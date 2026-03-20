@@ -1,0 +1,49 @@
+{
+  "thread_id": "email_thread_004",
+  "subject": "Project Meridian — URGENT: DataBridge Response Needed",
+  "messages": [
+    {
+      "message_id": "e004_001",
+      "date": "2026-01-28",
+      "time": "1:05 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["k.park@databridgesystems.com", "a.patel@databridgesystems.com"],
+      "cc": ["marcus.webb@acmehealth.com"],
+      "body": "Kevin, Aisha,\n\nI'm reaching out because I'm not getting responses from Tom and Kevin hasn't replied to two calendar invites. I'm emailing Aisha directly because she's been on our calls and I need someone at DataBridge to respond.\n\nThe situation: Marcus's team sent review comments and a revised mapping document (v1.1) to Tom and Kevin on January 20th. We've had no reply in 8 days. This is the critical path item for the entire project — without mapping approval, DataBridge can't finalize the ETL build, and CloudPeak can't finish the environment configuration. We have a hard cutover date of February 14th.\n\nI need to know:\n1. Did DataBridge receive the January 20th email with our review comments?\n2. What is the status of the revised mapping? When can we expect v1.2?\n3. Is Tom still the right contact for technical items?\n\nI've tried calling Kevin's number on file — it went to voicemail. Please respond to this email today.\n\nSarah Chen\nProject Manager, Acme Health"
+    },
+    {
+      "message_id": "e004_002",
+      "date": "2026-01-29",
+      "time": "9:47 AM EST",
+      "from": "a.patel@databridgesystems.com",
+      "to": ["sarah.chen@acmehealth.com"],
+      "cc": ["marcus.webb@acmehealth.com"],
+      "body": "Hi Sarah,\n\nApologies for the delay — and I want to be upfront about what's happened on our end.\n\nTom Reyes is no longer with DataBridge. He left the company on January 23rd. Kevin is aware but I think there was a gap in communicating this to you, and I apologize for that — it should have come from Kevin or from our management team, not from me in a reactive email.\n\nI have been assigned as the technical lead for this project going forward. I've just gone through Tom's handoff notes and I need to be honest with you: the handoff was incomplete. I was not aware that you had sent a revised mapping document on January 20th until I read your email this morning. I found Marcus's email in Tom's inbox, which I now have access to.\n\nI am reviewing the v1.1 mapping and comments now. The issues Marcus flagged look valid and I can address most of them. The one I need more time on is the external_lab_source_id Coding type change — I need to understand what reference code system you're using.\n\nCan we get on a call today or tomorrow? I want to move fast on this.\n\nAisha Patel\nIntegration Developer, DataBridge Systems"
+    },
+    {
+      "message_id": "e004_003",
+      "date": "2026-01-29",
+      "time": "10:22 AM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["a.patel@databridgesystems.com"],
+      "cc": ["marcus.webb@acmehealth.com", "k.park@databridgesystems.com"],
+      "body": "Aisha,\n\nThank you for responding — and I appreciate the honesty.\n\nWe can do a call today at 3pm EST. I'll send an invite now.\n\nA few things:\n- The External Lab Codes CSV was attached to Marcus's January 20th email. Let me know if you can't find it and we'll resend.\n- Please loop Kevin into any scheduling going forward. We need an account-level contact at DataBridge who is responsive.\n- I'll need to discuss a revised timeline for the mapping approval with you on the call.\n\nSee you at 3.\n\nSarah"
+    },
+    {
+      "message_id": "e004_004",
+      "date": "2026-01-29",
+      "time": "10:45 AM EST",
+      "from": "marcus.webb@acmehealth.com",
+      "to": ["sarah.chen@acmehealth.com"],
+      "body": "Sarah — I looked at LinkedIn. Tom's new job started January 19th at a company called Veriflow Health. So he effectively handed off and left during the same week he was supposed to be incorporating our mapping review comments. Kevin must have known. This is a material issue — do we need to flag it to Diana?\n\nMarcus"
+    },
+    {
+      "message_id": "e004_005",
+      "date": "2026-01-29",
+      "time": "11:02 AM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["marcus.webb@acmehealth.com"],
+      "body": "Marcus — yes, I think we do. Let me talk to Aisha first on the 3pm call and then I'll update Diana tonight or tomorrow morning.\n\nSarah"
+    }
+  ]
+}

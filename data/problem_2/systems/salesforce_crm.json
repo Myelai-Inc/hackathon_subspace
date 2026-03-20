@@ -1,0 +1,66 @@
+{
+  "system_id": "salesforce_crm",
+  "system_name": "Salesforce CRM",
+  "version": "Salesforce Enterprise Edition",
+  "purpose": "Central system of record for account relationships, opportunity tracking, activity logging, and health scoring.",
+  "owned_by": "Revenue Operations",
+  "csm_usage": "Primary account management tool. CSMs log activities, track account health, manage renewal pipeline, and document client interactions.",
+  "key_objects": {
+    "Account": {
+      "fields": [
+        {"name": "Id", "type": "ID", "description": "Salesforce record ID"},
+        {"name": "Name", "type": "string", "description": "Account/company name"},
+        {"name": "Industry", "type": "picklist", "description": "Industry vertical"},
+        {"name": "AnnualRevenue", "type": "currency", "description": "Account ARR"},
+        {"name": "ContractTier__c", "type": "picklist", "values": ["Basic", "Professional", "Enterprise"], "description": "Custom field — contract tier. NOT auto-synced from DocuSign."},
+        {"name": "HealthScore__c", "type": "number", "range": "0-100", "description": "Custom field — CSM-entered health score. Updated manually."},
+        {"name": "RenewalDate__c", "type": "date", "description": "Custom field — next renewal date. Manually maintained."},
+        {"name": "ChurnRiskFlag__c", "type": "picklist", "values": ["None", "Low", "Medium", "High", "Critical"], "description": "Custom field — CSM-assessed churn risk."},
+        {"name": "CSMOwner__c", "type": "lookup:User", "description": "Assigned CSM"},
+        {"name": "LastActivityDate", "type": "date", "description": "Auto-populated by Salesforce based on logged activities."},
+        {"name": "OpenTicketCount__c", "type": "number", "description": "Custom field — NOT synced from Zendesk. CSM updates manually or it goes stale."}
+      ]
+    },
+    "Activity (Task/Event)": {
+      "fields": [
+        {"name": "Id", "type": "ID"},
+        {"name": "WhatId", "type": "lookup:Account", "description": "Related account"},
+        {"name": "Subject", "type": "string", "description": "Activity summary"},
+        {"name": "ActivityDate", "type": "date"},
+        {"name": "Description", "type": "text", "description": "Full notes. CSM-entered."},
+        {"name": "Type", "type": "picklist", "values": ["Call", "Email", "Meeting", "Internal", "Other"]},
+        {"name": "Status", "type": "picklist", "values": ["Not Started", "In Progress", "Completed", "Deferred"]},
+        {"name": "OwnerId", "type": "lookup:User"}
+      ],
+      "integration_note": "Outlook emails are NOT auto-logged here. Calls are NOT auto-logged. Every activity must be manually created by the CSM."
+    },
+    "Opportunity": {
+      "fields": [
+        {"name": "Id", "type": "ID"},
+        {"name": "AccountId", "type": "lookup:Account"},
+        {"name": "Name", "type": "string"},
+        {"name": "StageName", "type": "picklist", "values": ["Renewal - 90 Days", "Renewal - 60 Days", "Renewal - 30 Days", "Expansion Identified", "Expansion Qualified", "Closed Won", "Closed Lost"]},
+        {"name": "CloseDate", "type": "date"},
+        {"name": "Amount", "type": "currency"},
+        {"name": "Type", "type": "picklist", "values": ["Renewal", "Expansion", "New Business"]}
+      ]
+    }
+  },
+  "known_gaps": [
+    {
+      "gap_id": "gap_001",
+      "description": "No bidirectional sync with Zendesk. OpenTicketCount__c is a manually-maintained field that is frequently stale.",
+      "impact": "CSMs cannot see ticket state from CRM; must switch to Zendesk manually."
+    },
+    {
+      "gap_id": "gap_002",
+      "description": "No integration with DocuSign. ContractTier__c and RenewalDate__c are manually entered and may not reflect the most current executed agreement.",
+      "impact": "Risk of CSM operating on incorrect SLA assumptions."
+    },
+    {
+      "gap_id": "gap_004",
+      "description": "No email or calendar sync. Outlook activity is not captured. CSMs must manually log every client communication as a Salesforce Activity.",
+      "impact": "17% of interactions missing from CRM; account history gaps affect renewals and handoffs."
+    }
+  ]
+}

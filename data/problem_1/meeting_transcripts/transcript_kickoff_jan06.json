@@ -1,0 +1,259 @@
+{
+  "meeting_id": "mtg_001",
+  "title": "Project Meridian — Kickoff Meeting",
+  "date": "2026-01-06",
+  "time": "10:00 AM EST",
+  "duration_minutes": 62,
+  "platform": "Zoom",
+  "attendees": [
+    {"participant_id": "p_sarah_chen", "present": true},
+    {"participant_id": "p_marcus_webb", "present": true},
+    {"participant_id": "p_diana_osei", "present": true},
+    {"participant_id": "p_linda_marsh", "present": false, "note": "joined 22 min late"},
+    {"participant_id": "p_kevin_park", "present": true},
+    {"participant_id": "p_tom_reyes", "present": true},
+    {"participant_id": "p_priya_nair", "present": true},
+    {"participant_id": "p_jordan_mills", "present": false}
+  ],
+  "transcript": [
+    {
+      "timestamp": "00:00",
+      "speaker": "Sarah Chen",
+      "text": "Alright, I think we have everyone — or close enough. Jordan I know isn't on but I'll make sure he gets the notes. Welcome everyone to the Project Meridian kickoff. Super excited to have DataBridge and CloudPeak in the same room, so to speak. Quick housekeeping: I'll be sending out action items after this call, so don't feel like you need to take furious notes. Tom, you want to kick us off with the scope overview?"
+    },
+    {
+      "timestamp": "00:47",
+      "speaker": "Tom Reyes",
+      "text": "Sure, thanks Sarah. So, at a high level — Acme's current integration layer is an HL7 v2 MLLP-based system, which was totally fine ten years ago but it's getting expensive to maintain and it can't really scale to the API surface area you're going to need for the network partnerships you're planning, right? The new stack is FHIR R4, REST-based, much more interoperable. Our job at DataBridge is to build the translation and routing layer that connects your source systems to the new API surface. We handle the data mapping, the transformation logic, the error handling. CloudPeak is standing up the compute and network environment that this all runs on."
+    },
+    {
+      "timestamp": "02:15",
+      "speaker": "Diana Osei",
+      "text": "Tom, can you speak to the data mapping piece specifically? That's the part I've heard the most concern about internally. We have a lot of custom fields in the legacy system."
+    },
+    {
+      "timestamp": "02:28",
+      "speaker": "Tom Reyes",
+      "text": "Yeah, absolutely. So the data mapping document is going to be the critical artifact here. It defines, field by field, how each source data element maps to the corresponding FHIR resource — patient demographics, encounter records, diagnostic results, the works. Marcus, your team is going to need to review and sign off on that document because you know the source system better than anyone. Once that's approved, we build against it. If the mapping changes after we've started building, we're in rework territory, so getting that right upfront is really important."
+    },
+    {
+      "timestamp": "03:52",
+      "speaker": "Marcus Webb",
+      "text": "Understood. What does the first draft look like timeline-wise?"
+    },
+    {
+      "timestamp": "03:58",
+      "speaker": "Tom Reyes",
+      "text": "I'll have a preliminary version to you by January 15th. That gives your team a week to review, and we're targeting approval by January 22nd. That's the date we've built into our schedule."
+    },
+    {
+      "timestamp": "04:15",
+      "speaker": "Sarah Chen",
+      "text": "Perfect. I'll put that in the action items. January 15th, Tom delivers data mapping v1. January 22nd, Acme review complete."
+    },
+    {
+      "timestamp": "04:28",
+      "speaker": "Priya Nair",
+      "text": "From our side, CloudPeak is assuming mapping approval by January 22nd as the trigger to finalize our environment config. Jordan has already started setting up the base network topology, but the specific compute allocation and security group rules depend on the final integration architecture. So the sooner we know what the middleware stack looks like, the better."
+    },
+    {
+      "timestamp": "05:10",
+      "speaker": "Tom Reyes",
+      "text": "Right, I'll make sure you have the architecture doc alongside the mapping doc. You'll need the deployment footprint to finish the CloudFormation templates."
+    },
+    {
+      "timestamp": "05:22",
+      "speaker": "Priya Nair",
+      "text": "Exactly. Jordan's been waiting on that to finalize the security group rules."
+    },
+    {
+      "timestamp": "06:04",
+      "speaker": "Sarah Chen",
+      "text": "Great. Okay, so phasing. Diana, this was something we talked about in the pre-call last week — do you want to walk through the rationale?"
+    },
+    {
+      "timestamp": "06:15",
+      "speaker": "Diana Osei",
+      "text": "Sure. Our recommendation going in was a phased approach. Phase 1 is read-only FHIR endpoints — patient lookup, encounter history, that kind of thing. We run that in parallel with the legacy system for 30 days, validate the data quality, and then Phase 2 brings write endpoints online and we start the cutover. The reason is risk management — if something goes wrong in Phase 1 we haven't touched any production write paths."
+    },
+    {
+      "timestamp": "07:10",
+      "speaker": "Tom Reyes",
+      "text": "That makes sense from a risk perspective. We can build to that. It's a little more work on our side because we're essentially delivering two integration surfaces instead of one, but it's very doable."
+    },
+    {
+      "timestamp": "07:31",
+      "speaker": "Kevin Park",
+      "text": "And from a contracting standpoint the phased approach is what the current SOW reflects, so we're aligned there."
+    },
+    {
+      "timestamp": "07:45",
+      "speaker": "Priya Nair",
+      "text": "CloudPeak can accommodate either approach. Phased means we bring up the read environment first, validate, then cut over the write environment. Slightly more coordination but manageable."
+    },
+    {
+      "timestamp": "08:02",
+      "speaker": "Sarah Chen",
+      "text": "Alright, so we're aligned on phased migration. Phase 1 read-only, Phase 2 write, 30-day validation window in between. I'll document that as a decided item."
+    },
+    {
+      "timestamp": "08:18",
+      "speaker": "Marcus Webb",
+      "text": "One thing I want to flag — we have about fifteen custom lab result fields in the legacy system that aren't in any standard FHIR profile. Tom, I'll send you a document that describes those. They're the ones I'm most nervous about in the mapping."
+    },
+    {
+      "timestamp": "08:45",
+      "speaker": "Tom Reyes",
+      "text": "Please do, that's really helpful. We'll figure out whether we extend the standard profile or use a contained resource. There are a few options."
+    },
+    {
+      "timestamp": "09:02",
+      "speaker": "Marcus Webb",
+      "text": "I'll send that today."
+    },
+    {
+      "timestamp": "09:10",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus sends Tom the custom lab fields doc today, January 6th."
+    },
+    {
+      "timestamp": "22:11",
+      "speaker": "Linda Marsh",
+      "text": "Sorry, just joined — did I miss the data mapping discussion?"
+    },
+    {
+      "timestamp": "22:18",
+      "speaker": "Sarah Chen",
+      "text": "Hey Linda! Yeah, we covered it — Tom's delivering a draft on the 15th, we have until the 22nd to review. I'll make sure you're on the review thread."
+    },
+    {
+      "timestamp": "22:30",
+      "speaker": "Linda Marsh",
+      "text": "Perfect, thank you. I just want to make sure I can check the ADT feed field names against the mapping — we had a discrepancy in the last migration project."
+    },
+    {
+      "timestamp": "22:43",
+      "speaker": "Marcus Webb",
+      "text": "Good call, Linda. You and I can sync before we send our review back to Tom."
+    },
+    {
+      "timestamp": "35:04",
+      "speaker": "Kevin Park",
+      "text": "One thing from our side — for status updates, Kevin should be my first point of contact, and Tom for anything technical. I'll make sure Kevin is looped on all the scheduling."
+    },
+    {
+      "timestamp": "35:20",
+      "speaker": "Sarah Chen",
+      "text": "Got it. Kevin for account stuff, Tom for architecture questions."
+    },
+    {
+      "timestamp": "51:22",
+      "speaker": "Priya Nair",
+      "text": "I want to confirm the cutover target date — February 14th. Is that still the plan?"
+    },
+    {
+      "timestamp": "51:30",
+      "speaker": "Diana Osei",
+      "text": "February 14th is the board-approved date. We need to be live by then. There's budget approval tied to it."
+    },
+    {
+      "timestamp": "51:45",
+      "speaker": "Priya Nair",
+      "text": "Understood. Jordan and I will plan backwards from that. We'll need at least ten business days of environment configuration once we have the final architecture. So that means we need artifacts from DataBridge no later than January 29th."
+    },
+    {
+      "timestamp": "52:08",
+      "speaker": "Tom Reyes",
+      "text": "January 29th for the architecture package from us. Noted. That's aggressive but doable if the mapping approval comes in on the 22nd."
+    },
+    {
+      "timestamp": "52:30",
+      "speaker": "Sarah Chen",
+      "text": "Okay, I'm noting that dependency — DataBridge needs the mapping approved by January 22nd to hit the January 29th architecture delivery. And CloudPeak needs architecture by January 29th to hit the February 14th cutover. That's the critical path."
+    },
+    {
+      "timestamp": "58:15",
+      "speaker": "Diana Osei",
+      "text": "Sarah, I want weekly status updates in my inbox. Keep them brief — three bullets is fine. What's on track, what's at risk, what needs my attention. If something slips to the at-risk column, I want to know before it becomes a crisis."
+    },
+    {
+      "timestamp": "58:38",
+      "speaker": "Sarah Chen",
+      "text": "Absolutely. I'll send those every Friday."
+    },
+    {
+      "timestamp": "61:14",
+      "speaker": "Sarah Chen",
+      "text": "Okay, I think we've covered the major items. To summarize: Tom delivers data mapping v1 by January 15th. Acme reviews by January 22nd. Marcus sends custom lab fields doc today. DataBridge delivers architecture package by January 29th. CloudPeak finalizes environment config by February 7th. Cutover February 14th. Kevin and Tom are DataBridge contacts. I'll send the full action item list within the hour. Thanks everyone."
+    }
+  ],
+  "action_items_mentioned": [
+    {
+      "id": "ai_001",
+      "description": "Tom Reyes delivers data mapping document v1 to Acme",
+      "owner": "p_tom_reyes",
+      "due_date": "2026-01-15",
+      "explicit": true
+    },
+    {
+      "id": "ai_002",
+      "description": "Acme (Marcus Webb + Linda Marsh) reviews and approves data mapping v1",
+      "owner": "p_marcus_webb",
+      "due_date": "2026-01-22",
+      "explicit": true
+    },
+    {
+      "id": "ai_003",
+      "description": "Marcus Webb sends Tom Reyes the custom lab result fields document",
+      "owner": "p_marcus_webb",
+      "due_date": "2026-01-06",
+      "explicit": true
+    },
+    {
+      "id": "ai_004",
+      "description": "DataBridge delivers architecture package (deployment footprint, CloudFormation templates) to CloudPeak",
+      "owner": "p_tom_reyes",
+      "due_date": "2026-01-29",
+      "explicit": true,
+      "depends_on": ["ai_002"]
+    },
+    {
+      "id": "ai_005",
+      "description": "CloudPeak finalizes production environment configuration",
+      "owner": "p_priya_nair",
+      "due_date": "2026-02-07",
+      "explicit": true,
+      "depends_on": ["ai_004"]
+    },
+    {
+      "id": "ai_006",
+      "description": "Sarah Chen sends weekly status update emails to Diana Osei every Friday",
+      "owner": "p_sarah_chen",
+      "due_date": "recurring_weekly",
+      "explicit": true
+    },
+    {
+      "id": "ai_007",
+      "description": "Sarah Chen sends post-kickoff action item summary to all attendees",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-06",
+      "explicit": false,
+      "note": "Implied by Sarah's comment 'I'll send within the hour'"
+    },
+    {
+      "id": "ai_008",
+      "description": "Linda Marsh to be added to the data mapping review thread",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-06",
+      "explicit": false
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec_001",
+      "description": "Adopt phased migration: Phase 1 = read-only FHIR endpoints, Phase 2 = write endpoints with 30-day stabilization window between phases.",
+      "participants": ["p_diana_osei", "p_sarah_chen", "p_tom_reyes", "p_priya_nair", "p_kevin_park"],
+      "rationale": "Risk management — allows data quality validation before activating write paths."
+    }
+  ]
+}

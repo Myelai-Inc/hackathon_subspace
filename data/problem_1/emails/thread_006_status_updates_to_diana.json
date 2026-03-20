@@ -1,0 +1,41 @@
+{
+  "thread_id": "email_thread_006",
+  "subject": "Project Meridian — Weekly Status",
+  "messages": [
+    {
+      "message_id": "e006_001",
+      "date": "2026-01-09",
+      "time": "4:55 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["diana.osei@acmehealth.com"],
+      "body": "Diana,\n\nWeek 1 status:\n\n✅ ON TRACK: Kickoff complete. Action items distributed. All parties confirmed receipt.\n✅ ON TRACK: DataBridge to deliver data mapping v1 by January 15th (on schedule).\n✅ ON TRACK: CloudPeak has begun base network topology setup.\n\nNothing requiring your attention this week.\n\nSarah"
+    },
+    {
+      "message_id": "e006_002",
+      "date": "2026-01-16",
+      "time": "5:02 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["diana.osei@acmehealth.com"],
+      "body": "Diana,\n\nWeek 2 status:\n\n✅ ON TRACK: DataBridge delivered data mapping v1 on January 15th — on schedule.\n✅ ON TRACK: Acme review underway (Marcus + Linda). Target approval January 22nd.\n🔵 NOTE: Technical review call on January 14th resulted in a decision to shift to single-phase migration (all endpoints on Feb 14 vs. phased approach). Tom Reyes confirmed DataBridge can support this. CloudPeak notified. SOW implication may be minor — Kevin is aware.\n\nNothing requiring your attention this week.\n\nSarah",
+      "note": "Diana was NOT consulted on the phasing decision change before this email. The email presents it as a done deal."
+    },
+    {
+      "message_id": "e006_003",
+      "date": "2026-01-23",
+      "time": "5:17 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["diana.osei@acmehealth.com"],
+      "body": "Diana,\n\nWeek 3 status:\n\n⚠️ MINOR DELAY: Data mapping review sent to DataBridge on January 20th with required revisions. Awaiting DataBridge response — this is a normal review cycle. Approval may slip a few days past the 22nd. Monitoring.\n✅ ON TRACK: CloudPeak environment setup progressing.\n✅ ON TRACK: No impact to February 14th cutover date at this time.\n\nNothing requiring your attention this week.\n\nSarah",
+      "note": "As of Jan 23, DataBridge has been silent for 3 days on a critical-path document. The word 'minor' and 'normal review cycle' significantly understates the risk. No mention of Kevin Park's unresponsiveness."
+    },
+    {
+      "message_id": "e006_004",
+      "date": "2026-01-30",
+      "time": "5:45 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["diana.osei@acmehealth.com"],
+      "body": "Diana,\n\nWeek 4 status:\n\n⚠️ AT RISK: DataBridge had a personnel transition (Tom Reyes, their Solutions Architect, left the company on Jan 23). I discovered this on January 28th after the mapping review received no response. I re-engaged DataBridge and their developer Aisha Patel is now handling technical items. We had a re-alignment call on January 29th. DataBridge has acknowledged the review comments and is working on v1.2.\n⚠️ AT RISK: Architecture package delivery to CloudPeak will be delayed by approximately 4-5 days (was Jan 29, now targeting Feb 3). CloudPeak has been informed.\n📋 WATCHING: February 14th cutover is still the plan. Will have a clearer picture by mid-next week.\n\nMay need your input next week if timeline situation changes. Will advise.\n\nSarah",
+      "note": "First mention of Tom Reyes departure — two weeks after he left, nine days after Marcus raised it verbally in the Jan 28 sync. CloudPeak's security configuration issue (Jordan's email) has not yet surfaced."
+    }
+  ]
+}

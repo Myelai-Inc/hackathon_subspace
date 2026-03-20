@@ -1,0 +1,40 @@
+{
+  "thread_id": "email_thread_001",
+  "subject": "Project Meridian — Kickoff Action Items & Summary",
+  "messages": [
+    {
+      "message_id": "e001_001",
+      "date": "2026-01-06",
+      "time": "11:42 AM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["k.park@databridgesystems.com", "t.reyes@databridgesystems.com", "p.nair@cloudpeak.io", "j.mills@cloudpeak.io", "marcus.webb@acmehealth.com", "diana.osei@acmehealth.com", "linda.marsh@acmehealth.com"],
+      "body": "Team,\n\nThanks for a great kickoff today. Here's a summary of what we covered and the action items coming out of the call.\n\n**Decisions Made:**\n- Migration approach: Phased. Phase 1 = read-only FHIR endpoints. Phase 2 = write endpoints. 30-day stabilization window between phases.\n- Cutover target: February 14, 2026 (board-approved, non-negotiable)\n- DataBridge contacts: Kevin Park (account/scheduling), Tom Reyes (technical)\n\n**Critical Path:**\nData mapping approval (Jan 22) → Architecture package to CloudPeak (Jan 29) → Environment config complete (Feb 7) → Cutover (Feb 14)\n\n**Action Items:**\n| Owner | Task | Due |\n|---|---|---|\n| Tom Reyes | Deliver data mapping v1 | Jan 15 |\n| Marcus Webb + Linda Marsh | Review and approve data mapping v1 | Jan 22 |\n| Marcus Webb | Send custom lab fields doc to Tom | Today (Jan 6) |\n| Tom Reyes | Deliver architecture package to CloudPeak | Jan 29 |\n| CloudPeak | Finalize production environment config | Feb 7 |\n| Sarah Chen | Weekly status update to Diana | Every Friday |\n\nLet me know if I've missed anything or gotten anything wrong.\n\nSarah"
+    },
+    {
+      "message_id": "e001_002",
+      "date": "2026-01-06",
+      "time": "2:15 PM EST",
+      "from": "p.nair@cloudpeak.io",
+      "to": ["sarah.chen@acmehealth.com"],
+      "cc": ["j.mills@cloudpeak.io"],
+      "body": "Sarah,\n\nThanks, looks accurate from our side. I'm looping Jordan in on this thread so he has the dates.\n\nOne note: the architecture package from DataBridge is really the key input for us. Jordan will need the deployment topology and security requirements before he can finalize the CloudFormation templates. As long as that comes in by the 29th we're in good shape.\n\nPriya"
+    },
+    {
+      "message_id": "e001_003",
+      "date": "2026-01-06",
+      "time": "4:02 PM EST",
+      "from": "t.reyes@databridgesystems.com",
+      "to": ["sarah.chen@acmehealth.com"],
+      "cc": ["k.park@databridgesystems.com"],
+      "body": "Sarah,\n\nConfirmed on our end. I have the custom lab fields doc from Marcus — thank you Marcus, those are helpful. I'll factor those into the mapping.\n\nJust to flag: when I said January 15th for the mapping draft, that's a preliminary version — there will likely be a review cycle, which is baked into the January 22nd approval target. So don't expect perfection on the 15th, expect something solid enough to review.\n\nTalk soon,\nTom"
+    },
+    {
+      "message_id": "e001_004",
+      "date": "2026-01-07",
+      "time": "9:21 AM EST",
+      "from": "diana.osei@acmehealth.com",
+      "to": ["sarah.chen@acmehealth.com"],
+      "body": "Sarah — looks good. Keep me posted on the mapping review. That's the piece I'm watching most closely.\n\nDiana"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "thread_id": "email_thread_002",
+  "subject": "Project Meridian — Data Mapping Document v1",
+  "messages": [
+    {
+      "message_id": "e002_001",
+      "date": "2026-01-15",
+      "time": "4:48 PM EST",
+      "from": "t.reyes@databridgesystems.com",
+      "to": ["marcus.webb@acmehealth.com", "sarah.chen@acmehealth.com"],
+      "cc": ["a.patel@databridgesystems.com", "linda.marsh@acmehealth.com"],
+      "body": "Marcus, Sarah,\n\nAttached is the data mapping document v1 — delivered on time as committed. \n\nQuick overview of what's in here:\n- Full field-level mapping from HL7 v2 segments to FHIR R4 resources (Patient, Encounter, Observation, DiagnosticReport)\n- Custom lab extensions: we've proposed handling the 15 custom fields as FHIR extensions using the http://acmehealth.org/fhir/StructureDefinition namespace. See Section 4. These will need your sign-off on the extension definitions.\n- Known gaps: there are 3 fields in the ADT A08 segment (patient update event) where the source system behavior isn't fully documented. I've flagged these with [NEEDS_CLARIFICATION] tags. Linda — you may be best positioned to answer these.\n- Transformation logic for null values, unknown codes, and legacy enum values that don't have FHIR equivalents is documented in Section 6.\n\nI'd suggest Linda and Marcus focus your review on Sections 3 (ADT mappings) and 4 (custom extensions). The rest is fairly standard and I'd expect lower friction there.\n\nTarget: your review comments back to me by January 22nd so we can finalize before I build against this.\n\nLet me know if you have questions.\nTom\n\n[Attachment: Meridian_DataMapping_v1_20260115.xlsx — 847KB]",
+      "attachments": [
+        {
+          "filename": "Meridian_DataMapping_v1_20260115.xlsx",
+          "description": "Data mapping spreadsheet with field-level HL7 to FHIR mappings",
+          "size_kb": 847
+        }
+      ]
+    },
+    {
+      "message_id": "e002_002",
+      "date": "2026-01-15",
+      "time": "5:12 PM EST",
+      "from": "marcus.webb@acmehealth.com",
+      "to": ["t.reyes@databridgesystems.com"],
+      "cc": ["sarah.chen@acmehealth.com", "linda.marsh@acmehealth.com"],
+      "body": "Tom,\n\nGot it, thanks for delivering on time. Linda and I will dig in tomorrow morning.\n\nMarcus"
+    },
+    {
+      "message_id": "e002_003",
+      "date": "2026-01-16",
+      "time": "10:05 AM EST",
+      "from": "linda.marsh@acmehealth.com",
+      "to": ["marcus.webb@acmehealth.com"],
+      "body": "Marcus,\n\nI've been through the mapping. The standard FHIR resources look fine, but I have significant concerns about Section 3 (ADT) and Section 4 (extensions). \n\nADT issues:\n- The A08 (patient update) segment mapping is wrong for fields PID-18 and PID-19. PID-18 (patient account number) is being mapped to identifier.value but it needs a system discriminator, otherwise we'll get collisions with the MRN. There's a legacy system quirk where PID-19 (SSN) is sometimes populated with a dummy value (999-99-9999) for privacy reasons — this will cause problems in the FHIR Observation if not handled.\n- The A03 (discharge) segment is missing the discharge disposition code. That's a regulatory requirement for our billing workflow.\n\nExtension issues:\n- The 15 custom lab extensions look mostly right but extension #7 (result_comment_routing_flag) has the wrong cardinality — it should be 0..* not 0..1, because some results can have multiple routing flags.\n- Extension #12 (external_lab_source_id) — Tom has this as a string but it should be a Coding type because we need to track which reference lab sent the result, not just a free-text ID.\n\nAlso the 3 [NEEDS_CLARIFICATION] fields — I know two of them. I'll write those up for Tom. The third one (PV1-52, the \"other healthcare provider\" field) I genuinely don't know. It's populated inconsistently in the source system. We may need to loop in the clinical informatics team.\n\nI'll put this all in a comment doc. Can you review before I send to Tom?\n\nLinda"
+    },
+    {
+      "message_id": "e002_004",
+      "date": "2026-01-16",
+      "time": "2:40 PM EST",
+      "from": "marcus.webb@acmehealth.com",
+      "to": ["linda.marsh@acmehealth.com"],
+      "body": "Linda — these are substantive issues, not just nits. Good catch on the discharge disposition — that would've been a billing headache. Let's consolidate into a clean comment log and I'll add context on the PV1-52 field (I'll check with Dr. Okonkwo in clinical informatics). Give me until Monday to pull that together and then we'll send it to Tom as a joint response.\n\nMarcus"
+    },
+    {
+      "message_id": "e002_005",
+      "date": "2026-01-19",
+      "time": "9:14 AM EST",
+      "from": "marcus.webb@acmehealth.com",
+      "to": ["linda.marsh@acmehealth.com"],
+      "body": "Linda — got clarity on PV1-52 from Dr. Okonkwo: we should map this to Encounter.participant with participantType = \"PART\" when populated, and ignore/drop when null (which is about 60% of records). He confirmed the inconsistent population is by design — it's only filled when there's a consulting provider involvement, not just the attending.\n\nOK I think we have everything. Can you finish the comment doc today so we can get it to Tom on the 20th?\n\nMarcus"
+    }
+  ]
+}

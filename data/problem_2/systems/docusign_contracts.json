@@ -1,0 +1,124 @@
+{
+  "system_id": "docusign_contracts",
+  "system_name": "DocuSign CLM",
+  "purpose": "Contract lifecycle management. Stores executed MSAs, SOWs, addenda, and order forms for all enterprise accounts.",
+  "owned_by": "Legal / Finance",
+  "csm_usage": "CSMs access DocuSign to retrieve SLA terms, credit provisions, and renewal dates when handling escalations or renewal conversations. Access is read-only for CSMs.",
+  "document_structure": {
+    "Master_Service_Agreement": {
+      "description": "Top-level contract governing the relationship. Includes general terms, liability, IP.",
+      "typical_fields": ["effective_date", "governing_law", "liability_cap", "termination_notice_days"]
+    },
+    "SLA_Addendum": {
+      "description": "Service Level Agreement attached to MSA. Defines uptime guarantees, response times, and credit terms.",
+      "typical_fields": [
+        "contract_tier",
+        "uptime_guarantee_pct",
+        "response_time_p1_hours",
+        "response_time_p2_hours",
+        "resolution_time_p1_hours",
+        "resolution_time_p2_hours",
+        "monthly_credit_cap_pct",
+        "credit_trigger_uptime_pct",
+        "dedicated_csm",
+        "custom_sla_window"
+      ]
+    },
+    "Order_Form": {
+      "description": "Governs the specific subscription: seats, modules, price, and renewal terms.",
+      "typical_fields": [
+        "arr_usd",
+        "seats",
+        "modules_licensed",
+        "auto_renewal",
+        "renewal_date",
+        "price_lock_pct"
+      ]
+    }
+  },
+  "sample_contracts": [
+    {
+      "account_name": "Lakeshore Freight Partners",
+      "salesforce_account_id": "0014W00002kJkLM",
+      "contract_tier": "Enterprise",
+      "uptime_guarantee_pct": 99.9,
+      "response_time_p1_hours": 1,
+      "response_time_p2_hours": 4,
+      "resolution_time_p1_hours": 8,
+      "resolution_time_p2_hours": 24,
+      "monthly_credit_cap_pct": 30,
+      "credit_trigger_uptime_pct": 99.5,
+      "dedicated_csm": true,
+      "custom_sla_window": "24/7/365",
+      "arr_usd": 148000,
+      "renewal_date": "2026-09-30",
+      "auto_renewal": true,
+      "special_provisions": "Executive sponsor quarterly review required. 90-day written notice required to cancel auto-renewal."
+    },
+    {
+      "account_name": "Apex Carriers Group",
+      "salesforce_account_id": "0014W00002kJkAB",
+      "contract_tier": "Professional",
+      "uptime_guarantee_pct": 99.5,
+      "response_time_p1_hours": 2,
+      "response_time_p2_hours": 8,
+      "resolution_time_p1_hours": 24,
+      "resolution_time_p2_hours": 72,
+      "monthly_credit_cap_pct": 15,
+      "credit_trigger_uptime_pct": 99.0,
+      "dedicated_csm": false,
+      "custom_sla_window": "M-F 8am-6pm EST",
+      "arr_usd": 72000,
+      "renewal_date": "2026-06-15",
+      "auto_renewal": false,
+      "special_provisions": null
+    },
+    {
+      "account_name": "Meridian Logistics LLC",
+      "salesforce_account_id": null,
+      "salesforce_account_id_note": "Not populated in DocuSign — manual linkage missing",
+      "contract_tier": "Professional",
+      "uptime_guarantee_pct": 99.5,
+      "response_time_p1_hours": 2,
+      "response_time_p2_hours": 8,
+      "resolution_time_p1_hours": 24,
+      "resolution_time_p2_hours": 72,
+      "monthly_credit_cap_pct": 15,
+      "credit_trigger_uptime_pct": 99.0,
+      "dedicated_csm": false,
+      "custom_sla_window": "M-F 8am-6pm EST",
+      "arr_usd": 58000,
+      "renewal_date": "2026-04-30",
+      "auto_renewal": true
+    },
+    {
+      "account_name": "TerraHaul Inc.",
+      "salesforce_account_id": "0014W00002kJkZZ",
+      "contract_tier": "Basic",
+      "uptime_guarantee_pct": 99.0,
+      "response_time_p1_hours": 8,
+      "response_time_p2_hours": 24,
+      "resolution_time_p1_hours": 72,
+      "resolution_time_p2_hours": null,
+      "monthly_credit_cap_pct": 10,
+      "credit_trigger_uptime_pct": 98.5,
+      "dedicated_csm": false,
+      "custom_sla_window": "M-F 9am-5pm EST",
+      "arr_usd": 18000,
+      "renewal_date": "2027-01-31",
+      "auto_renewal": true
+    }
+  ],
+  "known_gaps": [
+    {
+      "gap_id": "gap_002",
+      "description": "DocuSign is not integrated with Salesforce or Zendesk. Contract terms (SLA tier, response times, credit provisions) are not programmatically available in either system.",
+      "impact": "CSMs manually look up contracts per escalation. Support agents cannot see contract terms when setting SLA clocks. Risk of non-compliance with contracted SLAs."
+    },
+    {
+      "gap_id": "gap_007",
+      "description": "No automated renewal alert system between DocuSign and Salesforce. RenewalDate in Salesforce is manually maintained and may differ from the executed order form.",
+      "impact": "Renewal conversations may start late. Auto-renewal accounts may renew without a CSM conversation, missing expansion opportunity."
+    }
+  ]
+}

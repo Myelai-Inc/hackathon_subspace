@@ -1,0 +1,163 @@
+{
+  "description": "Sample escalation cases representing the range of complexity CSMs encounter. Useful for testing workflow decomposition and automation classification solutions.",
+  "cases": [
+    {
+      "case_id": "case_001",
+      "account_name": "Lakeshore Freight Partners",
+      "account_tier": "Enterprise",
+      "arr_usd": 148000,
+      "csm": "Jamie Torres",
+      "escalation_date": "2026-02-10",
+      "trigger": "VP of Operations (Carol Whitmore) called Jamie directly — not via Zendesk ticket",
+      "stated_issue": "API rate limit errors causing integration to fail. Fleet tracking data not updating for 6 hours.",
+      "zendesk_ticket_id": 84721,
+      "ticket_priority_set_by_agent": "urgent",
+      "contract_sla_p1_response_hours": 1,
+      "time_from_trigger_to_csm_aware_minutes": 22,
+      "sla_breach_risk": "HIGH — 1-hour SLA and CSM wasn't notified via Zendesk, only via direct call 22 minutes after issue started",
+      "complicating_factors": [
+        "This is the third API-related issue in 30 days for this account",
+        "Carol Whitmore mentioned in passing that they've been 'evaluating alternatives' — potential churn signal",
+        "CSM must decide whether to invoke SLA credit proactively before client asks"
+      ],
+      "resolution": {
+        "root_cause": "API rate limit configuration had been incorrectly set during a platform upgrade 48 hours prior",
+        "fix_time_minutes": 45,
+        "sla_credit_offered": true,
+        "credit_amount_usd": 3700,
+        "client_outcome": "Satisfied but watching. VP noted appreciation for proactive credit offer.",
+        "follow_up_required": ["3-day check-in", "14-day performance review", "Root cause report delivery"]
+      },
+      "csm_time_breakdown": {
+        "assembly_minutes": 81,
+        "judgment_minutes": 60,
+        "total_minutes": 141
+      }
+    },
+    {
+      "case_id": "case_002",
+      "account_name": "Meridian Logistics LLC",
+      "account_tier": "Professional",
+      "arr_usd": 58000,
+      "csm": "Jamie Torres",
+      "escalation_date": "2026-02-08",
+      "trigger": "Zendesk ticket #84655 — submitted by AP Manager (Linda Chen)",
+      "stated_issue": "Invoice for January shows $2,400 overcharge. Requesting credit.",
+      "zendesk_ticket_id": 84655,
+      "ticket_priority_set_by_agent": "high",
+      "contract_sla_p2_response_hours": 8,
+      "complicating_factors": [
+        "Salesforce account ID not linked in Zendesk ticket — CSM had to search manually",
+        "Renewal is in 2.5 months — billing dispute this close to renewal is a churn risk",
+        "CSM pulled wrong DocuSign contract initially (original MSA, not current amendment with pricing)"
+      ],
+      "resolution": {
+        "root_cause": "Billing system applied incorrect seat count after a user was deprovisioned but the billing record wasn't updated",
+        "fix_time_minutes": 180,
+        "sla_credit_offered": false,
+        "billing_credit_issued_usd": 2400,
+        "client_outcome": "Resolved. Account stable. Renewal conversation initiated as part of resolution call.",
+        "follow_up_required": ["3-day billing confirmation", "Renewal conversation in 4 weeks"]
+      },
+      "csm_time_breakdown": {
+        "assembly_minutes": 66,
+        "judgment_minutes": 28,
+        "total_minutes": 94,
+        "note": "Salesforce activity log was skipped due to back-to-back calls"
+      }
+    },
+    {
+      "case_id": "case_003",
+      "account_name": "Apex Carriers Group",
+      "account_tier": "Professional",
+      "arr_usd": 72000,
+      "csm": "Jamie Torres",
+      "escalation_date": "2026-02-07",
+      "trigger": "Zendesk ticket #84590 — submitted by IT Admin (Robert Park)",
+      "stated_issue": "Fleet data sync delay of 6 hours observed. Expected sync frequency is 15 minutes.",
+      "zendesk_ticket_id": 84590,
+      "ticket_priority_set_by_agent": "high",
+      "contract_sla_p2_response_hours": 8,
+      "complicating_factors": [
+        "Zendesk ticket history shows 3 prior sync issues in the past 60 days — pattern not visible in Salesforce",
+        "Account renewal in 4 months with no current expansion opportunity flagged",
+        "CSM recognized pattern and used the escalation call to gauge expansion interest — judgment call that created unexpected value"
+      ],
+      "resolution": {
+        "root_cause": "Recurring sync delay tied to specific vehicle class (Class 8 trucks) with a known but unpatched firmware integration bug",
+        "fix_time_minutes": 240,
+        "engineering_escalation": true,
+        "client_outcome": "Resolution in progress. Client appreciated CSM identifying the pattern across tickets.",
+        "expansion_outcome": "Client expressed interest in adding the Compliance module — CSM created expansion opportunity in CRM",
+        "follow_up_required": ["Engineering resolution ETA", "3-day status check", "14-day resolution validation", "Expansion discovery call"]
+      },
+      "csm_time_breakdown": {
+        "assembly_minutes": 73,
+        "judgment_minutes": 35,
+        "total_minutes": 108
+      }
+    },
+    {
+      "case_id": "case_004",
+      "account_name": "TerraHaul Inc.",
+      "account_tier": "Basic",
+      "arr_usd": 18000,
+      "csm": "Jamie Torres",
+      "escalation_date": "2026-02-05",
+      "trigger": "Zendesk ticket #84512 — submitted by Operations Manager (Sarah Obi)",
+      "stated_issue": "User cannot export monthly reports. Getting 403 Forbidden error.",
+      "zendesk_ticket_id": 84512,
+      "ticket_priority_set_by_agent": "normal",
+      "contract_sla_p2_response_hours": 24,
+      "complicating_factors": [
+        "CSM pulled wrong contract version initially — pulled original MSA instead of current amendment",
+        "Basic tier account — limited contract SLA, lower priority",
+        "CSM judgment call: is this worth a full escalation workflow or can it be resolved quickly?"
+      ],
+      "resolution": {
+        "root_cause": "User role had been incorrectly configured during a permissions audit last month",
+        "fix_time_minutes": 15,
+        "client_outcome": "Resolved quickly. Account is healthy. No churn risk.",
+        "follow_up_required": [],
+        "csm_note": "Skipped follow-up ticket creation and Calendly scheduling — Basic tier account, quick resolution, didn't seem necessary"
+      },
+      "csm_time_breakdown": {
+        "assembly_minutes": 49,
+        "judgment_minutes": 18,
+        "total_minutes": 67
+      }
+    },
+    {
+      "case_id": "case_005",
+      "account_name": "Northgate Medical Supplies",
+      "account_tier": "Enterprise",
+      "arr_usd": 195000,
+      "csm": "Alex Rivera",
+      "escalation_date": "2026-02-11",
+      "trigger": "Executive sponsor (CFO James Hartley) emailed VP of Customer Success (not the CSM) — cascaded to CSM 3 hours later",
+      "stated_issue": "Monthly usage report delivered to board shows completely different numbers than what the Vertex platform displays. Audit compliance risk.",
+      "zendesk_ticket_id": null,
+      "ticket_priority_set_by_agent": null,
+      "contract_sla_p1_response_hours": 1,
+      "time_from_trigger_to_csm_aware_minutes": 185,
+      "sla_breach_risk": "CRITICAL — Escalation routed through executive channel, not ticketing system. SLA clock never started. Issue already 3 hours old when CSM was notified.",
+      "complicating_factors": [
+        "Escalation bypassed ticketing system entirely — arrived via executive email chain",
+        "CFO is involved — this is a relationship-defining situation",
+        "Board audit implications — CSM must understand scope before committing to any resolution timeline",
+        "CSM has 4 other open escalations on the same day"
+      ],
+      "resolution": {
+        "root_cause": "Pending",
+        "client_outcome": "Pending",
+        "follow_up_required": ["Immediate executive call", "Root cause investigation", "Board-ready summary report"]
+      },
+      "csm_time_breakdown": {
+        "assembly_minutes": null,
+        "judgment_minutes": null,
+        "total_minutes": null,
+        "note": "Case in progress — time tracking not yet complete"
+      }
+    }
+  ]
+}

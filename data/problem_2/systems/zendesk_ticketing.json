@@ -1,0 +1,115 @@
+{
+  "system_id": "zendesk_ticketing",
+  "system_name": "Zendesk Support",
+  "purpose": "Customer support ticket management. Tracks all inbound support requests, engineering escalations, and follow-up tasks.",
+  "owned_by": "Support Operations",
+  "csm_usage": "CSMs view tickets for their accounts, create follow-up tasks, and escalate tickets to engineering or tier-2.",
+  "key_objects": {
+    "Ticket": {
+      "fields": [
+        {"name": "id", "type": "integer", "description": "Zendesk ticket ID"},
+        {"name": "subject", "type": "string"},
+        {"name": "description", "type": "text", "description": "Initial problem description"},
+        {"name": "status", "type": "enum", "values": ["new", "open", "pending", "on_hold", "solved", "closed"]},
+        {"name": "priority", "type": "enum", "values": ["low", "normal", "high", "urgent"]},
+        {"name": "requester_id", "type": "integer", "description": "Zendesk user ID of the submitter"},
+        {"name": "organization_id", "type": "integer", "description": "Zendesk organization ID. NOT linked to Salesforce Account ID."},
+        {"name": "assignee_id", "type": "integer", "description": "Assigned support agent"},
+        {"name": "group_id", "type": "integer", "description": "Support team/group"},
+        {"name": "tags", "type": "array:string", "description": "Issue category tags (e.g., billing, api-error, data-sync, performance)"},
+        {"name": "custom_fields": {
+          "csm_owner": {"type": "text", "description": "Free-text field for CSM name. NOT a lookup to Salesforce user. Manually entered and often blank."},
+          "salesforce_account_id": {"type": "text", "description": "Manually entered Salesforce Account ID. Present on ~60% of tickets. Not enforced or validated."},
+          "contract_sla_tier": {"type": "text", "description": "Manually entered by support agent. Often missing or incorrect because agents cannot access DocuSign."}
+        }},
+        {"name": "created_at", "type": "datetime"},
+        {"name": "updated_at", "type": "datetime"},
+        {"name": "solved_at", "type": "datetime"},
+        {"name": "due_at", "type": "datetime", "description": "SLA due date — calculated from ticket priority, NOT from the account's actual contract SLA tier."}
+      ],
+      "integration_note": "Zendesk calculates SLA based on ticket priority field, which does not reflect the actual contract SLA tier in DocuSign. An Enterprise account with a 2-hour SLA may get a 4-hour SLA response if the agent entered 'high' instead of 'urgent' priority."
+    },
+    "Organization": {
+      "fields": [
+        {"name": "id", "type": "integer"},
+        {"name": "name", "type": "string"},
+        {"name": "notes", "type": "text", "description": "Free-text notes about the organization. NOT synced from Salesforce."},
+        {"name": "tags", "type": "array:string"},
+        {"name": "external_id", "type": "string", "description": "Can hold Salesforce Account ID, but field is optional and infrequently populated."}
+      ]
+    }
+  },
+  "known_gaps": [
+    {
+      "gap_id": "gap_001",
+      "description": "Zendesk Organization is not linked to Salesforce Account. Two separate identity systems with no programmatic sync. Mapping is manual and incomplete.",
+      "impact": "CSM must switch between tools to understand full account context. Tickets can exist for an account with no Salesforce linkage."
+    },
+    {
+      "gap_id": "gap_002",
+      "description": "Contract SLA tier from DocuSign is not available in Zendesk. SLA clock is based on ticket priority entered by the support agent, which may not match contract terms.",
+      "impact": "SLA breach risk on Enterprise accounts. Over-servicing of Basic accounts."
+    },
+    {
+      "gap_id": "gap_003",
+      "description": "CSM ownership of accounts is not enforced in Zendesk. The csm_owner custom field is manually populated and frequently blank.",
+      "impact": "CSMs must search by organization name to find their accounts' tickets. No automated alert to CSM when a new ticket is opened by their account."
+    },
+    {
+      "gap_id": "gap_005",
+      "description": "Follow-up tickets created in Zendesk are not visible in Salesforce task list or Outlook calendar. CSMs use a personal Google Sheet to track upcoming follow-ups.",
+      "impact": "Follow-up obligations are invisible to management and fragile to CSM turnover."
+    }
+  ],
+  "sample_tickets": [
+    {
+      "id": 84721,
+      "subject": "API rate limit errors — integration down",
+      "status": "open",
+      "priority": "urgent",
+      "organization": "Lakeshore Freight Partners",
+      "tags": ["api-error", "integration", "p1-escalation"],
+      "created_at": "2026-02-10T09:14:00Z",
+      "salesforce_account_id": "0014W00002kJkLM",
+      "contract_sla_tier": "Enterprise",
+      "csm_owner": "Jamie Torres"
+    },
+    {
+      "id": 84655,
+      "subject": "Monthly invoice discrepancy — overbilled by $2,400",
+      "status": "pending",
+      "priority": "high",
+      "organization": "Meridian Logistics LLC",
+      "tags": ["billing", "invoice"],
+      "created_at": "2026-02-08T14:22:00Z",
+      "salesforce_account_id": "",
+      "contract_sla_tier": "",
+      "csm_owner": ""
+    },
+    {
+      "id": 84590,
+      "subject": "Fleet data not syncing — 6 hour lag observed",
+      "status": "on_hold",
+      "priority": "high",
+      "organization": "Apex Carriers Group",
+      "tags": ["data-sync", "performance"],
+      "created_at": "2026-02-07T10:45:00Z",
+      "salesforce_account_id": "0014W00002kJkAB",
+      "contract_sla_tier": "Professional",
+      "csm_owner": "Jamie Torres"
+    },
+    {
+      "id": 84512,
+      "subject": "User cannot export reports — permission error",
+      "status": "solved",
+      "priority": "normal",
+      "organization": "TerraHaul Inc.",
+      "tags": ["user-management", "permissions"],
+      "created_at": "2026-02-05T08:30:00Z",
+      "solved_at": "2026-02-06T11:15:00Z",
+      "salesforce_account_id": "0014W00002kJkZZ",
+      "contract_sla_tier": "Basic",
+      "csm_owner": ""
+    }
+  ]
+}

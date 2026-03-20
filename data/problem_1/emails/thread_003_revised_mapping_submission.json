@@ -1,0 +1,32 @@
+{
+  "thread_id": "email_thread_003",
+  "subject": "RE: Project Meridian — Data Mapping Document v1 — Review Comments + Revised Draft",
+  "messages": [
+    {
+      "message_id": "e003_001",
+      "date": "2026-01-20",
+      "time": "3:22 PM EST",
+      "from": "marcus.webb@acmehealth.com",
+      "to": ["t.reyes@databridgesystems.com", "k.park@databridgesystems.com"],
+      "cc": ["sarah.chen@acmehealth.com", "linda.marsh@acmehealth.com"],
+      "body": "Tom, Kevin,\n\nAttached are our review comments on the data mapping v1, along with a revised draft (v1.1) that incorporates our proposed corrections.\n\nSummary of changes:\n\n**Section 3 (ADT Mappings) — Changes Required:**\n1. PID-18 → identifier.value: Added system discriminator (urn:oid:2.16.840.1.113883.4.6) to prevent MRN collision. Please update your transformation logic.\n2. PID-19 (SSN) handling: Added explicit null/dummy check — if value is 999-99-9999, omit from output. See row 47.\n3. A03 (Discharge): Added missing discharge disposition code mapping → Encounter.hospitalization.dischargeDisposition. This is required for billing. See rows 88-94.\n\n**Section 4 (Custom Lab Extensions) — Changes Required:**\n4. Extension #7 (result_comment_routing_flag): Change cardinality from 0..1 to 0..*\n5. Extension #12 (external_lab_source_id): Change type from string to Coding. We've included the reference lab code system in the attachment.\n\n**NEEDS_CLARIFICATION Fields — Resolved:**\n- PV1-50 (Alternate Visit ID): Map to Encounter.identifier with use = 'secondary'. ✓\n- PV1-51 (Visit Indicator): Map to Encounter.class — valid values are 'I' (inpatient), 'O' (outpatient), 'E' (emergency). ✓\n- PV1-52 (Other Healthcare Provider): Map to Encounter.participant with participantType='PART' when populated; omit when null (~60% of records). ✓\n\nWe'd like to get your revised v1.2 back by January 27th so we can do a final sign-off before the end of the month.\n\nPlease confirm receipt — we're watching the timeline closely.\n\nMarcus Webb\nOperations Lead, Acme Health\n\n[Attachment: Meridian_DataMapping_v1.1_Review_Comments_20260120.xlsx — 1.1MB]\n[Attachment: External_Lab_Reference_Lab_Codes_v2.csv — 42KB]",
+      "attachments": [
+        {
+          "filename": "Meridian_DataMapping_v1.1_Review_Comments_20260120.xlsx",
+          "description": "Revised data mapping with embedded comments and tracked changes",
+          "size_kb": 1100
+        },
+        {
+          "filename": "External_Lab_Reference_Lab_Codes_v2.csv",
+          "description": "Reference lab code system for Extension #12 Coding type",
+          "size_kb": 42
+        }
+      ]
+    }
+  ],
+  "follow_up_messages": [],
+  "thread_status": "NO_REPLY",
+  "last_activity": "2026-01-20",
+  "days_since_last_reply": 8,
+  "note": "DataBridge (Tom Reyes and Kevin Park) have not replied to this email as of 2026-01-28. No read receipt, no acknowledgment, no out-of-office. This email contains critical review comments that DataBridge must address before the data mapping can be approved."
+}

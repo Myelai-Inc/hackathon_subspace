@@ -1,0 +1,195 @@
+{
+  "meeting_id": "mtg_003",
+  "title": "Project Meridian — Weekly Status Sync",
+  "date": "2026-01-28",
+  "time": "11:00 AM EST",
+  "duration_minutes": 31,
+  "platform": "Zoom",
+  "attendees": [
+    {"participant_id": "p_sarah_chen", "present": true},
+    {"participant_id": "p_marcus_webb", "present": true},
+    {"participant_id": "p_priya_nair", "present": true},
+    {"participant_id": "p_kevin_park", "present": false, "note": "No response to invite sent Jan 22 and Jan 27"},
+    {"participant_id": "p_tom_reyes", "present": false, "note": "No response to invite"}
+  ],
+  "transcript": [
+    {
+      "timestamp": "00:00",
+      "speaker": "Sarah Chen",
+      "text": "Okay. Kevin and Tom aren't on — I'll follow up with Kevin after. Priya, thanks for joining. Marcus, where are we?"
+    },
+    {
+      "timestamp": "00:12",
+      "speaker": "Marcus Webb",
+      "text": "Honestly, not great. We sent our review comments back to DataBridge on January 20th with the revised mapping requirements. We haven't heard anything back. Tom's been our contact and he's been — radio silent."
+    },
+    {
+      "timestamp": "00:35",
+      "speaker": "Sarah Chen",
+      "text": "When you say revised requirements — what changed?"
+    },
+    {
+      "timestamp": "00:42",
+      "speaker": "Marcus Webb",
+      "text": "So the v1 mapping Tom sent on the 15th had about twelve issues that Linda and I flagged. Mostly around the ADT feed mappings and the custom lab extensions. We documented everything in a comment log and sent it back with a revised version of the mapping document — we call it v1.1. We asked for confirmation that Tom received it and a revised timeline for his team to incorporate the changes. Nothing."
+    },
+    {
+      "timestamp": "01:18",
+      "speaker": "Sarah Chen",
+      "text": "Okay. So the mapping is not approved."
+    },
+    {
+      "timestamp": "01:22",
+      "speaker": "Marcus Webb",
+      "text": "No. And until DataBridge comes back to us on our comments, we can't give approval."
+    },
+    {
+      "timestamp": "01:32",
+      "speaker": "Priya Nair",
+      "text": "I need to flag something. CloudPeak has been operating on the assumption that the mapping was approved and that we'd have the architecture package from DataBridge by the 29th — which is tomorrow. Jordan has already provisioned the base compute environment. If the mapping isn't approved and the architecture isn't coming tomorrow, that's a problem for us."
+    },
+    {
+      "timestamp": "01:58",
+      "speaker": "Sarah Chen",
+      "text": "What kind of problem? Can you hold the environment?"
+    },
+    {
+      "timestamp": "02:06",
+      "speaker": "Priya Nair",
+      "text": "We can hold it for a couple of weeks, but there are costs. Also, the security group configuration Jordan set up is based on the single-phase architecture that Tom described — I got a note from Tom about the phasing change back in January but we never got the full architecture doc, so Jordan built on what he knew from the kickoff plus Tom's email. If the architecture changes again, we'd need to redo that work."
+    },
+    {
+      "timestamp": "02:45",
+      "speaker": "Sarah Chen",
+      "text": "Wait — you got a note from Tom about the phasing change?"
+    },
+    {
+      "timestamp": "02:52",
+      "speaker": "Priya Nair",
+      "text": "Yeah, I got a brief email — let me find it — it said the team had decided to go single-phase and the architecture doc would reflect that. But I never got the actual architecture doc."
+    },
+    {
+      "timestamp": "03:05",
+      "speaker": "Sarah Chen",
+      "text": "Okay. So you know about the single-phase decision. Good. But Jordan built on incomplete architecture info."
+    },
+    {
+      "timestamp": "03:15",
+      "speaker": "Priya Nair",
+      "text": "Correct. We made some assumptions. We need that architecture doc to validate our configuration before we can say the environment is ready."
+    },
+    {
+      "timestamp": "03:28",
+      "speaker": "Marcus Webb",
+      "text": "Sarah, I have to be honest — I'm worried. Tom going silent doesn't feel like 'we're heads down building.' It feels like something's wrong on their end."
+    },
+    {
+      "timestamp": "03:44",
+      "speaker": "Sarah Chen",
+      "text": "I know. I've sent two calendar invites to Kevin and nothing. I'm going to try calling Kevin after this call."
+    },
+    {
+      "timestamp": "03:58",
+      "speaker": "Marcus Webb",
+      "text": "I actually... I was looking at LinkedIn last night and I think Tom Reyes may have changed his job. His profile says he started somewhere new in January."
+    },
+    {
+      "timestamp": "04:15",
+      "speaker": "Sarah Chen",
+      "text": "You're kidding."
+    },
+    {
+      "timestamp": "04:18",
+      "speaker": "Marcus Webb",
+      "text": "I'm not. I haven't confirmed it. But if Tom left DataBridge and nobody told us, that would explain a lot."
+    },
+    {
+      "timestamp": "04:32",
+      "speaker": "Sarah Chen",
+      "text": "Okay. Let me reach out to Kevin directly — not just calendar invites, I'll call. And I'll email Aisha, she's been on the calls. If Tom is gone, Aisha may be the best way in."
+    },
+    {
+      "timestamp": "04:50",
+      "speaker": "Priya Nair",
+      "text": "I want to make sure I understand the current state. The data mapping is not approved. DataBridge has not responded to Acme's review comments. The architecture package was due tomorrow and it doesn't sound like it's coming. Is that right?"
+    },
+    {
+      "timestamp": "05:08",
+      "speaker": "Sarah Chen",
+      "text": "That's right. And the February 14th cutover is looking very tight."
+    },
+    {
+      "timestamp": "05:18",
+      "speaker": "Priya Nair",
+      "text": "Sarah, I have to be direct — if we don't have the architecture from DataBridge by February 1st at the latest, we cannot deliver a validated environment by February 14th. That's a hard constraint. Our SLA with you is ten business days of configuration time after we have all artifacts."
+    },
+    {
+      "timestamp": "05:40",
+      "speaker": "Sarah Chen",
+      "text": "I hear you. I'm going to get DataBridge on the phone today. Marcus, if you don't hear from me by end of day, send me a message."
+    },
+    {
+      "timestamp": "05:55",
+      "speaker": "Marcus Webb",
+      "text": "And Sarah — Diana should probably know about this. The cutover date is at risk and she set that date for a reason."
+    },
+    {
+      "timestamp": "06:10",
+      "speaker": "Sarah Chen",
+      "text": "Yeah. Let me try to get DataBridge back on line first. I don't want to escalate if this is just a communication glitch. Once I know what we're dealing with I'll decide whether to loop in Diana."
+    },
+    {
+      "timestamp": "06:28",
+      "speaker": "Marcus Webb",
+      "text": "Understood. But the clock is ticking."
+    },
+    {
+      "timestamp": "29:44",
+      "speaker": "Sarah Chen",
+      "text": "Okay. Action items: I'm calling Kevin Park today and emailing Aisha. Marcus holds on any escalation to Diana until I have more info. Priya, if I can get DataBridge engaged today, what's the fastest path to getting the architecture to you?"
+    },
+    {
+      "timestamp": "30:02",
+      "speaker": "Priya Nair",
+      "text": "Tom or Aisha sends the architecture doc to me and Jordan, we'll start reviewing immediately. If we get it by February 1st we can still make February 14th work — barely."
+    },
+    {
+      "timestamp": "30:18",
+      "speaker": "Sarah Chen",
+      "text": "Got it. February 1st is the drop-dead date for the architecture doc. I'll convey that."
+    }
+  ],
+  "action_items_mentioned": [
+    {
+      "id": "ai_015",
+      "description": "Sarah Chen to call Kevin Park directly and email Aisha Patel to re-engage DataBridge",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-28",
+      "explicit": true
+    },
+    {
+      "id": "ai_016",
+      "description": "DataBridge to respond to Acme's revised data mapping v1.1 comments and deliver architecture package",
+      "owner": "p_kevin_park",
+      "due_date": "2026-02-01",
+      "explicit": true,
+      "note": "Feb 1 identified as drop-dead date by Priya Nair"
+    },
+    {
+      "id": "ai_017",
+      "description": "Sarah Chen to decide whether to escalate to Diana Osei after DataBridge contact attempt",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-28",
+      "explicit": false,
+      "note": "Sarah explicitly chose to delay escalation: 'Let me try to get DataBridge back on line first.' Marcus had recommended escalating."
+    }
+  ],
+  "risks_surfaced": [
+    "DataBridge Solutions Architect (Tom Reyes) may have left the company — unconfirmed but suspected",
+    "Data mapping not approved as of Jan 28 — was due Jan 22",
+    "CloudPeak environment built on incomplete architecture assumptions",
+    "Architecture package due Jan 29 — appears not to be coming",
+    "Feb 14 cutover at risk if architecture not delivered by Feb 1",
+    "Escalation to Diana Osei being deliberately deferred by Sarah Chen"
+  ]
+}

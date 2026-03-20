@@ -1,0 +1,45 @@
+{
+  "role": {
+    "title": "Client Success Manager (CSM)",
+    "department": "Client Success",
+    "organization": "Vertex Solutions Inc.",
+    "organization_description": "A B2B SaaS company providing fleet management software to mid-market logistics companies. Currently manages 140 enterprise accounts.",
+    "team_size": 6,
+    "accounts_per_csm": 23,
+    "average_tenure_months": 14
+  },
+  "role_purpose": "Ensure enterprise accounts achieve measurable value from the Vertex platform, retain and expand relationships, and serve as the primary escalation point for service and commercial issues.",
+  "compensation_context": {
+    "fully_loaded_cost_per_hour_usd": 72,
+    "target_billable_hours_per_month": 160,
+    "note": "This figure includes salary, benefits, overhead, and tooling costs."
+  },
+  "current_workload": {
+    "cases_handled_per_month": 47,
+    "average_case_resolution_days": 4.2,
+    "monthly_qbrs_conducted": 8,
+    "monthly_onboarding_accounts": 2,
+    "reported_time_allocation": {
+      "assembly_work_pct": 64,
+      "judgment_work_pct": 36,
+      "note": "Based on time-tracking data from Q4 2025. CSMs self-report that the split should be inverted for them to do their jobs well."
+    }
+  },
+  "systems_used": [
+    "salesforce_crm",
+    "zendesk_ticketing",
+    "docusign_contracts",
+    "outlook_email",
+    "calendly_scheduling",
+    "google_sheets_tracking",
+    "slack_internal_comms",
+    "vertex_platform_admin"
+  ],
+  "primary_workflows": [
+    "service_escalation_handling",
+    "quarterly_business_review",
+    "new_account_onboarding",
+    "renewal_management",
+    "expansion_opportunity_tracking"
+  ]
+}

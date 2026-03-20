@@ -1,0 +1,212 @@
+{
+  "channel_id": "slack_ch_002",
+  "channel_name": "#meridian-acme-databridge",
+  "workspace": "Acme Health (shared channel)",
+  "description": "Shared Slack channel between Acme Health and DataBridge Systems for Project Meridian coordination. CloudPeak does not have access.",
+  "members": [
+    "sarah.chen (Acme Health)",
+    "marcus.webb (Acme Health)",
+    "linda.marsh (Acme Health)",
+    "t.reyes (DataBridge Systems)",
+    "a.patel (DataBridge Systems)",
+    "k.park (DataBridge Systems)"
+  ],
+  "messages": [
+    {
+      "message_id": "s002_001",
+      "date": "2026-01-07",
+      "time": "10:30 AM EST",
+      "author": "t.reyes",
+      "text": "Sarah, Marcus — channel is set up. This is the best place for day-to-day coordination between our teams. @k.park will be watching this too for scheduling / account items"
+    },
+    {
+      "message_id": "s002_002",
+      "date": "2026-01-07",
+      "time": "10:45 AM EST",
+      "author": "sarah.chen",
+      "text": "perfect, thanks Tom. I'll make sure Linda is added too"
+    },
+    {
+      "message_id": "s002_003",
+      "date": "2026-01-07",
+      "time": "10:47 AM EST",
+      "author": "k.park",
+      "text": "👋 Kevin here — in the loop!"
+    },
+    {
+      "message_id": "s002_004",
+      "date": "2026-01-12",
+      "time": "2:30 PM EST",
+      "author": "t.reyes",
+      "text": "heads up — started the field inventory for the mapping. aisha and I are going through the HL7 message samples you sent over. a few questions coming your way later this week"
+    },
+    {
+      "message_id": "s002_005",
+      "date": "2026-01-12",
+      "time": "2:44 PM EST",
+      "author": "marcus.webb",
+      "text": "great, we're available. linda is the go-to for HL7 segment questions"
+    },
+    {
+      "message_id": "s002_006",
+      "date": "2026-01-13",
+      "time": "11:15 AM EST",
+      "author": "t.reyes",
+      "text": "@linda.marsh — quick question: in the OBX segment for lab results, are you sometimes sending OBX-5 (observation value) as a CE type (coded element) even when the LOINC code is in OBX-3? or is OBX-3 always the code?"
+    },
+    {
+      "message_id": "s002_007",
+      "date": "2026-01-13",
+      "time": "11:52 AM EST",
+      "author": "linda.marsh",
+      "text": "OBX-3 is always the LOINC code. OBX-5 type depends on the test — quantitative results are NM type, qualitative are ST. you'll occasionally see CE in OBX-5 for microbiology sensitivities but that should always have OBX-3 populated too"
+    },
+    {
+      "message_id": "s002_008",
+      "date": "2026-01-13",
+      "time": "11:58 AM EST",
+      "author": "t.reyes",
+      "text": "perfect, that's clear. one more: for the result_comment_routing_flag (your custom extension #7) — is there a defined set of values or is it free-text?"
+    },
+    {
+      "message_id": "s002_009",
+      "date": "2026-01-13",
+      "time": "12:14 PM EST",
+      "author": "linda.marsh",
+      "text": "defined set. values are: STAT, CRITICAL, ROUTE_LAB, ROUTE_PHYSICIAN, ROUTE_BILLING. sometimes multiple flags on one result — e.g., CRITICAL and ROUTE_PHYSICIAN together. that's why the cardinality needs to be 0..*"
+    },
+    {
+      "message_id": "s002_010",
+      "date": "2026-01-13",
+      "time": "12:18 PM EST",
+      "author": "t.reyes",
+      "text": "noted on cardinality, I'll fix that in the mapping doc. thanks Linda, this is helpful"
+    },
+    {
+      "message_id": "s002_011",
+      "date": "2026-01-15",
+      "time": "4:52 PM EST",
+      "author": "t.reyes",
+      "text": "mapping v1 just went out via email. let me know when you've had a chance to look it over"
+    },
+    {
+      "message_id": "s002_012",
+      "date": "2026-01-15",
+      "time": "5:05 PM EST",
+      "author": "marcus.webb",
+      "text": "got it, thanks"
+    },
+    {
+      "message_id": "s002_013",
+      "date": "2026-01-20",
+      "time": "3:30 PM EST",
+      "author": "marcus.webb",
+      "text": "Tom, Kevin — just sent the v1.1 review comments via email. significant items in ADT section and on the custom extensions. please confirm receipt"
+    },
+    {
+      "message_id": "s002_014",
+      "date": "2026-01-22",
+      "time": "9:00 AM EST",
+      "author": "sarah.chen",
+      "text": "Tom / Kevin — just following up on Marcus's message Monday. Have you had a chance to look at the review comments?"
+    },
+    {
+      "message_id": "s002_015",
+      "date": "2026-01-24",
+      "time": "11:00 AM EST",
+      "author": "sarah.chen",
+      "text": "Kevin, Tom — I sent a calendar invite for a sync, haven't heard back. Can someone confirm availability?"
+    },
+    {
+      "message_id": "s002_016",
+      "date": "2026-01-27",
+      "time": "3:00 PM EST",
+      "author": "sarah.chen",
+      "text": "Team — second calendar invite sent. Please respond. We need to sync before end of week."
+    },
+    {
+      "message_id": "s002_017",
+      "date": "2026-01-29",
+      "time": "10:05 AM EST",
+      "author": "a.patel",
+      "text": "Hi everyone — Aisha here. I've taken over as technical lead from Tom (you may have seen Sarah's email). I've reviewed the Jan 20th comments and I'm working through them. I'll have v1.2 to Marcus by Monday Feb 2. sorry for the radio silence from our side — it wasn't intentional and I know it put you in a bad spot"
+    },
+    {
+      "message_id": "s002_018",
+      "date": "2026-01-29",
+      "time": "10:12 AM EST",
+      "author": "marcus.webb",
+      "text": "Thanks Aisha. We appreciate the transparency. Feb 2 for v1.2 works. Let us know if you have questions on any of the comments"
+    },
+    {
+      "message_id": "s002_019",
+      "date": "2026-01-29",
+      "time": "10:15 AM EST",
+      "author": "linda.marsh",
+      "text": "Aisha — I also sent Tom an email on Jan 23 about extension #12 with more context on the reference lab codes. you should have that in his inbox if you have access to it. happy to resend if easier"
+    },
+    {
+      "message_id": "s002_020",
+      "date": "2026-01-29",
+      "time": "10:19 AM EST",
+      "author": "a.patel",
+      "text": "yes I have access to that inbox, I'll find it. thank you"
+    },
+    {
+      "message_id": "s002_021",
+      "date": "2026-02-02",
+      "time": "2:14 PM EST",
+      "author": "a.patel",
+      "text": "@marcus.webb @linda.marsh — v1.2 is in your inboxes. I believe I've addressed all the comments. The external_lab_source_id is now a Coding type using the code system Linda provided. please let me know if anything looks off"
+    },
+    {
+      "message_id": "s002_022",
+      "date": "2026-02-02",
+      "time": "2:30 PM EST",
+      "author": "linda.marsh",
+      "text": "reviewing now 👀"
+    },
+    {
+      "message_id": "s002_023",
+      "date": "2026-02-03",
+      "time": "10:45 AM EST",
+      "author": "marcus.webb",
+      "text": "Aisha — looks good overall. One open item: the A03 discharge disposition mapping (rows 88-94) — I see it's there now but the value set reference is pointing to an older version of the NUBC code list. Linda, can you confirm which version we use?"
+    },
+    {
+      "message_id": "s002_024",
+      "date": "2026-02-03",
+      "time": "11:02 AM EST",
+      "author": "linda.marsh",
+      "text": "we use NUBC v2023. the one in v1.2 is pointing to v2019. Aisha can you update that reference?"
+    },
+    {
+      "message_id": "s002_025",
+      "date": "2026-02-03",
+      "time": "11:15 AM EST",
+      "author": "a.patel",
+      "text": "done — updating now. will have v1.3 to you within the hour"
+    },
+    {
+      "message_id": "s002_026",
+      "date": "2026-02-03",
+      "time": "12:30 PM EST",
+      "author": "a.patel",
+      "text": "v1.3 in your inboxes. architecture package also sent to Priya and Jordan at CloudPeak"
+    },
+    {
+      "message_id": "s002_027",
+      "date": "2026-02-03",
+      "time": "1:05 PM EST",
+      "author": "marcus.webb",
+      "text": "✅ Approved. Marking data mapping v1.3 as the approved baseline. Thank you Aisha, this was good work under pressure."
+    },
+    {
+      "message_id": "s002_028",
+      "date": "2026-02-03",
+      "time": "1:12 PM EST",
+      "author": "sarah.chen",
+      "text": "🎉 great work everyone. Aisha please tell us your availability for the integration testing cycle — we need to coordinate with CloudPeak on the environment readiness schedule"
+    }
+  ]
+}

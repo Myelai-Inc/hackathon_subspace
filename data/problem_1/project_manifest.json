@@ -1,0 +1,155 @@
+{
+  "project": {
+    "name": "Project Meridian",
+    "description": "Platform migration from legacy HL7-MLLP integration layer to modern FHIR R4 REST API middleware for Acme Health's patient data exchange network.",
+    "start_date": "2026-01-06",
+    "target_cutover_date": "2026-02-14",
+    "status": "at_risk"
+  },
+  "organizations": [
+    {
+      "id": "org_acme",
+      "name": "Acme Health",
+      "role": "client",
+      "description": "Regional healthcare network undergoing platform modernization."
+    },
+    {
+      "id": "org_databridge",
+      "name": "DataBridge Systems",
+      "role": "middleware_vendor",
+      "description": "Contracted to design and implement the FHIR integration middleware and data mapping layer."
+    },
+    {
+      "id": "org_cloudpeak",
+      "name": "CloudPeak Infrastructure",
+      "role": "infrastructure_partner",
+      "description": "Responsible for cloud environment provisioning, security configuration, and network setup."
+    }
+  ],
+  "participants": [
+    {
+      "id": "p_sarah_chen",
+      "name": "Sarah Chen",
+      "org_id": "org_acme",
+      "title": "Project Manager",
+      "email": "sarah.chen@acmehealth.com",
+      "primary_contact": true
+    },
+    {
+      "id": "p_marcus_webb",
+      "name": "Marcus Webb",
+      "org_id": "org_acme",
+      "title": "Operations Lead",
+      "email": "marcus.webb@acmehealth.com"
+    },
+    {
+      "id": "p_diana_osei",
+      "name": "Diana Osei",
+      "org_id": "org_acme",
+      "title": "VP of Technology",
+      "email": "diana.osei@acmehealth.com",
+      "note": "Executive sponsor. Receives weekly status updates from Sarah."
+    },
+    {
+      "id": "p_linda_marsh",
+      "name": "Linda Marsh",
+      "org_id": "org_acme",
+      "title": "IT Analyst",
+      "email": "linda.marsh@acmehealth.com"
+    },
+    {
+      "id": "p_kevin_park",
+      "name": "Kevin Park",
+      "org_id": "org_databridge",
+      "title": "Account Manager",
+      "email": "k.park@databridgesystems.com",
+      "note": "Primary business contact for DataBridge. Becomes unresponsive after Jan 20."
+    },
+    {
+      "id": "p_tom_reyes",
+      "name": "Tom Reyes",
+      "org_id": "org_databridge",
+      "title": "Solutions Architect",
+      "email": "t.reyes@databridgesystems.com",
+      "note": "Technical lead for DataBridge. Departed the company around Jan 28 — departure not formally communicated to Acme."
+    },
+    {
+      "id": "p_aisha_patel",
+      "name": "Aisha Patel",
+      "org_id": "org_databridge",
+      "title": "Integration Developer",
+      "email": "a.patel@databridgesystems.com",
+      "note": "Junior developer who takes over Tom's responsibilities after his departure. Not brought up to speed on the revised mapping doc."
+    },
+    {
+      "id": "p_priya_nair",
+      "name": "Priya Nair",
+      "org_id": "org_cloudpeak",
+      "title": "Delivery Manager",
+      "email": "p.nair@cloudpeak.io",
+      "primary_contact": true
+    },
+    {
+      "id": "p_jordan_mills",
+      "name": "Jordan Mills",
+      "org_id": "org_cloudpeak",
+      "title": "Infrastructure Lead",
+      "email": "j.mills@cloudpeak.io"
+    }
+  ],
+  "known_dependencies": [
+    {
+      "id": "dep_001",
+      "description": "DataBridge must deliver approved data mapping document before ETL pipeline build can begin.",
+      "upstream_owner": "org_acme",
+      "downstream_owner": "org_databridge",
+      "milestone": "Final data mapping approval",
+      "status": "blocked",
+      "blocks": ["dep_002"]
+    },
+    {
+      "id": "dep_002",
+      "description": "DataBridge ETL pipeline build must be complete before CloudPeak can finalize production environment configuration.",
+      "upstream_owner": "org_databridge",
+      "downstream_owner": "org_cloudpeak",
+      "milestone": "ETL pipeline delivered",
+      "status": "not_started",
+      "blocks": ["dep_003"]
+    },
+    {
+      "id": "dep_003",
+      "description": "CloudPeak production environment must be configured and validated before cutover date.",
+      "upstream_owner": "org_cloudpeak",
+      "downstream_owner": "org_acme",
+      "milestone": "Production environment ready",
+      "status": "not_started",
+      "blocks": []
+    }
+  ],
+  "decisions_log": [
+    {
+      "id": "dec_001",
+      "date": "2026-01-06",
+      "description": "Adopt a phased migration approach: Phase 1 covers read-only FHIR endpoints; Phase 2 adds write endpoints after a 30-day stabilization period.",
+      "made_by": ["p_sarah_chen", "p_tom_reyes", "p_priya_nair"],
+      "status": "reversed",
+      "reversed_by": "dec_002"
+    },
+    {
+      "id": "dec_002",
+      "date": "2026-01-14",
+      "description": "Revised to single-phase cutover. DataBridge confirmed their middleware can handle full read/write scope simultaneously, eliminating need for a two-phase approach.",
+      "made_by": ["p_tom_reyes", "p_sarah_chen"],
+      "status": "reversed",
+      "reversed_by": "dec_003",
+      "note": "CloudPeak was NOT present at this meeting and was not formally notified of this decision."
+    },
+    {
+      "id": "dec_003",
+      "date": "2026-02-10",
+      "description": "Reverted to phased migration. CloudPeak's security configuration for single-phase approach requires an additional two weeks of setup work, making Feb 14 cutover impossible.",
+      "made_by": ["p_sarah_chen", "p_priya_nair", "p_diana_osei"],
+      "status": "active"
+    }
+  ]
+}

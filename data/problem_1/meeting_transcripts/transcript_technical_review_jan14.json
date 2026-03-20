@@ -1,0 +1,221 @@
+{
+  "meeting_id": "mtg_002",
+  "title": "Project Meridian — Technical Architecture Review",
+  "date": "2026-01-14",
+  "time": "2:00 PM EST",
+  "duration_minutes": 48,
+  "platform": "Zoom",
+  "attendees": [
+    {"participant_id": "p_sarah_chen", "present": true},
+    {"participant_id": "p_marcus_webb", "present": true},
+    {"participant_id": "p_linda_marsh", "present": true},
+    {"participant_id": "p_tom_reyes", "present": true},
+    {"participant_id": "p_aisha_patel", "present": true, "note": "First appearance on any call"},
+    {"participant_id": "p_priya_nair", "present": false, "note": "Declined invite — sent apologies via email"},
+    {"participant_id": "p_jordan_mills", "present": false},
+    {"participant_id": "p_kevin_park", "present": false, "note": "No response to invite"}
+  ],
+  "transcript": [
+    {
+      "timestamp": "00:00",
+      "speaker": "Sarah Chen",
+      "text": "Okay, we're missing Priya and Kevin and Jordan, but I think the main work today is technical so let's go ahead. Tom, Aisha — good to have you both. Tom, do you want to walk us through what you've got so far?"
+    },
+    {
+      "timestamp": "00:25",
+      "speaker": "Tom Reyes",
+      "text": "Yeah, absolutely. So I've been working on the preliminary data mapping and I'm going to share my screen. I also wanted to use this call to float a question about the migration approach, because something came up when I was designing the architecture."
+    },
+    {
+      "timestamp": "00:45",
+      "speaker": "Sarah Chen",
+      "text": "Sure, go ahead."
+    },
+    {
+      "timestamp": "00:48",
+      "speaker": "Tom Reyes",
+      "text": "So we scoped this as a phased migration — Phase 1 read-only, Phase 2 write. But when I started modeling the FHIR resource graph, I realized the read and write surfaces share about 80% of the same transformation logic. If we build Phase 1, we're basically building most of Phase 2 anyway, and then we have to maintain two separate deployment configurations, two validation suites, two UAT cycles. From an engineering standpoint, I think we can do this in a single cutover and actually reduce risk. The key is a really solid integration testing harness before we go live. Aisha, do you want to speak to that?"
+    },
+    {
+      "timestamp": "01:52",
+      "speaker": "Aisha Patel",
+      "text": "Yeah, so I've been building out our test framework, and I think if we have the mapping approved by the 22nd we can have a full integration test suite covering both read and write endpoints by the end of January. That gives us two weeks of UAT before the February 14th cutover. I'd actually feel more confident in a single-phase with thorough testing than two phases where you're validating a partial system."
+    },
+    {
+      "timestamp": "02:30",
+      "speaker": "Marcus Webb",
+      "text": "That's interesting. My concern with the phased approach was always that 30-day stabilization window — that's a lot of overhead on our operations team running two systems in parallel."
+    },
+    {
+      "timestamp": "02:52",
+      "speaker": "Sarah Chen",
+      "text": "Diana made the call on phased for risk management reasons, but... if the technical argument is sound I can bring this back to her. Tom, can you put together a quick one-pager on the risk comparison? Single-phase vs. two-phase, pros and cons?"
+    },
+    {
+      "timestamp": "03:15",
+      "speaker": "Tom Reyes",
+      "text": "Absolutely, I'll have that to you tomorrow."
+    },
+    {
+      "timestamp": "03:22",
+      "speaker": "Sarah Chen",
+      "text": "Okay. I think we can decide this now actually — Marcus, you're comfortable with single phase if DataBridge has the test coverage?"
+    },
+    {
+      "timestamp": "03:35",
+      "speaker": "Marcus Webb",
+      "text": "Yeah, if Aisha's confident in the testing I'm fine with it. Saves us the parallel operation headache."
+    },
+    {
+      "timestamp": "03:44",
+      "speaker": "Sarah Chen",
+      "text": "Let's call it decided then. Single-phase cutover. Tom, still plan to write the risk comparison doc, but we'll go with single-phase unless Diana overrules. I'll send her a note after this call."
+    },
+    {
+      "timestamp": "03:58",
+      "speaker": "Tom Reyes",
+      "text": "Perfect. I'll update the architecture accordingly. This actually simplifies our deployment model quite a bit."
+    },
+    {
+      "timestamp": "04:30",
+      "speaker": "Sarah Chen",
+      "text": "Noted. Let me pull up the action items from kickoff — Tom, on the data mapping draft for the 15th, are we still on track?"
+    },
+    {
+      "timestamp": "04:44",
+      "speaker": "Tom Reyes",
+      "text": "Yes, you'll have it tomorrow. Aisha has been helping prep the initial field inventory so it's in decent shape."
+    },
+    {
+      "timestamp": "04:58",
+      "speaker": "Linda Marsh",
+      "text": "Tom, I wanted to ask — Marcus sent over the custom lab fields document last week. Were those factored in?"
+    },
+    {
+      "timestamp": "05:10",
+      "speaker": "Tom Reyes",
+      "text": "Yes, I got those. There are a few that I think we'll handle as FHIR extensions. I'll flag them clearly in the mapping document so Marcus and Linda can review. Some of them are going to require a judgment call from your side about what the expected behavior should be when those fields are null."
+    },
+    {
+      "timestamp": "05:38",
+      "speaker": "Marcus Webb",
+      "text": "Linda, can you take the lead on reviewing those specifically? You know the lab system better than I do."
+    },
+    {
+      "timestamp": "05:48",
+      "speaker": "Linda Marsh",
+      "text": "Sure, I'll review those sections and send my comments directly to Tom."
+    },
+    {
+      "timestamp": "14:22",
+      "speaker": "Tom Reyes",
+      "text": "One thing I want to flag for the record — the architecture we're now going to single-phase — this affects the infrastructure footprint. CloudPeak will need to provision for the full read/write stack from day one rather than standing up the read environment first. The security group configuration is also going to be different. I'll need to make sure Priya has the updated architecture doc."
+    },
+    {
+      "timestamp": "14:52",
+      "speaker": "Sarah Chen",
+      "text": "Right, I'll loop in Priya after the call. Actually, can you send the updated architecture doc directly to Priya when it's ready, Tom?"
+    },
+    {
+      "timestamp": "15:05",
+      "speaker": "Tom Reyes",
+      "text": "Will do."
+    },
+    {
+      "timestamp": "15:10",
+      "speaker": "Sarah Chen",
+      "text": "I'll send Priya a note to expect it. I want to make sure she knows the phasing decision changed."
+    },
+    {
+      "timestamp": "15:20",
+      "speaker": "Tom Reyes",
+      "text": "Yeah definitely loop her in, there are implications for her environment setup."
+    },
+    {
+      "timestamp": "44:02",
+      "speaker": "Sarah Chen",
+      "text": "Alright, let me recap. We're switching to single-phase cutover on February 14th. Tom sends data mapping v1 tomorrow, January 15th. Acme review by January 22nd. Tom sends updated architecture package to CloudPeak — when does that change, Tom?"
+    },
+    {
+      "timestamp": "44:20",
+      "speaker": "Tom Reyes",
+      "text": "Same date, January 29th. Once we have the mapping approved we can finalize architecture pretty quickly."
+    },
+    {
+      "timestamp": "44:30",
+      "speaker": "Sarah Chen",
+      "text": "Okay. Same critical path, new migration approach. Anything else?"
+    },
+    {
+      "timestamp": "44:40",
+      "speaker": "Marcus Webb",
+      "text": "Just want to make sure Kevin is aware of the phasing change. If there are contract implications..."
+    },
+    {
+      "timestamp": "44:52",
+      "speaker": "Sarah Chen",
+      "text": "Good point. Kevin wasn't on this call — I'll send him a note. Tom, you talk to Kevin too?"
+    },
+    {
+      "timestamp": "45:00",
+      "speaker": "Tom Reyes",
+      "text": "Yeah I'll let him know."
+    }
+  ],
+  "action_items_mentioned": [
+    {
+      "id": "ai_009",
+      "description": "Tom Reyes to write single-phase vs. two-phase risk comparison one-pager",
+      "owner": "p_tom_reyes",
+      "due_date": "2026-01-15",
+      "explicit": true,
+      "note": "Decision to switch was made before this document was requested — doc may never have been produced"
+    },
+    {
+      "id": "ai_010",
+      "description": "Sarah Chen to notify Diana Osei of phasing decision change (single-phase instead of phased)",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-14",
+      "explicit": false,
+      "note": "Implied: 'I'll send her a note after this call.' No record of this email exists in the thread data."
+    },
+    {
+      "id": "ai_011",
+      "description": "Sarah Chen to notify Priya Nair (CloudPeak) that migration is now single-phase and architecture will change",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-14",
+      "explicit": false,
+      "note": "Sarah said 'I'll send Priya a note.' No evidence this was sent."
+    },
+    {
+      "id": "ai_012",
+      "description": "Tom Reyes to send updated architecture package (single-phase) directly to Priya Nair",
+      "owner": "p_tom_reyes",
+      "due_date": "2026-01-29",
+      "explicit": true
+    },
+    {
+      "id": "ai_013",
+      "description": "Linda Marsh to review custom lab field extensions in data mapping v1 and send comments to Tom Reyes",
+      "owner": "p_linda_marsh",
+      "due_date": "2026-01-22",
+      "explicit": true
+    },
+    {
+      "id": "ai_014",
+      "description": "Sarah Chen to notify Kevin Park of phasing decision change",
+      "owner": "p_sarah_chen",
+      "due_date": "2026-01-14",
+      "explicit": false
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec_002",
+      "description": "Switch from phased migration to single-phase cutover. All FHIR read and write endpoints go live simultaneously on February 14th.",
+      "participants": ["p_sarah_chen", "p_marcus_webb", "p_tom_reyes", "p_aisha_patel"],
+      "rationale": "80% shared transformation logic makes Phase 1/Phase 2 split redundant; parallel operations overhead on Acme's team outweighs staged risk reduction.",
+      "note": "CloudPeak (Priya Nair, Jordan Mills) NOT present. Kevin Park NOT present. Diana Osei NOT consulted."
+    }
+  ]
+}

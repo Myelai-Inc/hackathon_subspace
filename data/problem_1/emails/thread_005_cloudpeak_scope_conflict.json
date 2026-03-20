@@ -1,0 +1,40 @@
+{
+  "thread_id": "email_thread_005",
+  "subject": "Project Meridian — Security Configuration for Single-Phase Architecture",
+  "messages": [
+    {
+      "message_id": "e005_001",
+      "date": "2026-02-06",
+      "time": "2:14 PM EST",
+      "from": "j.mills@cloudpeak.io",
+      "to": ["sarah.chen@acmehealth.com", "p.nair@cloudpeak.io"],
+      "cc": ["a.patel@databridgesystems.com", "marcus.webb@acmehealth.com"],
+      "body": "Sarah, Priya,\n\nI've been reviewing the architecture package that Aisha sent over on February 3rd. Thank you Aisha, it's well put together.\n\nI need to flag a significant issue related to the single-phase migration approach.\n\nThe full read/write FHIR stack requires a security configuration under HIPAA that's materially different from what I had set up for the phased approach. Specifically:\n\n1. **Write-path audit logging**: Under HIPAA Security Rule §164.312(b), all write operations on PHI resources must be logged at the field level, not just the request level. The audit infrastructure I built assumes request-level logging (read-only pattern). Retrofitting field-level audit logging requires a different storage backend and a middleware sidecar I haven't configured.\n\n2. **Encryption key management**: The write path requires FHIR resource-level encryption for Observation and DiagnosticReport resources in transit (not just TLS at the boundary). I need to deploy a KMS key hierarchy that's separate from the read-path keys. This was not in the original architecture assumptions.\n\n3. **Network segmentation**: The write API endpoints need to sit in a different subnet with tighter security group rules than the read endpoints. Currently everything is in the same subnet.\n\nBottom line: the environment as currently configured supports Phase 1 (read-only) safely, but is NOT ready for write-path production traffic.\n\nTo complete the security configuration for single-phase, I need approximately 10-12 business days of work from today. That would put completion around February 20th at the earliest.\n\nI know February 14th is a hard date. I want to be transparent about this rather than let you find out on cutover day.\n\nJordan Mills\nInfrastructure Lead, CloudPeak Infrastructure"
+    },
+    {
+      "message_id": "e005_002",
+      "date": "2026-02-06",
+      "time": "3:45 PM EST",
+      "from": "p.nair@cloudpeak.io",
+      "to": ["sarah.chen@acmehealth.com"],
+      "cc": ["j.mills@cloudpeak.io"],
+      "body": "Sarah,\n\nJordan's email represents the situation accurately. I want to offer a path forward:\n\nOption A: Revert to phased migration. Phase 1 (read-only) goes live February 14th as originally planned. The environment as built supports this today. Phase 2 (write) goes live approximately March 3rd after Jordan completes the security configuration. This meets your board date for Phase 1 and only delays write capability.\n\nOption B: Delay full cutover to February 28th. We compress Jordan's security work and DataBridge's remaining integration testing into three weeks. Higher risk, but possible.\n\nI wanted to give you these options before we get on a call, so you can think through the implications.\n\nPriya"
+    },
+    {
+      "message_id": "e005_003",
+      "date": "2026-02-06",
+      "time": "4:30 PM EST",
+      "from": "sarah.chen@acmehealth.com",
+      "to": ["diana.osei@acmehealth.com"],
+      "body": "Diana,\n\nI need to brief you on a situation that has developed over the past two weeks on Project Meridian. I should have escalated sooner and I apologize for that.\n\nHere is the current state:\n\n1. DataBridge's Solutions Architect (Tom Reyes) left the company on January 23rd without formally notifying us. The data mapping review I sent on January 20th sat unread in his inbox for 9 days. I found out on January 28th and re-engaged the DataBridge team.\n\n2. As of today, DataBridge has delivered a revised architecture package and the mapping approval is progressing — we're about 4-5 days behind schedule on that piece.\n\n3. CloudPeak has flagged a HIPAA compliance issue with the single-phase architecture that requires 10-12 days of additional security configuration work. Their environment is ready for read-only traffic (Phase 1) but not write-path traffic (Phase 2) by February 14th.\n\nBottom line: The February 14th date for a full single-phase cutover is no longer achievable.\n\nCloudPeak has proposed two options (Option A: revert to phased, Phase 1 on Feb 14 / Phase 2 on ~March 3; Option B: delay full cutover to Feb 28). I recommend Option A — it preserves the February 14th board date for the Phase 1 milestone and only delays write capability.\n\nI know this is not what you want to hear. I'm sorry I didn't surface the DataBridge situation earlier. Can we connect tomorrow morning to make the call?\n\nSarah"
+    },
+    {
+      "message_id": "e005_004",
+      "date": "2026-02-06",
+      "time": "5:12 PM EST",
+      "from": "diana.osei@acmehealth.com",
+      "to": ["sarah.chen@acmehealth.com"],
+      "body": "Sarah — call me now.\n\nDiana"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "project": "Project Meridian",
+  "status_updates": [
+    {
+      "week": 1,
+      "report_date": "2026-01-09",
+      "submitted_by": "p_sarah_chen",
+      "submitted_to": "p_diana_osei",
+      "overall_status": "GREEN",
+      "summary": "Kickoff complete. All parties aligned. Action items distributed and confirmed. No issues.",
+      "items": [
+        {"label": "Data Mapping Delivery (Jan 15)", "status": "ON_TRACK", "note": "DataBridge confirmed delivery on schedule."},
+        {"label": "Acme Review (Jan 22)", "status": "ON_TRACK", "note": "Review period not yet started."},
+        {"label": "CloudPeak Environment Setup", "status": "ON_TRACK", "note": "Base topology in progress."},
+        {"label": "February 14 Cutover", "status": "ON_TRACK", "note": null}
+      ],
+      "escalations": []
+    },
+    {
+      "week": 2,
+      "report_date": "2026-01-16",
+      "submitted_by": "p_sarah_chen",
+      "submitted_to": "p_diana_osei",
+      "overall_status": "GREEN",
+      "summary": "Mapping delivered on time. Review underway. Note: migration approach updated to single-phase.",
+      "items": [
+        {"label": "Data Mapping v1 Delivery", "status": "COMPLETE", "note": "Delivered Jan 15 as scheduled."},
+        {"label": "Acme Review (Jan 22)", "status": "ON_TRACK", "note": "Marcus and Linda reviewing."},
+        {"label": "Migration Approach", "status": "CHANGED", "note": "Switched to single-phase cutover per technical review Jan 14. DataBridge and CloudPeak notified."},
+        {"label": "February 14 Cutover", "status": "ON_TRACK", "note": null}
+      ],
+      "escalations": [],
+      "note": "Diana was not consulted on the phasing decision. She is being informed retroactively via this status update."
+    },
+    {
+      "week": 3,
+      "report_date": "2026-01-23",
+      "submitted_by": "p_sarah_chen",
+      "submitted_to": "p_diana_osei",
+      "overall_status": "GREEN",
+      "summary": "Minor delay in mapping approval. Normal review cycle. On track for Feb 14.",
+      "items": [
+        {"label": "Data Mapping Approval (Jan 22)", "status": "MINOR_DELAY", "note": "Review comments sent to DataBridge Jan 20. Awaiting response. Expected within a few days."},
+        {"label": "CloudPeak Environment", "status": "ON_TRACK", "note": null},
+        {"label": "February 14 Cutover", "status": "ON_TRACK", "note": null}
+      ],
+      "escalations": [],
+      "actual_situation": {
+        "note": "As of Jan 23, DataBridge has been silent for 3 days on the critical-path mapping review. Kevin Park has not responded to a calendar invite. Tom Reyes has not acknowledged receipt of the review document. The word 'minor' significantly understates the risk. The mapping approval was due Jan 22 and shows no sign of progressing."
+      }
+    },
+    {
+      "week": 4,
+      "report_date": "2026-01-30",
+      "submitted_by": "p_sarah_chen",
+      "submitted_to": "p_diana_osei",
+      "overall_status": "YELLOW",
+      "summary": "DataBridge personnel transition discovered. Re-engaged. Slight delay but Feb 14 target still active.",
+      "items": [
+        {"label": "DataBridge Contact Situation", "status": "AT_RISK", "note": "Tom Reyes (Solutions Architect) left DataBridge Jan 23. Not formally communicated. Aisha Patel is new technical lead. Mapping review comments were unread for 9 days."},
+        {"label": "Data Mapping Approval", "status": "AT_RISK", "note": "DataBridge producing v1.2 — expected Feb 2. Architecture package to CloudPeak expected Feb 3."},
+        {"label": "February 14 Cutover", "status": "WATCHING", "note": "Feb 14 is still the target. CloudPeak needs architecture by Feb 3 to begin final config."}
+      ],
+      "escalations": [
+        "First mention of DataBridge personnel issue to Diana Osei — 7 days after Marcus raised it internally, 2 days after Sarah confirmed it via Aisha"
+      ]
+    },
+    {
+      "week": 5,
+      "report_date": "2026-02-06",
+      "submitted_by": "p_sarah_chen",
+      "submitted_to": "p_diana_osei",
+      "overall_status": "RED",
+      "summary": "Feb 14 full cutover not achievable. CloudPeak security configuration requires 10-12 days for write-path compliance. Recommending revert to phased approach.",
+      "items": [
+        {"label": "Data Mapping", "status": "COMPLETE", "note": "v1.3 approved Feb 3."},
+        {"label": "Architecture Package", "status": "COMPLETE", "note": "Delivered to CloudPeak Feb 3."},
+        {"label": "CloudPeak Security Config", "status": "BLOCKED", "note": "Single-phase write-path requires HIPAA field-level audit logging, KMS key hierarchy, and network segmentation not in current environment. 10-12 business days to complete."},
+        {"label": "February 14 Cutover", "status": "AT_RISK", "note": "Phase 1 (read-only) achievable on Feb 14. Phase 2 (write) not achievable before ~Feb 28 at earliest."}
+      ],
+      "escalations": [
+        "Recommending executive decision on Option A (revert to phased, Phase 1 Feb 14 / Phase 2 ~Mar 3) vs. Option B (delay full cutover to Feb 28)."
+      ],
+      "note": "Sarah sent this to Diana via email at 4:30pm (thread_005). Diana's response: 'Call me now.'"
+    }
+  ]
+}

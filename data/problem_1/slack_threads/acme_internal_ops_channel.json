@@ -1,0 +1,190 @@
+{
+  "channel_id": "slack_ch_001",
+  "channel_name": "#meridian-internal",
+  "workspace": "Acme Health",
+  "description": "Internal Acme Health Slack channel for Project Meridian coordination. DataBridge and CloudPeak do not have access.",
+  "messages": [
+    {
+      "message_id": "s001_001",
+      "date": "2026-01-20",
+      "time": "3:35 PM EST",
+      "author": "marcus.webb",
+      "text": "just sent the v1.1 mapping comments to DataBridge. linda did a thorough job catching those ADT issues. fingers crossed Tom turns this around fast, we're tight on time"
+    },
+    {
+      "message_id": "s001_002",
+      "date": "2026-01-20",
+      "time": "3:41 PM EST",
+      "author": "sarah.chen",
+      "text": "👍 thanks for driving that. let me know if you don't hear back by Wednesday"
+    },
+    {
+      "message_id": "s001_003",
+      "date": "2026-01-22",
+      "time": "11:02 AM EST",
+      "author": "marcus.webb",
+      "text": "nothing from Tom. sent 2 days ago. sarah, when's the next touchpoint with DataBridge?"
+    },
+    {
+      "message_id": "s001_004",
+      "date": "2026-01-22",
+      "time": "11:18 AM EST",
+      "author": "sarah.chen",
+      "text": "i have a sync invite out to kevin for tomorrow. if he doesn't respond I'll push harder. tom usually responds within a day or two, maybe he's heads down on something"
+    },
+    {
+      "message_id": "s001_005",
+      "date": "2026-01-23",
+      "time": "9:05 AM EST",
+      "author": "linda.marsh",
+      "text": "quick question — should I email Tom directly about the extension #12 coding type question? I have more context on the reference lab system that might help move things"
+    },
+    {
+      "message_id": "s001_006",
+      "date": "2026-01-23",
+      "time": "9:22 AM EST",
+      "author": "marcus.webb",
+      "text": "yes please do, cc me. the more channels the better at this point"
+    },
+    {
+      "message_id": "s001_007",
+      "date": "2026-01-23",
+      "time": "9:30 AM EST",
+      "author": "linda.marsh",
+      "text": "sent. also tried to find Tom on the DataBridge website to see if there was another phone number. his bio isn't on their website anymore 🤔 probably just a web update thing"
+    },
+    {
+      "message_id": "s001_008",
+      "date": "2026-01-24",
+      "time": "2:15 PM EST",
+      "author": "sarah.chen",
+      "text": "kevin didn't respond to the thursday invite either. going to try calling him. this is getting weird"
+    },
+    {
+      "message_id": "s001_009",
+      "date": "2026-01-24",
+      "time": "2:45 PM EST",
+      "author": "marcus.webb",
+      "text": "voicemail?"
+    },
+    {
+      "message_id": "s001_010",
+      "date": "2026-01-24",
+      "time": "2:48 PM EST",
+      "author": "sarah.chen",
+      "text": "voicemail. left a message. will give it until monday"
+    },
+    {
+      "message_id": "s001_011",
+      "date": "2026-01-27",
+      "time": "8:44 AM EST",
+      "author": "marcus.webb",
+      "text": "sarah — looked at tom's linkedin last night. he has a new position listed. started 'january 2026' at veriflow health. think he left databrdige"
+    },
+    {
+      "message_id": "s001_012",
+      "date": "2026-01-27",
+      "time": "8:52 AM EST",
+      "author": "sarah.chen",
+      "text": "oh no. that would explain everything. I'll bring this up in the status sync tomorrow"
+    },
+    {
+      "message_id": "s001_013",
+      "date": "2026-01-27",
+      "time": "9:01 AM EST",
+      "author": "marcus.webb",
+      "text": "do we need to loop in diana NOW? this feels like exec-level information"
+    },
+    {
+      "message_id": "s001_014",
+      "date": "2026-01-27",
+      "time": "9:15 AM EST",
+      "author": "sarah.chen",
+      "text": "let me confirm with databrdige first. I don't want to go to diana with a rumor from linkedin. let me get facts then I'll escalate if needed. sending another invite to the databrige team now"
+    },
+    {
+      "message_id": "s001_015",
+      "date": "2026-01-29",
+      "time": "10:10 AM EST",
+      "author": "sarah.chen",
+      "text": "🚨 confirmed. tom left databrdige jan 23. aisha is taking over. we're getting on a call at 3pm today. the mapping review we sent on jan 20 sat in tom's inbox the whole time. 9 days lost"
+    },
+    {
+      "message_id": "s001_016",
+      "date": "2026-01-29",
+      "time": "10:14 AM EST",
+      "author": "marcus.webb",
+      "text": "nine days. we're already past the architecture delivery date to cloudpeak"
+    },
+    {
+      "message_id": "s001_017",
+      "date": "2026-01-29",
+      "time": "10:16 AM EST",
+      "author": "marcus.webb",
+      "text": "does diana know"
+    },
+    {
+      "message_id": "s001_018",
+      "date": "2026-01-29",
+      "time": "10:20 AM EST",
+      "author": "sarah.chen",
+      "text": "not yet. I'm telling her tonight or tomorrow after I know where aisha stands. call at 3 will tell us a lot"
+    },
+    {
+      "message_id": "s001_019",
+      "date": "2026-01-29",
+      "time": "10:22 AM EST",
+      "author": "linda.marsh",
+      "text": "the email I sent tom on the 23rd about extension #12 — aisha has tom's inbox now so she's seen it. that's one thing at least"
+    },
+    {
+      "message_id": "s001_020",
+      "date": "2026-01-29",
+      "time": "4:45 PM EST",
+      "author": "sarah.chen",
+      "text": "post-call update: aisha is competent and genuinely on it. she estimates she can have v1.2 of the mapping to us by feb 2. architecture package to cloudpeak by feb 3. I told priya. priya is... not thrilled but said we might still make feb 14 if everything else moves perfectly. will update diana tonight"
+    },
+    {
+      "message_id": "s001_021",
+      "date": "2026-01-29",
+      "time": "4:52 PM EST",
+      "author": "marcus.webb",
+      "text": "'if everything else moves perfectly' has not been the theme of this project 😬"
+    },
+    {
+      "message_id": "s001_022",
+      "date": "2026-02-06",
+      "time": "3:00 PM EST",
+      "author": "sarah.chen",
+      "text": "@marcus — just got jordan mills' email. security config for single phase is more involved than cloudpeak thought. they need 10-12 days from now to be production-ready for write-path traffic. feb 14 for full cutover is gone"
+    },
+    {
+      "message_id": "s001_023",
+      "date": "2026-02-06",
+      "time": "3:04 PM EST",
+      "author": "marcus.webb",
+      "text": "how did we not know this sooner"
+    },
+    {
+      "message_id": "s001_024",
+      "date": "2026-02-06",
+      "time": "3:08 PM EST",
+      "author": "sarah.chen",
+      "text": "cloudpeak built on the original phased-approach security assumptions and the architecture change (single phase) landed on them late because of the databrdige situation. jordan couldn't have flagged this earlier without the architecture doc, and that doc was late. so it's a cascade"
+    },
+    {
+      "message_id": "s001_025",
+      "date": "2026-02-06",
+      "time": "3:12 PM EST",
+      "author": "marcus.webb",
+      "text": "and the phasing decision was made on jan 14 and cloudpeak wasn't in that meeting"
+    },
+    {
+      "message_id": "s001_026",
+      "date": "2026-02-06",
+      "time": "3:14 PM EST",
+      "author": "sarah.chen",
+      "text": "correct. that's on me. I'm calling diana now"
+    }
+  ]
+}
