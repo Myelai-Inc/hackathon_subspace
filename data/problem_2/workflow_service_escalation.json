@@ -14,8 +14,6 @@
       "inputs": ["Zendesk ticket notification email", "Direct stakeholder message (email, phone, or Slack)"],
       "outputs": ["Mental note of escalation priority", "Decision to begin workflow"],
       "systems_touched": ["outlook_email", "zendesk_ticketing", "slack_internal_comms"],
-      "automation_classification": "PARTIALLY_AUTOMATABLE",
-      "automation_notes": "Triage can be automated for tickets with clear priority indicators. Escalations that arrive via direct contact or non-standard channels require human judgment to recognize and route.",
       "avg_time_minutes": 5,
       "judgment_required": false,
       "error_prone": false
@@ -27,16 +25,9 @@
       "inputs": ["Account name or company domain"],
       "outputs": ["Account health score", "Contract tier (Basic / Professional / Enterprise)", "Renewal date", "Account owner", "ARR value", "Recent CRM activity notes"],
       "systems_touched": ["salesforce_crm"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Deterministic lookup. No judgment required. Can be triggered automatically when escalation is received.",
       "avg_time_minutes": 8,
       "judgment_required": false,
-      "error_prone": false,
-      "integration_gap": {
-        "gap_id": "gap_001",
-        "description": "Zendesk does not pull account CRM data when a ticket is created. CSM must manually look up CRM context in a separate tab. Account health score and contract tier are not visible in Zendesk.",
-        "downstream_assembly_work": "8 min per escalation × 18 escalations/month = 144 minutes/month per CSM"
-      }
+      "error_prone": false
     },
     {
       "task_id": "t03",
@@ -45,18 +36,10 @@
       "inputs": ["Account name"],
       "outputs": ["SLA response time commitment", "Uptime SLA percentage", "Credit/penalty terms", "Special provisions (e.g., dedicated support, custom SLA windows)"],
       "systems_touched": ["docusign_contracts"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Contract terms are static, structured, and stored digitally. Can be indexed and retrieved automatically.",
       "avg_time_minutes": 12,
       "judgment_required": false,
       "error_prone": true,
-      "error_notes": "CSMs occasionally pull the wrong contract version (e.g., original MSA instead of current amendment). Estimated error rate: ~8% of cases.",
-      "integration_gap": {
-        "gap_id": "gap_002",
-        "description": "Contract terms (SLA tier, uptime %, credit provisions) are not surfaced in Salesforce or Zendesk. CSM must manually retrieve from DocuSign each time. There is no automated extraction of contract metadata into the CRM.",
-        "downstream_assembly_work": "12 min per escalation × 18 escalations/month = 216 minutes/month per CSM",
-        "error_cost": "8% error rate on contract lookup. If wrong SLA tier is used to frame response, CSM may over-promise (credit risk) or under-serve (churn risk). Estimated 1-2 cases/month affected."
-      }
+      "error_notes": "CSMs occasionally pull the wrong contract version (e.g., original MSA instead of current amendment). Estimated error rate: ~8% of cases."
     },
     {
       "task_id": "t04",
@@ -65,16 +48,9 @@
       "inputs": ["Account name or Zendesk organization ID"],
       "outputs": ["List of open tickets with status", "Pattern of recent issues (e.g., repeated billing errors, recurring API timeout)", "Any tickets already assigned to engineering or tier-2 support"],
       "systems_touched": ["zendesk_ticketing"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Retrieval is deterministic. Pattern detection (e.g., 'this is the 3rd timeout issue this month') could be flagged automatically.",
       "avg_time_minutes": 10,
       "judgment_required": false,
-      "error_prone": false,
-      "integration_gap": {
-        "gap_id": "gap_003",
-        "description": "Open tickets are not visible in the CRM account view. Salesforce shows activity logs from CSM interactions but not the underlying Zendesk ticket queue. CSM has to maintain mental model of ticket state across both systems.",
-        "downstream_assembly_work": "10 min per escalation × 18 escalations/month = 180 minutes/month per CSM"
-      }
+      "error_prone": false
     },
     {
       "task_id": "t05",
@@ -83,8 +59,6 @@
       "inputs": ["Issue category", "Current ticket state", "Internal Slack status of specialists"],
       "outputs": ["Named internal specialist or team", "Preliminary availability signal"],
       "systems_touched": ["slack_internal_comms", "vertex_platform_admin"],
-      "automation_classification": "PARTIALLY_AUTOMATABLE",
-      "automation_notes": "Routing by issue type is rule-based and automatable. However, selection of a specific specialist (vs. the team queue) involves relationship context — the CSM may know that a particular engineer has account history or that a particular tier-2 agent has worked with this client before.",
       "avg_time_minutes": 7,
       "judgment_required": true,
       "judgment_notes": "Choosing between 'put this in the general queue' vs. 'loop in Marcus specifically because he knows this client' is a relationship judgment, not a rules-based decision."
@@ -96,8 +70,6 @@
       "inputs": ["Account profile (from t02)", "Contract terms (from t03)", "Open tickets (from t04)", "Issue description"],
       "outputs": ["Internal handoff email or message"],
       "systems_touched": ["outlook_email", "slack_internal_comms"],
-      "automation_classification": "PARTIALLY_AUTOMATABLE",
-      "automation_notes": "Boilerplate context (account health, contract tier, open tickets) can be auto-populated into a template. The CSM's assessment of urgency and churn risk requires judgment and should remain human-authored.",
       "avg_time_minutes": 14,
       "judgment_required": true,
       "judgment_notes": "CSM's churn risk signal is often the most valuable part of this message — it tells the specialist whether this is a routine technical issue or a relationship-defining moment."
@@ -109,8 +81,6 @@
       "inputs": ["Account context (prepared in prior tasks)", "Stakeholder's verbal description of issue"],
       "outputs": ["Clear understanding of client's emotional state and relationship risk", "Negotiated resolution path and timeline", "Implicit commitments made by CSM"],
       "systems_touched": [],
-      "automation_classification": "HUMAN_ESSENTIAL",
-      "automation_notes": "This is the irreplaceable work. Empathy, active listening, relationship navigation, reading subtext, negotiating under pressure — none of this is automatable at the level needed to manage enterprise accounts.",
       "avg_time_minutes": 32,
       "judgment_required": true
     },
@@ -121,8 +91,6 @@
       "inputs": ["Call outcomes", "Commitments made verbally", "Resolution timeline from specialist"],
       "outputs": ["Client-facing email"],
       "systems_touched": ["outlook_email"],
-      "automation_classification": "PARTIALLY_AUTOMATABLE",
-      "automation_notes": "Structure (recap, commitments, next steps) can be templated. Tone calibration and the specific language used for sensitive accounts requires human judgment.",
       "avg_time_minutes": 18,
       "judgment_required": true
     },
@@ -133,18 +101,10 @@
       "inputs": ["Call notes", "Email sent in t08"],
       "outputs": ["Salesforce activity record"],
       "systems_touched": ["salesforce_crm"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Call metadata (participants, time, duration) and email content can be captured automatically. Structured summary can be AI-generated from call notes.",
       "avg_time_minutes": 11,
       "judgment_required": false,
       "error_prone": true,
-      "error_notes": "CRM logging is the most commonly skipped or abbreviated task. When CSMs are busy, this slips. Estimated 15-20% of interactions are not fully logged, creating gaps in account history.",
-      "integration_gap": {
-        "gap_id": "gap_004",
-        "description": "Outlook email activity is not synced to Salesforce. CSMs must manually log each email interaction as a CRM activity. Calendar meetings are also not auto-logged. There is no automatic capture of communication events.",
-        "downstream_assembly_work": "11 min per escalation × 18 escalations/month = 198 minutes/month per CSM",
-        "data_quality_impact": "~17% of interactions missing from CRM account history. This creates blind spots for CSM handoffs, renewal risk assessment, and management reporting."
-      }
+      "error_notes": "CRM logging is the most commonly skipped or abbreviated task. When CSMs are busy, this slips. Estimated 15-20% of interactions are not fully logged, creating gaps in account history."
     },
     {
       "task_id": "t10",
@@ -153,17 +113,10 @@
       "inputs": ["Escalation outcome", "Commitments made to client"],
       "outputs": ["Zendesk follow-up tickets with due dates and ownership"],
       "systems_touched": ["zendesk_ticketing"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Follow-up ticket creation is deterministic (fixed intervals, fixed template content). Can be auto-triggered when an escalation is marked resolved.",
       "avg_time_minutes": 9,
       "judgment_required": false,
       "error_prone": true,
-      "error_notes": "CSMs sometimes create only the 3-day ticket and forget the 14-day and 30-day. Estimated 25% of cases missing at least one follow-up ticket.",
-      "integration_gap": {
-        "gap_id": "gap_005",
-        "description": "Follow-up tickets created in Zendesk are not reflected in the CSM's Outlook calendar or Salesforce task list. CSMs must manually remember or check Zendesk. Scheduling follow-up calls is a separate manual step in Calendly.",
-        "downstream_assembly_work": "9 min per escalation × 18 escalations/month = 162 minutes/month per CSM"
-      }
+      "error_notes": "CSMs sometimes create only the 3-day ticket and forget the 14-day and 30-day. Estimated 25% of cases missing at least one follow-up ticket."
     },
     {
       "task_id": "t11",
@@ -172,16 +125,8 @@
       "inputs": ["Follow-up dates from t10", "Client contact info"],
       "outputs": ["Calendly booking links or calendar invites", "Entry in CSM's personal tracking sheet"],
       "systems_touched": ["calendly_scheduling", "google_sheets_tracking", "outlook_email"],
-      "automation_classification": "FULLY_AUTOMATABLE",
-      "automation_notes": "Scheduling based on fixed intervals is fully deterministic. Calendly links can be generated automatically. Personal tracking sheet is a symptom of missing CRM-scheduling integration.",
       "avg_time_minutes": 8,
-      "judgment_required": false,
-      "integration_gap": {
-        "gap_id": "gap_006",
-        "description": "Calendly bookings do not automatically create Salesforce activities or Zendesk follow-up tickets. The scheduled call exists in Calendly and in the CSM's personal Google Sheet, but not in the official systems of record. When a CSM handles 18+ escalations per month, this personal tracker becomes unmaintainable.",
-        "downstream_assembly_work": "8 min per escalation × 18 escalations/month = 144 minutes/month per CSM",
-        "data_quality_impact": "Personal Google Sheet tracking is abandoned or falls behind in high-volume periods. Management has no visibility into upcoming follow-up obligations."
-      }
+      "judgment_required": false
     },
     {
       "task_id": "t12",
@@ -190,18 +135,8 @@
       "inputs": ["Resolution outcome", "Client sentiment from call", "CSM judgment"],
       "outputs": ["Updated Salesforce account health score"],
       "systems_touched": ["salesforce_crm"],
-      "automation_classification": "PARTIALLY_AUTOMATABLE",
-      "automation_notes": "Mechanical inputs to health score (ticket volume, response times, feature adoption) can be automated. The qualitative relationship signal (e.g., 'the VP sounded like she was shopping competitors') should remain human-entered.",
       "avg_time_minutes": 5,
       "judgment_required": true
     }
-  ],
-  "workflow_summary": {
-    "total_avg_time_minutes": 139,
-    "assembly_task_time_minutes": 67,
-    "judgment_task_time_minutes": 72,
-    "assembly_pct": 48,
-    "judgment_pct": 52,
-    "note": "These percentages are for a single 'ideal' case. In practice, pre-task assembly (context gathering) and post-task administration (logging, scheduling) often bleed into each other and account for the 64% assembly figure in the CSM's time tracking data."
-  }
+  ]
 }

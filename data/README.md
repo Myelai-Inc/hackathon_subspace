@@ -10,7 +10,7 @@ This repository contains synthetic datasets for both challenges in the B2B Opera
 
 **Dataset location:** `problem_1/`
 
-A six-week multi-party project communication stream for a fictional healthcare platform migration ("Project Meridian") involving three organizations. The dataset includes meeting transcripts, email threads, Slack channel logs, and weekly status reports — all containing decisions, action items, blockers, stalls, and a series of escalation failures.
+A six-week multi-party project communication stream for a fictional healthcare platform migration ("Project Meridian") involving three organizations. The dataset includes meeting transcripts, email threads, Slack channel logs, and weekly status reports — containing decisions, action items, blockers, and a series of communication failures that accumulate over time.
 
 [→ Read the full dataset guide](problem_1/README.md)
 
@@ -18,7 +18,7 @@ A six-week multi-party project communication stream for a fictional healthcare p
 ```
 problem_1/
 ├── README.md
-├── project_manifest.json              # Participants, orgs, dependency graph, decision log
+├── project_manifest.json              # Participants and organizations
 ├── meeting_transcripts/
 │   ├── transcript_kickoff_jan06.json
 │   ├── transcript_technical_review_jan14.json
@@ -43,7 +43,7 @@ problem_1/
 
 **Dataset location:** `problem_2/`
 
-An operational snapshot of the Client Success Manager role at a fictional B2B SaaS company (Vertex Solutions Inc.). The dataset includes a role definition, a detailed workflow decomposition with automation classifications, system schemas, an integration gap map with cost quantification, a time-tracking activity log, and five sample escalation cases.
+An operational snapshot of the Client Success Manager role at a fictional B2B SaaS company (Vertex Solutions Inc.). The dataset includes a role definition, two workflow decompositions, system schemas, a system integration reference, a time-tracking activity log, and five sample escalation cases.
 
 [→ Read the full dataset guide](problem_2/README.md)
 
@@ -51,9 +51,10 @@ An operational snapshot of the Client Success Manager role at a fictional B2B Sa
 ```
 problem_2/
 ├── README.md
-├── role_definition.json               # Role profile, workload metrics, time split
-├── workflow_service_escalation.json   # 12-task workflow decomposition with automation classifications
-├── integration_map.json               # 6 integration gaps with cost and fix data
+├── role_definition.json               # Role profile and workload metrics
+├── workflow_service_escalation.json   # 12-task workflow: service escalation handling
+├── workflow_qbr_preparation.json      # 11-task workflow: quarterly business review
+├── integration_map.json               # System profiles and existing integrations
 ├── activity_log.csv                   # Task-level time tracking across 4 CSMs
 ├── systems/
 │   ├── salesforce_crm.json
@@ -69,8 +70,8 @@ problem_2/
 
 These datasets are synthetic but modeled on real operational patterns. They are intentionally:
 
-- **Messy**: Information is fragmented across channels. Not all action items are explicitly captured. Some decisions are reversed. Some status updates understate risk.
-- **Realistic**: Communication style, timing, and failure modes reflect how real multi-party projects actually go wrong.
-- **Rich enough to build on**: Each dataset contains enough structured metadata (action item arrays, automation classifications, integration gap cost data) to validate extractions and cross-check analyses, without being so pre-processed that there's nothing left to solve.
+- **Messy**: Information is fragmented across channels. Not all action items are explicitly captured. Some decisions are reversed or communicated unevenly. Some status updates do not fully reflect conditions visible elsewhere in the data.
+- **Realistic**: Communication style, timing, and failure modes reflect how real multi-party projects and operational roles actually behave.
+- **Open-ended**: The datasets contain enough raw material to build against without pre-answering the questions the problem statement asks. What you find, how you structure it, and how you communicate it is the work.
 
 Teams may use these datasets with any stack — NLP pipelines, graph databases, agent frameworks, or full-stack applications.

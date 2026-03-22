@@ -29,8 +29,7 @@
         {"label": "Migration Approach", "status": "CHANGED", "note": "Switched to single-phase cutover per technical review Jan 14. DataBridge and CloudPeak notified."},
         {"label": "February 14 Cutover", "status": "ON_TRACK", "note": null}
       ],
-      "escalations": [],
-      "note": "Diana was not consulted on the phasing decision. She is being informed retroactively via this status update."
+      "escalations": []
     },
     {
       "week": 3,
@@ -44,10 +43,7 @@
         {"label": "CloudPeak Environment", "status": "ON_TRACK", "note": null},
         {"label": "February 14 Cutover", "status": "ON_TRACK", "note": null}
       ],
-      "escalations": [],
-      "actual_situation": {
-        "note": "As of Jan 23, DataBridge has been silent for 3 days on the critical-path mapping review. Kevin Park has not responded to a calendar invite. Tom Reyes has not acknowledged receipt of the review document. The word 'minor' significantly understates the risk. The mapping approval was due Jan 22 and shows no sign of progressing."
-      }
+      "escalations": []
     },
     {
       "week": 4,
@@ -61,9 +57,7 @@
         {"label": "Data Mapping Approval", "status": "AT_RISK", "note": "DataBridge producing v1.2 — expected Feb 2. Architecture package to CloudPeak expected Feb 3."},
         {"label": "February 14 Cutover", "status": "WATCHING", "note": "Feb 14 is still the target. CloudPeak needs architecture by Feb 3 to begin final config."}
       ],
-      "escalations": [
-        "First mention of DataBridge personnel issue to Diana Osei — 7 days after Marcus raised it internally, 2 days after Sarah confirmed it via Aisha"
-      ]
+      "escalations": []
     },
     {
       "week": 5,
@@ -80,8 +74,7 @@
       ],
       "escalations": [
         "Recommending executive decision on Option A (revert to phased, Phase 1 Feb 14 / Phase 2 ~Mar 3) vs. Option B (delay full cutover to Feb 28)."
-      ],
-      "note": "Sarah sent this to Diana via email at 4:30pm (thread_005). Diana's response: 'Call me now.'"
+      ]
     }
   ]
 }

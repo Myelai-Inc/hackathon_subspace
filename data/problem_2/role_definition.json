@@ -20,9 +20,7 @@
     "monthly_qbrs_conducted": 8,
     "monthly_onboarding_accounts": 2,
     "reported_time_allocation": {
-      "assembly_work_pct": 64,
-      "judgment_work_pct": 36,
-      "note": "Based on time-tracking data from Q4 2025. CSMs self-report that the split should be inverted for them to do their jobs well."
+      "note": "Based on time-tracking data from Q4 2025. CSMs self-report that the current assembly/judgment split should be inverted for them to do their jobs well. See activity_log.csv for raw time-tracking data."
     }
   },
   "systems_used": [

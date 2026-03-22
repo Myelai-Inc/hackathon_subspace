@@ -158,38 +158,5 @@
       "speaker": "Sarah Chen",
       "text": "Got it. February 1st is the drop-dead date for the architecture doc. I'll convey that."
     }
-  ],
-  "action_items_mentioned": [
-    {
-      "id": "ai_015",
-      "description": "Sarah Chen to call Kevin Park directly and email Aisha Patel to re-engage DataBridge",
-      "owner": "p_sarah_chen",
-      "due_date": "2026-01-28",
-      "explicit": true
-    },
-    {
-      "id": "ai_016",
-      "description": "DataBridge to respond to Acme's revised data mapping v1.1 comments and deliver architecture package",
-      "owner": "p_kevin_park",
-      "due_date": "2026-02-01",
-      "explicit": true,
-      "note": "Feb 1 identified as drop-dead date by Priya Nair"
-    },
-    {
-      "id": "ai_017",
-      "description": "Sarah Chen to decide whether to escalate to Diana Osei after DataBridge contact attempt",
-      "owner": "p_sarah_chen",
-      "due_date": "2026-01-28",
-      "explicit": false,
-      "note": "Sarah explicitly chose to delay escalation: 'Let me try to get DataBridge back on line first.' Marcus had recommended escalating."
-    }
-  ],
-  "risks_surfaced": [
-    "DataBridge Solutions Architect (Tom Reyes) may have left the company — unconfirmed but suspected",
-    "Data mapping not approved as of Jan 28 — was due Jan 22",
-    "CloudPeak environment built on incomplete architecture assumptions",
-    "Architecture package due Jan 29 — appears not to be coming",
-    "Feb 14 cutover at risk if architecture not delivered by Feb 1",
-    "Escalation to Diana Osei being deliberately deferred by Sarah Chen"
   ]
 }

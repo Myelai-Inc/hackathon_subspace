@@ -8,81 +8,77 @@
 - **DataBridge Systems** (middleware vendor) — designing and building the new integration middleware
 - **CloudPeak Infrastructure** (infrastructure partner) — provisioning and configuring the cloud environment
 
-The project has a hard cutover date of **February 14, 2026**, established by Acme's board. Over six weeks, a series of decisions, miscommunications, untracked action items, and stalls accumulate — ultimately threatening the project timeline.
+The project has a hard cutover date of **February 14, 2026**, established by Acme's board. Over six weeks, decisions are made, revised, and communicated unevenly across channels — with consequences that accumulate toward the cutover date.
 
 ---
 
 ## What This Dataset Contains
 
 ### `project_manifest.json`
-The master reference document. Contains all participants (with org affiliations and roles), the full dependency graph, and the known decision log — including decisions that were reversed. **Read this first.**
+A reference document listing all participants (with org affiliations, titles, and emails) and the three organizations involved. **Start here to understand who is who.**
 
 ### `meeting_transcripts/`
 Three meeting transcripts in chronological order:
 
-| File | Date | Summary |
+| File | Date | Meeting |
 |------|------|---------|
-| `transcript_kickoff_jan06.json` | Jan 6 | Kickoff. Phased migration decided. Action items established. Critical path defined. |
-| `transcript_technical_review_jan14.json` | Jan 14 | Technical review. **Phased migration reversed to single-phase.** CloudPeak and Kevin Park not present. |
-| `transcript_status_sync_jan28.json` | Jan 28 | Status sync. DataBridge silence surfaces. Tom Reyes departure suspected. Escalation deliberately deferred. |
+| `transcript_kickoff_jan06.json` | Jan 6 | Project kickoff — scope, approach, and timeline established |
+| `transcript_technical_review_jan14.json` | Jan 14 | Technical architecture review |
+| `transcript_status_sync_jan28.json` | Jan 28 | Weekly status sync |
 
-Each transcript includes structured `action_items_mentioned` and `decisions` arrays alongside the raw dialogue.
+Transcripts are raw dialogue only — no pre-extracted action items or decisions.
 
 ### `emails/`
 Six email threads covering the full project arc:
 
-| File | Key Content |
-|------|-------------|
-| `thread_001_kickoff_followup.json` | Post-kickoff action item summary |
-| `thread_002_mapping_v1_delivery.json` | DataBridge delivers mapping v1; Linda's review catches significant issues |
-| `thread_003_revised_mapping_submission.json` | **Acme sends v1.1 to DataBridge — goes unanswered for 8 days** |
-| `thread_004_vendor_reengagement.json` | Tom Reyes departure confirmed; Aisha takes over |
-| `thread_005_cloudpeak_scope_conflict.json` | Jordan flags HIPAA security configuration gap for single-phase; Sarah finally escalates to Diana |
-| `thread_006_status_updates_to_diana.json` | Five weekly status updates — note how risk is understated across weeks 3 and 4 |
+| File | Dates | Content |
+|------|-------|---------|
+| `thread_001_kickoff_followup.json` | Jan 6 | Post-kickoff summary from Sarah to all participants |
+| `thread_002_mapping_v1_delivery.json` | Jan 15–17 | DataBridge delivers data mapping v1; Acme team review |
+| `thread_003_revised_mapping_submission.json` | Jan 20 | Acme sends revised mapping v1.1 to DataBridge |
+| `thread_004_vendor_reengagement.json` | Jan 28–29 | Sarah re-engages DataBridge after a period of no contact |
+| `thread_005_cloudpeak_scope_conflict.json` | Feb 6 | CloudPeak flags a security configuration issue |
+| `thread_006_status_updates_to_diana.json` | Jan 9 – Jan 30 | Four weekly status updates from Sarah to Diana Osei (VP) |
 
 ### `slack_threads/`
 
 | File | Channel | Content |
 |------|---------|---------|
-| `acme_internal_ops_channel.json` | `#meridian-internal` | Acme-only channel. More candid than email — Marcus's LinkedIn discovery, escalation debates, real-time reactions. |
-| `acme_databridge_shared_channel.json` | `#meridian-acme-databridge` | Shared channel. Shows the silence from DataBridge, re-engagement, and resolution of the mapping. |
+| `acme_internal_ops_channel.json` | `#meridian-internal` | Acme-only channel. Candid internal discussion not visible to vendors. |
+| `acme_databridge_shared_channel.json` | `#meridian-acme-databridge` | Shared channel between Acme and DataBridge teams. |
 
 ### `status_updates/status_updates.json`
-Five weekly status reports from Sarah to Diana. The contrast between the "actual situation" annotations and the reported status is significant signal for stall detection.
+Five weekly status reports from Sarah Chen to Diana Osei, covering January 9 through February 6.
 
 ---
 
-## Key Analytical Challenges Embedded in This Data
+## What Your Solution Should Produce
 
-### 1. Decision extraction with reversals
-- The phased migration decision (Jan 6) is reversed to single-phase (Jan 14), then partially reversed back to phased (Feb 10, via the CloudPeak security issue)
-- The Jan 14 reversal was made without CloudPeak or Kevin Park present
-- Diana Osei was not consulted on the Jan 14 reversal — she was informed retroactively in the week 2 status update
+There is no single required output format. Your solution should demonstrate that it can do one or more of the following, applied to this dataset:
 
-### 2. Action items with missing owners or implied deadlines
-- Several action items from meeting transcripts were never followed up: the risk comparison one-pager (ai_009), the Priya notification (ai_011), the Diana notification (ai_010)
-- The status update cadence (ai_006) was followed, but with understated content
+**1. Extract structured project state from the communication stream.**
+What decisions have been made — and by whom, with whose input, and whether they were later changed? What action items were committed to, explicitly or implicitly, and what is their current status? What is blocking forward progress?
 
-### 3. Stall detection
-- DataBridge goes silent Jan 20 → confirmed via Aisha Jan 29 (9 days)
-- Kevin Park never responds to two calendar invites (Jan 22, Jan 27) and one Slack message
-- CloudPeak's security configuration issue could not surface until they received the architecture doc (Feb 3), but the root cause (single-phase decision) was made Jan 14
+*Example output form: a structured log of decisions with participants, dates, and current status; an action item register with owners, due dates, and completion state.*
 
-### 4. Cross-channel information fragmentation
-- Tom's departure is discovered via LinkedIn by Marcus (Slack, Jan 27), confirmed by Aisha (email, Jan 29) — but never formally communicated by DataBridge
-- The phasing decision change was made in a meeting (Jan 14), briefly mentioned in an email to CloudPeak (mentioned in status sync Jan 28), and first told to Diana in the week 2 status update
-- The real escalation from Marcus ("Diana should know about this") happened in Slack on Jan 27 and Jan 29, not in any official channel
+**2. Surface dependencies and the critical path.**
+Which tasks depend on other tasks? Which organizations are accountable for which dependencies? Where is the longest sequential chain of dependent work, and which items on that chain are currently at risk?
 
-### 5. Incomplete escalation
-- Marcus explicitly recommended escalating to Diana on Jan 27 (Slack) and again verbally on Jan 28 (status sync transcript)
-- Sarah deferred escalation both times, waiting for more information
-- Diana was not escalated to until Feb 6 — after the CloudPeak security issue landed
+*Example output form: a dependency graph or table showing what blocks what, with current status per node.*
+
+**3. Detect stalls and missed notifications.**
+When did a dependency or action item go silent — and for how long before it was noticed? Were there decisions made in one channel that affected work in another channel, where the affected party was never notified?
+
+*Example output form: a stall log with the dependency, the silence window, when it surfaced, and how it was eventually resolved; a notification gap report.*
+
+The real test: run your solution against a new input. In `test_input/` (see below) you'll find a short additional communication slice — a Slack thread and one email — not from Project Meridian. Your solution should handle it without Project Meridian-specific hardcoding.
 
 ---
 
-## Suggested Starting Points
+## Notes on the Data
 
-- **NLP / Extraction**: Parse the meeting transcripts and emails to extract decisions, action items, and blockers into a structured format. Compare your extraction against the `action_items_mentioned` and `decisions` arrays in each file.
-- **Graph modeling**: Build a dependency graph from `project_manifest.json` and populate it with state as you parse communications chronologically. Which nodes are blocked? What is the critical path?
-- **Stall detection**: Define a "stall" heuristic (e.g., no response within N days on a critical-path item) and scan the communication stream for matches. What threshold catches the DataBridge silence without generating noise?
-- **Escalation analysis**: Map when risks were first visible in the data vs. when they were escalated. What would an automated system have flagged, and when?
+- **Communication is fragmented across channels.** A decision made in a meeting may be partially referenced in an email and fully absent from the shared Slack channel. Your solution must synthesize across sources.
+- **Not all action items are explicit.** Some commitments are implied ("I'll send her a note after this call"), not stated as formal action items.
+- **Some decisions were made without full stakeholder attendance.** The attendance lists in each transcript are intentionally uneven.
+- **Status reports are written by the person managing the project.** They reflect what that person chose to communicate, which may not fully reflect the state visible in other channels.
+- **The data contains no red herrings** — every channel contains real signal — but not every message is equally important.

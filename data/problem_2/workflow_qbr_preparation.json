@@ -1,0 +1,137 @@
+{
+  "workflow_id": "wf_002",
+  "workflow_name": "Quarterly Business Review (QBR) Preparation and Delivery",
+  "trigger": "QBR scheduled on calendar (typically 30 days before end of quarter). Applies to all Enterprise accounts and Professional accounts with ARR > $50k.",
+  "frequency": "~8 per month per CSM",
+  "average_total_time_hours": 4.5,
+  "tasks": [
+    {
+      "task_id": "q01",
+      "name": "Schedule QBR with account stakeholders",
+      "description": "CSM reaches out to the account's primary contact to propose QBR dates, confirms attendees (including executive sponsor if applicable), sends calendar invite via Outlook, and creates a Calendly booking for accounts that prefer self-scheduling. Notes meeting format preference (video, in-person, phone).",
+      "inputs": ["Account contact list from Salesforce", "CSM's Outlook calendar availability"],
+      "outputs": ["Confirmed QBR date and attendee list", "Calendar invite sent"],
+      "systems_touched": ["outlook_email", "calendly_scheduling", "salesforce_crm"],
+      "avg_time_minutes": 18,
+      "judgment_required": true,
+      "judgment_notes": "Deciding which executives to invite and how hard to push for attendance on accounts showing disengagement requires relationship judgment.",
+      "error_prone": false
+    },
+    {
+      "task_id": "q02",
+      "name": "Pull usage and adoption metrics from Vertex platform",
+      "description": "CSM logs into Vertex Platform Admin and manually exports account usage data: monthly active users, feature adoption rates, API call volume, uptime incidents, and any alerts or errors in the past quarter. Copies data into a staging spreadsheet.",
+      "inputs": ["Account ID in Vertex platform"],
+      "outputs": ["Usage metrics for the quarter (MAU, feature adoption %, API volume, incident count)"],
+      "systems_touched": ["vertex_platform_admin", "google_sheets_tracking"],
+      "avg_time_minutes": 35,
+      "judgment_required": false,
+      "error_prone": true,
+      "error_notes": "Manual export process is error-prone — CSMs occasionally pull the wrong date range or miss accounts with multiple sub-organizations. Estimated 10-15% of QBRs include at least one data error caught during prep or on the call."
+    },
+    {
+      "task_id": "q03",
+      "name": "Pull account health and activity history from Salesforce",
+      "description": "CSM reviews the account's Salesforce record: current health score, recent activity log, open opportunities, renewal date, and any notes from prior QBRs or escalations. Checks whether health score reflects recent escalations.",
+      "inputs": ["Account name in Salesforce"],
+      "outputs": ["Current health score", "Summary of account activity in past quarter", "Renewal date and ARR", "Open pipeline items"],
+      "systems_touched": ["salesforce_crm"],
+      "avg_time_minutes": 20,
+      "judgment_required": false,
+      "error_prone": true,
+      "error_notes": "Salesforce activity history is only as complete as CSM logging discipline. Accounts with recent CSM handoffs may have sparse history. Health score may not reflect escalations that weren't logged."
+    },
+    {
+      "task_id": "q04",
+      "name": "Pull open and recently closed tickets from Zendesk",
+      "description": "CSM searches Zendesk for all tickets associated with the account in the past 90 days. Notes P1/P2 incidents, resolution times, recurring issue patterns, and any SLA breaches. Checks whether breach credits were applied.",
+      "inputs": ["Account name or Zendesk organization ID"],
+      "outputs": ["Ticket summary for past quarter", "P1/P2 incident count", "Any unresolved items", "SLA breach flags"],
+      "systems_touched": ["zendesk_ticketing"],
+      "avg_time_minutes": 25,
+      "judgment_required": false,
+      "error_prone": false
+    },
+    {
+      "task_id": "q05",
+      "name": "Review contract terms and renewal status in DocuSign",
+      "description": "CSM retrieves the current Master Service Agreement and Order Form to confirm: current tier, ARR, renewal date, auto-renewal clause, any committed SLA credits outstanding, and whether the current usage is within contracted limits.",
+      "inputs": ["Account name in DocuSign"],
+      "outputs": ["Current contract tier and ARR", "Renewal date and auto-renewal flag", "Outstanding credits", "Usage vs. contracted limits"],
+      "systems_touched": ["docusign_contracts"],
+      "avg_time_minutes": 15,
+      "judgment_required": false,
+      "error_prone": true,
+      "error_notes": "CSMs occasionally reference the original contract instead of the most recent amendment. Outdated ARR or SLA terms presented in QBR can undermine credibility with the client."
+    },
+    {
+      "task_id": "q06",
+      "name": "Build QBR slide deck",
+      "description": "CSM assembles a presentation from the data gathered in q02-q05. Typical slide structure: executive summary, usage metrics with quarter-over-quarter trend, support summary (incidents, resolution times), value delivered against success plan goals, roadmap items relevant to account, and renewal/expansion discussion. Data is copy-pasted from the staging spreadsheet and formatted manually in Google Slides or PowerPoint.",
+      "inputs": ["Usage metrics (from q02)", "Account health and history (from q03)", "Ticket summary (from q04)", "Contract terms (from q05)", "Prior QBR notes"],
+      "outputs": ["QBR slide deck (PDF or slides)"],
+      "systems_touched": ["google_sheets_tracking", "outlook_email"],
+      "avg_time_minutes": 65,
+      "judgment_required": true,
+      "judgment_notes": "Deciding what narrative to frame around the data — especially for accounts with incidents or flat usage — requires judgment about what the client cares about and what risks to surface vs. downplay.",
+      "error_prone": true,
+      "error_notes": "Manual copy-paste from multiple sources leads to version mismatches and formatting errors. CSMs sometimes present Q3 data in a Q4 QBR because data wasn't refreshed."
+    },
+    {
+      "task_id": "q07",
+      "name": "Prepare discussion agenda and talking points",
+      "description": "CSM writes a brief internal prep note (not shared with client) covering: accounts to probe for expansion signals, known friction points to address, renewal risks, and questions to ask about upcoming initiatives or headcount changes that might affect usage.",
+      "inputs": ["Account knowledge", "Prior QBR outcomes", "Open opportunities in Salesforce", "Any recent escalation context"],
+      "outputs": ["Internal prep note with agenda and talking points"],
+      "systems_touched": ["salesforce_crm", "google_sheets_tracking"],
+      "avg_time_minutes": 20,
+      "judgment_required": true,
+      "judgment_notes": "This is almost entirely judgment work — synthesizing what is known about the account into a conversation strategy."
+    },
+    {
+      "task_id": "q08",
+      "name": "Conduct QBR call",
+      "description": "CSM presents the QBR to account stakeholders. Walks through metrics, acknowledges any incidents, discusses value delivered, takes questions, probes for upcoming business changes, identifies expansion interest, and confirms renewal intent. Sets mutual success goals for the next quarter.",
+      "inputs": ["QBR slide deck (from q06)", "Talking points (from q07)", "Client stakeholders"],
+      "outputs": ["Client feedback on platform performance", "Expansion or risk signals", "Agreed next-quarter goals", "Verbal renewal commitment or concern"],
+      "systems_touched": [],
+      "avg_time_minutes": 55,
+      "judgment_required": true
+    },
+    {
+      "task_id": "q09",
+      "name": "Send follow-up summary to client",
+      "description": "CSM sends a post-QBR email to the account's primary contact and executive sponsor summarizing what was discussed, any commitments made (feature requests escalated, credits applied, roadmap items noted), and next-quarter success goals.",
+      "inputs": ["QBR call notes", "Commitments made verbally"],
+      "outputs": ["Client-facing follow-up email"],
+      "systems_touched": ["outlook_email"],
+      "avg_time_minutes": 22,
+      "judgment_required": true,
+      "judgment_notes": "Tone and framing matter — follow-up email for a healthy account vs. one that expressed renewal concern should be calibrated differently."
+    },
+    {
+      "task_id": "q10",
+      "name": "Log QBR in Salesforce and update account record",
+      "description": "CSM creates a Salesforce activity record for the QBR (type: meeting), logs the outcome, updates the account health score, adds any expansion opportunity to the pipeline, and updates the success plan fields with next-quarter goals.",
+      "inputs": ["QBR call outcomes", "Expansion signals", "Success plan goals"],
+      "outputs": ["Salesforce activity record", "Updated health score", "Updated opportunity pipeline"],
+      "systems_touched": ["salesforce_crm"],
+      "avg_time_minutes": 18,
+      "judgment_required": false,
+      "error_prone": true,
+      "error_notes": "QBR logging is frequently abbreviated or deferred, especially when CSM has back-to-back QBRs. Expansion opportunities identified verbally during QBRs are sometimes never entered in Salesforce."
+    },
+    {
+      "task_id": "q11",
+      "name": "Create success plan follow-up tasks",
+      "description": "CSM creates 2-4 follow-up tasks in Zendesk or on their personal tracking sheet: a 30-day check-in on goal progress, a feature request follow-up if applicable, and a renewal outreach flag if renewal date is within 90 days.",
+      "inputs": ["Success goals agreed in q08", "Renewal date from q05"],
+      "outputs": ["Follow-up tasks with due dates and owners"],
+      "systems_touched": ["zendesk_ticketing", "google_sheets_tracking"],
+      "avg_time_minutes": 12,
+      "judgment_required": false,
+      "error_prone": true,
+      "error_notes": "Follow-up task creation is the most commonly skipped step. CSMs under time pressure create the 30-day check-in but skip the feature request and renewal tasks. Estimated 30-40% of QBRs missing at least one follow-up task."
+    }
+  ]
+}
