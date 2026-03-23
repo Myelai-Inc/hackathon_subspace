@@ -107,6 +107,156 @@
       "text": "Sure, I'll review those sections and send my comments directly to Tom."
     },
     {
+      "timestamp": "06:02",
+      "speaker": "Tom Reyes",
+      "text": "Great. Okay, let me share my screen and walk through what we have so far. Give me a second to pull it up."
+    },
+    {
+      "timestamp": "06:18",
+      "speaker": "Sarah Chen",
+      "text": "Take your time."
+    },
+    {
+      "timestamp": "06:35",
+      "speaker": "Tom Reyes",
+      "text": "Alright, you should be able to see the mapping spreadsheet. I'm going to start with the patient demographics section — that's Tab 1. Each row is a source field from the HL7 v2 feed, and the columns map across to the FHIR Patient resource. The third column is the FHIR path, the fourth is the transformation rule, and the fifth is the criticality tier."
+    },
+    {
+      "timestamp": "07:00",
+      "speaker": "Marcus Webb",
+      "text": "Can you zoom in a bit on the PID segment?"
+    },
+    {
+      "timestamp": "07:06",
+      "speaker": "Tom Reyes",
+      "text": "Sure. So PID-3 is the patient identifier — we're mapping that to Patient.identifier. We pull the first repetition where the identifier type code is MR, which is the medical record number. Any other repetitions we're treating as secondary identifiers and mapping to additional Patient.identifier entries."
+    },
+    {
+      "timestamp": "07:35",
+      "speaker": "Linda Marsh",
+      "text": "That's the right approach. I flagged in my prior notes that PID-3 sometimes has encounter IDs in the wrong repetition — do you have handling for that?"
+    },
+    {
+      "timestamp": "07:48",
+      "speaker": "Tom Reyes",
+      "text": "Yes — Aisha built a validation step that checks for the identifier type code before we map. If it's not an MR-typed identifier it doesn't go into Patient.identifier.value as the primary. We log any mismatched types to a validation report."
+    },
+    {
+      "timestamp": "08:05",
+      "speaker": "Linda Marsh",
+      "text": "Good. That was exactly the issue we had in 2022."
+    },
+    {
+      "timestamp": "08:15",
+      "speaker": "Tom Reyes",
+      "text": "Moving to PID-5 — patient name. We're mapping to Patient.name. This is standard HumanName — family, given, prefix. We handle the case where the suffix field PID-5.5 is populated. One thing I flagged — about 8% of your records have a blank PID-5.2 for the given name. FHIR treats given name as optional but some downstream consumers may not. We're mapping it as-is and logging the blanks."
+    },
+    {
+      "timestamp": "08:48",
+      "speaker": "Marcus Webb",
+      "text": "That 8% — is that a known data quality issue in our source system?"
+    },
+    {
+      "timestamp": "08:56",
+      "speaker": "Tom Reyes",
+      "text": "Looks like it. It's consistent across the sample we got. Not random noise."
+    },
+    {
+      "timestamp": "09:05",
+      "speaker": "Marcus Webb",
+      "text": "Okay. I'll loop in our data quality team on that separately. It's not something DataBridge needs to fix — it's a source issue."
+    },
+    {
+      "timestamp": "09:18",
+      "speaker": "Tom Reyes",
+      "text": "Agreed. We just need a documented policy on how to handle it at the integration layer. For now we're planning to pass through as-is. If you want us to reject records with missing given names, we can do that, but my recommendation is to log and pass through."
+    },
+    {
+      "timestamp": "09:35",
+      "speaker": "Marcus Webb",
+      "text": "Log and pass through is fine. We'll fix the source data quality issue separately."
+    },
+    {
+      "timestamp": "09:48",
+      "speaker": "Tom Reyes",
+      "text": "Good. Moving on — PID-7 is date of birth, mapping to Patient.birthDate. Standard ISO 8601 format. No issues there. PID-8 is administrative sex — we're mapping to Patient.gender using the FHIR value set. Your source uses M/F/U — we map those to male/female/unknown. The 'other' value in FHIR doesn't have a direct equivalent in your source."
+    },
+    {
+      "timestamp": "10:18",
+      "speaker": "Linda Marsh",
+      "text": "We've actually had requests from clinical staff to add a separate gender identity field. Is that something we can incorporate?"
+    },
+    {
+      "timestamp": "10:30",
+      "speaker": "Tom Reyes",
+      "text": "FHIR R4 has the individual-genderIdentity extension. We can include it but it would need to be populated in the source system for us to map it. Does your HL7 feed carry gender identity anywhere?"
+    },
+    {
+      "timestamp": "10:48",
+      "speaker": "Linda Marsh",
+      "text": "Not yet. It's on the roadmap for the source system but not live."
+    },
+    {
+      "timestamp": "10:58",
+      "speaker": "Tom Reyes",
+      "text": "Then I'd recommend we stub the extension in the mapping document for future use but don't implement it in this build. We can add it as a change request when your source system is ready."
+    },
+    {
+      "timestamp": "11:14",
+      "speaker": "Sarah Chen",
+      "text": "That's a reasonable approach. Document it as future scope."
+    },
+    {
+      "timestamp": "11:25",
+      "speaker": "Tom Reyes",
+      "text": "I'll add a 'future scope' column to the mapping doc for items like that. Good. Let me jump to the encounter section — that's where things get more interesting. The MSH and EVN segments plus PV1 all feed into the FHIR Encounter resource."
+    },
+    {
+      "timestamp": "11:48",
+      "speaker": "Tom Reyes",
+      "text": "PV1-2 is the patient class — inpatient, outpatient, emergency. We map that to Encounter.class using the ActEncounterCode value set. PV1-3 is the assigned patient location — we're mapping that to Encounter.location. The location codes in your source system don't match the FHIR location resource IDs, so we need a crosswalk table."
+    },
+    {
+      "timestamp": "12:15",
+      "speaker": "Marcus Webb",
+      "text": "The location crosswalk — that's something we'd need to provide you, right? We'd know our internal location codes."
+    },
+    {
+      "timestamp": "12:25",
+      "speaker": "Tom Reyes",
+      "text": "Exactly. I've flagged that in the mapping doc as an Acme-to-provide item. It's not blocking the build but we'll need it before UAT."
+    },
+    {
+      "timestamp": "12:40",
+      "speaker": "Marcus Webb",
+      "text": "I'll put together the location code crosswalk. Linda, can you help with the clinical unit codes?"
+    },
+    {
+      "timestamp": "12:50",
+      "speaker": "Linda Marsh",
+      "text": "Yes. I'll pull that from the master facility table."
+    },
+    {
+      "timestamp": "13:02",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus and Linda provide location code crosswalk to Tom by January 20th."
+    },
+    {
+      "timestamp": "13:15",
+      "speaker": "Tom Reyes",
+      "text": "That works. One more thing on encounters — PV1-44 and PV1-45 are admit and discharge date-times. We map those to Encounter.period. The tricky ones are encounters that don't have a discharge date yet — active encounters. FHIR handles that as an open period, so we leave Encounter.period.end null. That's valid but some consuming applications may handle it differently."
+    },
+    {
+      "timestamp": "13:48",
+      "speaker": "Linda Marsh",
+      "text": "We have about 12% of encounters that are open on any given day. That's normal for our inpatient census."
+    },
+    {
+      "timestamp": "14:00",
+      "speaker": "Tom Reyes",
+      "text": "Good to know. We'll make sure that's tested explicitly. Aisha will add open-encounter scenarios to the test suite."
+    },
+    {
       "timestamp": "14:22",
       "speaker": "Tom Reyes",
       "text": "One thing I want to flag for the record — the architecture we're now going to single-phase — this affects the infrastructure footprint. CloudPeak will need to provision for the full read/write stack from day one rather than standing up the read environment first. The security group configuration is also going to be different. I'll need to make sure Priya has the updated architecture doc."
@@ -130,6 +280,526 @@
       "timestamp": "15:20",
       "speaker": "Tom Reyes",
       "text": "Yeah definitely loop her in, there are implications for her environment setup."
+    },
+    {
+      "timestamp": "15:35",
+      "speaker": "Sarah Chen",
+      "text": "Okay, let's keep going through the mapping. Tom, what's next?"
+    },
+    {
+      "timestamp": "15:42",
+      "speaker": "Tom Reyes",
+      "text": "Diagnostic results — that's the most complex section and where the custom lab fields come in. The OBR and OBX segments map to the FHIR DiagnosticReport and Observation resources. Let me flip to Tab 3."
+    },
+    {
+      "timestamp": "16:00",
+      "speaker": "Tom Reyes",
+      "text": "OBX-2 is the value type — numeric, string, coded entry. Each value type maps to a different Observation.value element. Numeric goes to valueQuantity with the unit from OBX-6. Coded entries go to valueCodeableConcept. We handle all the standard LOINC-coded observations without issue."
+    },
+    {
+      "timestamp": "16:32",
+      "speaker": "Linda Marsh",
+      "text": "What about the local lab codes? We have about forty observations that don't have LOINC codes — they use our internal coding system."
+    },
+    {
+      "timestamp": "16:45",
+      "speaker": "Tom Reyes",
+      "text": "Right, those are the custom ones from the document Marcus sent. For those, we're proposing to include both the local code and, where we could find a candidate LOINC code, a secondary coding. Some of the fifteen custom fields in Marcus's doc have close LOINC equivalents. About six of them don't — those we'll map with only the local code system identifier set to your OID."
+    },
+    {
+      "timestamp": "17:15",
+      "speaker": "Linda Marsh",
+      "text": "Can you show me which six you're proposing to carry as local-only?"
+    },
+    {
+      "timestamp": "17:22",
+      "speaker": "Tom Reyes",
+      "text": "Sure, Tab 4 — the custom extensions tab. The ones in red are local-only. You've got the lactate dehydrogenase isoenzyme panel, the two proprietary cardiac biomarker fields, the regional immunosuppression protocol level, and two of the point-of-care device readouts."
+    },
+    {
+      "timestamp": "17:52",
+      "speaker": "Linda Marsh",
+      "text": "The cardiac biomarker fields — those are from our vendor-specific panel. I'll check with the lab whether there's an industry code we should be using. Give me until the 20th on those."
+    },
+    {
+      "timestamp": "18:08",
+      "speaker": "Tom Reyes",
+      "text": "No problem. I'll leave those flagged in the doc. If you find a LOINC code we'll add it. If not, local-only is a valid FHIR implementation."
+    },
+    {
+      "timestamp": "18:22",
+      "speaker": "Marcus Webb",
+      "text": "Tom, how are you handling the OBX-8 abnormal flags? We have a custom coding scheme — LL, L, N, H, HH, and a few proprietary ones."
+    },
+    {
+      "timestamp": "18:38",
+      "speaker": "Tom Reyes",
+      "text": "Good catch. OBX-8 maps to Observation.interpretation using the HL7 ObservationInterpretation value set. The standard LL/L/N/H/HH codes map directly. The proprietary ones — do you have documentation on what they mean?"
+    },
+    {
+      "timestamp": "18:55",
+      "speaker": "Marcus Webb",
+      "text": "I have a code table somewhere. I'll dig it up."
+    },
+    {
+      "timestamp": "19:05",
+      "speaker": "Tom Reyes",
+      "text": "That would help. For any proprietary code we can't map to the standard value set, we'll include it as a local coding alongside the mapped code. But we'll need to know the semantics."
+    },
+    {
+      "timestamp": "19:20",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus sends Tom the abnormal flag code table with definitions."
+    },
+    {
+      "timestamp": "19:35",
+      "speaker": "Tom Reyes",
+      "text": "Moving on — OBR maps to DiagnosticReport. OBR-4 is the universal service identifier — maps to DiagnosticReport.code. OBR-14 is the specimen received datetime, OBR-22 is the report status datetime. These map to DiagnosticReport.issued. We track the full specimen-to-report timeline in the FHIR resource."
+    },
+    {
+      "timestamp": "20:05",
+      "speaker": "Linda Marsh",
+      "text": "What about the ordering provider? We need to make sure the result is linked back to the ordering physician."
+    },
+    {
+      "timestamp": "20:16",
+      "speaker": "Tom Reyes",
+      "text": "OBR-16 is the ordering provider — maps to DiagnosticReport.resultsInterpreter when it's the reading physician, and to the associated ServiceRequest.requester for the ordering physician. We also maintain the link between DiagnosticReport and the originating Encounter."
+    },
+    {
+      "timestamp": "20:40",
+      "speaker": "Linda Marsh",
+      "text": "Good. The encounter linkage is important — our downstream analytics depend on it."
+    },
+    {
+      "timestamp": "20:52",
+      "speaker": "Tom Reyes",
+      "text": "It's implemented. Every DiagnosticReport.encounter reference will be populated if the associated encounter exists in the system."
+    },
+    {
+      "timestamp": "21:05",
+      "speaker": "Sarah Chen",
+      "text": "Tom, let me ask a broader question while we're on the lab section. What's Aisha's approach to test coverage for diagnostic results? That's a high-stakes data class."
+    },
+    {
+      "timestamp": "21:20",
+      "speaker": "Tom Reyes",
+      "text": "So Aisha's plan is to build test cases from a synthetic dataset that covers: each observation value type — numeric, string, coded; each abnormal flag variant including the proprietary ones once we have the code table; result statuses including preliminary, final, corrected, and cancelled; and edge cases like missing OBX-8 and null result values. She's targeting around 200 discrete test scenarios for the lab section alone."
+    },
+    {
+      "timestamp": "21:55",
+      "speaker": "Marcus Webb",
+      "text": "That's comprehensive. We'll want to see the test case list before UAT so we can make sure our own UAT scenarios don't duplicate too much."
+    },
+    {
+      "timestamp": "22:10",
+      "speaker": "Tom Reyes",
+      "text": "I'll have Aisha share her test scenario list. She was planning to send it alongside the mapping doc anyway."
+    },
+    {
+      "timestamp": "22:25",
+      "speaker": "Sarah Chen",
+      "text": "Good. Let's continue. Tom, what's after diagnostics?"
+    },
+    {
+      "timestamp": "22:38",
+      "speaker": "Tom Reyes",
+      "text": "Medication orders and administration — that's Tab 5. RXO and RXA segments map to MedicationRequest and MedicationAdministration respectively. This is a Tier 1 criticality section — hard reject on any mapping failure. The stakes are too high."
+    },
+    {
+      "timestamp": "23:00",
+      "speaker": "Marcus Webb",
+      "text": "Agreed. I'd add allergy records to that same tier."
+    },
+    {
+      "timestamp": "23:08",
+      "speaker": "Tom Reyes",
+      "text": "Yes, allergies are in Tab 6 — AL1 segment maps to AllergyIntolerance resource. That's also Tier 1. Any allergy record that fails validation gets hard rejected with an error code sent back to the source system."
+    },
+    {
+      "timestamp": "23:28",
+      "speaker": "Linda Marsh",
+      "text": "What's the error handling flow when a hard reject happens? Does it go to a dead letter queue?"
+    },
+    {
+      "timestamp": "23:40",
+      "speaker": "Tom Reyes",
+      "text": "Yes. Failed messages go to a dead letter queue in Amazon SQS. We'll have a monitoring dashboard — we'll send you the access details — and you can configure alerts for any dead letter queue activity. Tier 1 failures generate an immediate alert."
+    },
+    {
+      "timestamp": "24:00",
+      "speaker": "Sarah Chen",
+      "text": "Who on the Acme side monitors that queue?"
+    },
+    {
+      "timestamp": "24:08",
+      "speaker": "Marcus Webb",
+      "text": "That would be our integration team — I'll designate someone. But I want to make sure we have runbook documentation for how to investigate and reprocess a failed message."
+    },
+    {
+      "timestamp": "24:22",
+      "speaker": "Tom Reyes",
+      "text": "That's part of the operational runbook we deliver before cutover. We'll walk your team through it during the handoff."
+    },
+    {
+      "timestamp": "24:38",
+      "speaker": "Sarah Chen",
+      "text": "Good. Tom, let's keep moving — we have about twenty minutes left and I want to make sure we get through the architecture discussion."
+    },
+    {
+      "timestamp": "24:52",
+      "speaker": "Tom Reyes",
+      "text": "Let me flip to the architecture diagram. One second. Okay — you can see the updated stack. The key change from the phased plan is that we're now provisioning the full read/write FHIR API surface from day one. This means the CloudPeak environment needs to support the complete data model from the start, rather than the read-only subset."
+    },
+    {
+      "timestamp": "25:20",
+      "speaker": "Marcus Webb",
+      "text": "What does that mean for the compute sizing?"
+    },
+    {
+      "timestamp": "25:28",
+      "speaker": "Tom Reyes",
+      "text": "It's modestly larger — maybe 20% more compute headroom in the transformation layer because we're handling both inbound reads and outbound writes in the same service. The good news is Fargate auto-scaling handles burst capacity, so the base provisioned tier doesn't need to be massive."
+    },
+    {
+      "timestamp": "25:52",
+      "speaker": "Sarah Chen",
+      "text": "I'll relay that to Priya so she and Jordan can adjust the capacity plan. Tom, can you include a compute requirement section in the architecture doc?"
+    },
+    {
+      "timestamp": "26:05",
+      "speaker": "Tom Reyes",
+      "text": "Absolutely. I'll include recommended task sizes for Fargate, target concurrency, and expected resource utilization at peak load."
+    },
+    {
+      "timestamp": "26:20",
+      "speaker": "Marcus Webb",
+      "text": "What about the API authentication layer? Our downstream consumers — the network partners — how do they authenticate to the FHIR API?"
+    },
+    {
+      "timestamp": "26:35",
+      "speaker": "Tom Reyes",
+      "text": "We're implementing SMART on FHIR for external client authorization. That's the standard for FHIR API access. Each downstream partner gets a client ID and secret, and they use an OAuth 2.0 client credentials flow to obtain a bearer token. The token is scoped to specific FHIR resource types based on the partner's access rights."
+    },
+    {
+      "timestamp": "27:05",
+      "speaker": "Marcus Webb",
+      "text": "And the Acme-to-DataBridge path — the inbound HL7 feed — how is that secured?"
+    },
+    {
+      "timestamp": "27:15",
+      "speaker": "Tom Reyes",
+      "text": "That's a private network path — MLLP over a site-to-site VPN. No public internet exposure. The VPN terminates at CloudPeak's VPC and the MLLP listener is in a private subnet with security group rules that only allow traffic from Acme's IP ranges."
+    },
+    {
+      "timestamp": "27:38",
+      "speaker": "Sarah Chen",
+      "text": "Good. That aligns with what Dev Rajan and Jordan need to coordinate on."
+    },
+    {
+      "timestamp": "27:50",
+      "speaker": "Tom Reyes",
+      "text": "Exactly. I'll make sure the architecture doc includes the specific security group rules DataBridge needs CloudPeak to configure."
+    },
+    {
+      "timestamp": "28:05",
+      "speaker": "Linda Marsh",
+      "text": "Tom, one concern I have — what happens if the HL7 feed goes down? If Rhapsody restarts, do we lose messages?"
+    },
+    {
+      "timestamp": "28:18",
+      "speaker": "Tom Reyes",
+      "text": "No. The Amazon MQ broker persists messages to disk before the transformation service picks them up. If the feed drops, messages accumulate in the queue and are processed in order when the feed comes back. We don't lose anything."
+    },
+    {
+      "timestamp": "28:38",
+      "speaker": "Linda Marsh",
+      "text": "And if the transformation service goes down?"
+    },
+    {
+      "timestamp": "28:44",
+      "speaker": "Tom Reyes",
+      "text": "Same answer — messages sit in the queue. Fargate will restart the task within about 30 seconds. Queue depth will build up but nothing is lost. We'll include queue depth monitoring in the dashboard so your team can see if there's a backlog building."
+    },
+    {
+      "timestamp": "29:05",
+      "speaker": "Marcus Webb",
+      "text": "That's good. Our biggest concern with the old HL7 system was message loss during restarts."
+    },
+    {
+      "timestamp": "29:18",
+      "speaker": "Tom Reyes",
+      "text": "The persistent queue is exactly designed to address that. It's one of the main reliability improvements in the new stack."
+    },
+    {
+      "timestamp": "29:32",
+      "speaker": "Sarah Chen",
+      "text": "Let me ask about retry logic. If a message transformation fails — not a hard reject, but a transient error — does it retry automatically?"
+    },
+    {
+      "timestamp": "29:46",
+      "speaker": "Tom Reyes",
+      "text": "Yes. We have exponential backoff retry on transient errors — network timeouts, downstream service unavailability. Three retries with increasing backoff. If it fails all three retries, it moves to the dead letter queue with full error context so your team can investigate."
+    },
+    {
+      "timestamp": "30:08",
+      "speaker": "Marcus Webb",
+      "text": "Can messages be manually reprocessed from the dead letter queue?"
+    },
+    {
+      "timestamp": "30:16",
+      "speaker": "Tom Reyes",
+      "text": "Yes. The runbook will include the procedure for moving a message back to the main queue after the underlying issue is fixed. It's a few clicks in the AWS console."
+    },
+    {
+      "timestamp": "30:30",
+      "speaker": "Sarah Chen",
+      "text": "Good. Alright, I think we've covered the main technical items. Let me check the time — we have about twelve minutes left. Tom, is there anything in the mapping doc that you're still uncertain about and want Acme input on before you finalize v1?"
+    },
+    {
+      "timestamp": "30:50",
+      "speaker": "Tom Reyes",
+      "text": "Two things. One — the MRG segment for patient merges. We're mapping that to a linked Patient record pattern in FHIR, but the exact behavior depends on how Acme wants patient identity managed post-merge. That needs a conversation with Marcus's team."
+    },
+    {
+      "timestamp": "31:12",
+      "speaker": "Marcus Webb",
+      "text": "Patient merges are infrequent but critical. I'll connect you with our MPI team — they have a specific workflow for that."
+    },
+    {
+      "timestamp": "31:24",
+      "speaker": "Tom Reyes",
+      "text": "Perfect. Second item — the document section headers in the CDA attachments. We have some OBX records with CDA documents embedded as base64. We're mapping those to FHIR DocumentReference. The question is whether the downstream network partners need access to those documents or just the discrete data elements."
+    },
+    {
+      "timestamp": "31:52",
+      "speaker": "Marcus Webb",
+      "text": "That's a question for the network partnership team — that's outside my scope. Diana would know."
+    },
+    {
+      "timestamp": "32:04",
+      "speaker": "Sarah Chen",
+      "text": "I'll ask Diana. For now, Tom, include DocumentReference in the mapping and we'll decide whether to expose it in the API."
+    },
+    {
+      "timestamp": "32:18",
+      "speaker": "Tom Reyes",
+      "text": "Done. I'll include it and flag it as pending business decision in the mapping doc."
+    },
+    {
+      "timestamp": "32:30",
+      "speaker": "Sarah Chen",
+      "text": "Good. Marcus, Linda — any other questions for Tom before we close?"
+    },
+    {
+      "timestamp": "32:40",
+      "speaker": "Linda Marsh",
+      "text": "I think I have enough to do a thorough review when the doc comes out tomorrow. I'll read through the custom extensions tab carefully and send comments directly."
+    },
+    {
+      "timestamp": "32:55",
+      "speaker": "Marcus Webb",
+      "text": "Same. I'll focus on the ADT segments and encounter data. Linda takes the clinical stuff."
+    },
+    {
+      "timestamp": "33:10",
+      "speaker": "Tom Reyes",
+      "text": "That division makes sense. If you can tag your comments in the spreadsheet so I know who raised each one, that'll make the resolution process faster."
+    },
+    {
+      "timestamp": "33:25",
+      "speaker": "Sarah Chen",
+      "text": "Tom, any other dependencies or blockers you want to flag before we wrap?"
+    },
+    {
+      "timestamp": "33:35",
+      "speaker": "Tom Reyes",
+      "text": "The signed BAA — Kevin said he'd have that by January 13th. We're not blocked yet but we need it before we can access any Acme staging data."
+    },
+    {
+      "timestamp": "33:50",
+      "speaker": "Sarah Chen",
+      "text": "Kevin's not on this call but I'll follow up with him on the BAA today. That date is tomorrow so it should already be in flight."
+    },
+    {
+      "timestamp": "34:05",
+      "speaker": "Tom Reyes",
+      "text": "And the location crosswalk and abnormal flag code table — those are the other open items I need from Acme."
+    },
+    {
+      "timestamp": "34:18",
+      "speaker": "Marcus Webb",
+      "text": "I'll get both of those to you by the 20th."
+    },
+    {
+      "timestamp": "34:28",
+      "speaker": "Tom Reyes",
+      "text": "That's fine, we don't need them for the mapping v1 delivery — just before we finalize the build."
+    },
+    {
+      "timestamp": "34:42",
+      "speaker": "Sarah Chen",
+      "text": "Good. Let me also note — Aisha, you've been mostly listening. Anything you want to add before we close the technical portion?"
+    },
+    {
+      "timestamp": "34:52",
+      "speaker": "Aisha Patel",
+      "text": "Just one thing — for the integration test environment, I'll need access to the HAPI FHIR test server that CloudPeak is standing up. Can someone make sure Jordan has my email so he can send me the connection details when it's ready?"
+    },
+    {
+      "timestamp": "35:08",
+      "speaker": "Sarah Chen",
+      "text": "I'll connect you and Jordan directly after this call."
+    },
+    {
+      "timestamp": "35:18",
+      "speaker": "Aisha Patel",
+      "text": "Thanks. That's all from me."
+    },
+    {
+      "timestamp": "35:30",
+      "speaker": "Tom Reyes",
+      "text": "Actually one more — Aisha, I want to confirm with you that the test framework will cover the single-phase architecture, not the two-phase. Make sure you're not building against the old deployment model."
+    },
+    {
+      "timestamp": "35:48",
+      "speaker": "Aisha Patel",
+      "text": "Already updated. When you mentioned the single-phase approach at the start of the call I made a note. The full read/write surface will be covered from day one in the test suite."
+    },
+    {
+      "timestamp": "36:02",
+      "speaker": "Tom Reyes",
+      "text": "Perfect."
+    },
+    {
+      "timestamp": "36:15",
+      "speaker": "Sarah Chen",
+      "text": "Alright. Good session. Tom, mapping v1 goes out tomorrow — January 15th. Acme, review window is January 15th through 22nd. Rolling comments welcome. Marcus provides location crosswalk and flag code table by the 20th. Aisha and Jordan to connect on test environment access. Tom sends updated architecture to Priya when ready. I'll follow up on the BAA with Kevin today. Anything I missed?"
+    },
+    {
+      "timestamp": "36:52",
+      "speaker": "Marcus Webb",
+      "text": "The MPI team introduction for patient merges."
+    },
+    {
+      "timestamp": "37:00",
+      "speaker": "Sarah Chen",
+      "text": "Right — Marcus connects Tom with the MPI team. Got it."
+    },
+    {
+      "timestamp": "37:10",
+      "speaker": "Tom Reyes",
+      "text": "And the abnormal flag code table is on the list too."
+    },
+    {
+      "timestamp": "37:18",
+      "speaker": "Sarah Chen",
+      "text": "Yes, that's included. Okay — I think we're good. Thanks everyone. This was a productive session."
+    },
+    {
+      "timestamp": "37:30",
+      "speaker": "Aisha Patel",
+      "text": "Thanks — good to finally meet everyone."
+    },
+    {
+      "timestamp": "37:38",
+      "speaker": "Marcus Webb",
+      "text": "Same. Looking forward to seeing the mapping doc tomorrow, Tom."
+    },
+    {
+      "timestamp": "37:45",
+      "speaker": "Tom Reyes",
+      "text": "You'll have it."
+    },
+    {
+      "timestamp": "38:00",
+      "speaker": "Linda Marsh",
+      "text": "Tom, one quick thing before we close — you mentioned the FHIR validator. Which version are you using? We've seen inconsistencies across validator versions on some of the extension profiles."
+    },
+    {
+      "timestamp": "38:14",
+      "speaker": "Tom Reyes",
+      "text": "We're running the HL7 Java validator, version 6.1.14. I'll pin that in the test suite documentation so there's no ambiguity. If you want to run local validation on your end we can use the same version."
+    },
+    {
+      "timestamp": "38:30",
+      "speaker": "Linda Marsh",
+      "text": "That would be helpful. I'd like to run some validation checks on our end during the review period."
+    },
+    {
+      "timestamp": "38:40",
+      "speaker": "Tom Reyes",
+      "text": "I'll include the validator setup instructions in a separate doc and link it from the mapping spreadsheet."
+    },
+    {
+      "timestamp": "38:55",
+      "speaker": "Sarah Chen",
+      "text": "Good idea. That way the review is grounded in the same tooling we're building against."
+    },
+    {
+      "timestamp": "39:10",
+      "speaker": "Marcus Webb",
+      "text": "Aisha, quick question — will you be available to answer technical questions during our review period if something in the mapping document isn't clear?"
+    },
+    {
+      "timestamp": "39:22",
+      "speaker": "Aisha Patel",
+      "text": "Yes, absolutely. Best to reach me on Slack or email. I'm usually pretty responsive during business hours."
+    },
+    {
+      "timestamp": "39:32",
+      "speaker": "Tom Reyes",
+      "text": "And for anything more complex I'm available too. Don't wait until the end of the review window if something is blocking your read-through."
+    },
+    {
+      "timestamp": "39:48",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. Okay, I want to do one final check — Marcus, Linda, do you feel like you have enough context to do a meaningful review of the mapping doc when it comes out tomorrow? Any gaps we should address now?"
+    },
+    {
+      "timestamp": "40:05",
+      "speaker": "Marcus Webb",
+      "text": "I feel good. Today's walkthrough helped a lot — I understand Tom's methodology now, which makes it easier to assess whether the specific mappings are right."
+    },
+    {
+      "timestamp": "40:18",
+      "speaker": "Linda Marsh",
+      "text": "Same. The custom extensions section is the area I'll focus on. I may have more questions once I see the actual field-level decisions, but I know where to send them."
+    },
+    {
+      "timestamp": "40:32",
+      "speaker": "Tom Reyes",
+      "text": "Fair. And I'll add inline notes to the more complex decisions in the doc so the rationale is clear without you having to reverse-engineer it."
+    },
+    {
+      "timestamp": "40:46",
+      "speaker": "Sarah Chen",
+      "text": "That'll save a lot of back-and-forth. Good thinking."
+    },
+    {
+      "timestamp": "41:00",
+      "speaker": "Aisha Patel",
+      "text": "I'll also attach a sample output — a few example FHIR resources generated from synthetic HL7 messages — so you can see what the actual JSON looks like, not just the mapping rules."
+    },
+    {
+      "timestamp": "41:18",
+      "speaker": "Marcus Webb",
+      "text": "That would be very helpful. Seeing the actual output is much easier to evaluate than reading a mapping table."
+    },
+    {
+      "timestamp": "41:28",
+      "speaker": "Tom Reyes",
+      "text": "Good call, Aisha. Include one example for each major resource type — Patient, Encounter, DiagnosticReport, Observation."
+    },
+    {
+      "timestamp": "41:40",
+      "speaker": "Aisha Patel",
+      "text": "Will do. I'll have those ready to go with the mapping doc tomorrow."
+    },
+    {
+      "timestamp": "41:55",
+      "speaker": "Sarah Chen",
+      "text": "Perfect. That's a really useful addition. Okay I think we're genuinely done with the substantive content. Let me do a formal recap for the record."
     },
     {
       "timestamp": "44:02",

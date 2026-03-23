@@ -117,6 +117,276 @@
       "text": "Action item — Marcus sends Tom the custom lab fields doc today, January 6th."
     },
     {
+      "timestamp": "09:22",
+      "speaker": "Kevin Park",
+      "text": "Sarah, on the milestone side — the SOW has four billing milestones tied to deliverable acceptance. I want to make sure we're aligned on what 'acceptance' means for the mapping doc. Is that a formal sign-off email from Acme, or is there a formal approval workflow?"
+    },
+    {
+      "timestamp": "09:40",
+      "speaker": "Sarah Chen",
+      "text": "Good question. Diana, what's the threshold on that?"
+    },
+    {
+      "timestamp": "09:48",
+      "speaker": "Diana Osei",
+      "text": "For the mapping doc specifically, I'd say a written email from Marcus or Linda confirming the review is complete is sufficient. We don't need a formal DocuSign or anything. But it does need to be explicit — no implied approvals."
+    },
+    {
+      "timestamp": "10:05",
+      "speaker": "Kevin Park",
+      "text": "That works. I'll note that in the project tracker. Tom, same question for the architecture package — is that the same bar?"
+    },
+    {
+      "timestamp": "10:14",
+      "speaker": "Tom Reyes",
+      "text": "Yeah, for us a written confirmation from Sarah that the architecture doc is accepted is the trigger. We just need something we can point to."
+    },
+    {
+      "timestamp": "10:25",
+      "speaker": "Sarah Chen",
+      "text": "Noted. I'll be the accepting party on the architecture package. Marcus and Linda on the mapping doc."
+    },
+    {
+      "timestamp": "10:38",
+      "speaker": "Tom Reyes",
+      "text": "One more thing on the mapping — I want to set expectations about how we handle null and default values. The legacy system has a lot of fields that are technically required by FHIR but populated inconsistently in source. We're going to need a documented policy on how to handle those. Marcus, is there someone on your team who owns data governance?"
+    },
+    {
+      "timestamp": "11:00",
+      "speaker": "Marcus Webb",
+      "text": "That would be Linda for the clinical data side. For anything administrative — demographics, insurance — that's my team."
+    },
+    {
+      "timestamp": "11:12",
+      "speaker": "Tom Reyes",
+      "text": "Okay. So in the mapping doc I'll flag the fields with data quality issues and we'll need decisions from both of you. I'll probably set up a separate tab in the spreadsheet just for those."
+    },
+    {
+      "timestamp": "11:28",
+      "speaker": "Linda Marsh",
+      "text": "— sorry, looks like she hasn't joined yet."
+    },
+    {
+      "timestamp": "11:31",
+      "speaker": "Sarah Chen",
+      "text": "Linda's not on yet — she said she might be a few minutes late. Tom, keep going."
+    },
+    {
+      "timestamp": "11:36",
+      "speaker": "Tom Reyes",
+      "text": "Sure. So alongside the mapping, I also want to discuss error handling strategy. When a message comes in from the legacy system and we can't map a field — either it's missing required data or it's in a format we don't recognize — what's the expected behavior? Do we reject the transaction? Log and continue? That policy needs to be locked down early."
+    },
+    {
+      "timestamp": "12:00",
+      "speaker": "Marcus Webb",
+      "text": "From an operations standpoint, I'd prefer we log and continue for non-critical fields, and hard-reject for anything that would compromise patient safety — medication orders, allergy records. But we should define the tiers."
+    },
+    {
+      "timestamp": "12:20",
+      "speaker": "Tom Reyes",
+      "text": "That's exactly what we'd recommend. We'll build a criticality tier into the mapping doc — Tier 1 is hard-reject, Tier 2 is log-and-flag, Tier 3 is best-effort. You'll need to validate the tier assignments."
+    },
+    {
+      "timestamp": "12:38",
+      "speaker": "Diana Osei",
+      "text": "I want to make sure compliance is comfortable with any log-and-continue behavior on clinical records. Tom, can you include a brief rationale column in the mapping doc explaining why each Tier 2 field got that rating? If I get questions from our compliance team I want to be able to defend the choices."
+    },
+    {
+      "timestamp": "12:58",
+      "speaker": "Tom Reyes",
+      "text": "Absolutely, that's a good idea regardless. We can add that."
+    },
+    {
+      "timestamp": "13:15",
+      "speaker": "Priya Nair",
+      "text": "From an infrastructure standpoint, we're going to need to know the expected message volume. Our compute sizing depends on peak throughput. Do you have numbers on that, Marcus?"
+    },
+    {
+      "timestamp": "13:30",
+      "speaker": "Marcus Webb",
+      "text": "We're running about 40,000 ADT messages a day at peak, roughly 2,000 per hour during business hours. Lab results are another 15,000 a day. I can send you a more detailed breakdown — we have six months of logs."
+    },
+    {
+      "timestamp": "13:50",
+      "speaker": "Priya Nair",
+      "text": "That would be really helpful. Jordan is doing the capacity planning — can you send it to both of us?"
+    },
+    {
+      "timestamp": "14:00",
+      "speaker": "Marcus Webb",
+      "text": "Sure, I'll pull that report today."
+    },
+    {
+      "timestamp": "14:15",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus sends volume report to Priya and Jordan today."
+    },
+    {
+      "timestamp": "14:30",
+      "speaker": "Tom Reyes",
+      "text": "On the FHIR side, I want to confirm we're targeting R4 and not STU3. There are organizations still on STU3 and the resource structures are different enough that it matters."
+    },
+    {
+      "timestamp": "14:44",
+      "speaker": "Marcus Webb",
+      "text": "R4. That was specified in the RFP."
+    },
+    {
+      "timestamp": "14:50",
+      "speaker": "Tom Reyes",
+      "text": "Good. Just wanted it on the record. Aisha will build the test suite against R4 conformance."
+    },
+    {
+      "timestamp": "15:05",
+      "speaker": "Sarah Chen",
+      "text": "Priya, quick question on the environment — are we talking AWS, Azure, something else?"
+    },
+    {
+      "timestamp": "15:12",
+      "speaker": "Priya Nair",
+      "text": "AWS. Jordan has been working in us-east-1. We'll also set up a disaster recovery footprint in us-west-2, but the primary stack is us-east-1."
+    },
+    {
+      "timestamp": "15:25",
+      "speaker": "Tom Reyes",
+      "text": "That's consistent with what we scoped. Our middleware stack runs in containers — Fargate most likely. We'll need to align on VPC configuration and make sure our service can reach Acme's source systems."
+    },
+    {
+      "timestamp": "15:42",
+      "speaker": "Marcus Webb",
+      "text": "Our internal systems are on-prem. We'll be providing a site-to-site VPN or direct connect for the integration layer to reach our HL7 feeds. IT is already engaged on that."
+    },
+    {
+      "timestamp": "16:00",
+      "speaker": "Tom Reyes",
+      "text": "Good. We'll need the network specs — IP ranges, port requirements — before we can finalize the deployment config. That should probably go to Jordan?"
+    },
+    {
+      "timestamp": "16:12",
+      "speaker": "Priya Nair",
+      "text": "Yes, Jordan owns the network layer. You can copy me but send the technical specs to Jordan directly."
+    },
+    {
+      "timestamp": "16:24",
+      "speaker": "Sarah Chen",
+      "text": "Marcus, can you get those network specs to Jordan by January 13th? That gives CloudPeak a week before the mapping review starts."
+    },
+    {
+      "timestamp": "16:35",
+      "speaker": "Marcus Webb",
+      "text": "I'll check with IT but I think that's doable."
+    },
+    {
+      "timestamp": "16:45",
+      "speaker": "Sarah Chen",
+      "text": "Okay. Action item — Marcus coordinates with IT to send network specs to Jordan by January 13th."
+    },
+    {
+      "timestamp": "17:00",
+      "speaker": "Kevin Park",
+      "text": "Tom, on our side — once the mapping is approved, what does the build timeline look like? Just so I can update the project schedule."
+    },
+    {
+      "timestamp": "17:12",
+      "speaker": "Tom Reyes",
+      "text": "Mapping approved January 22nd, we finalize the architecture package by the 29th. The core transformation logic we can have coded and unit-tested within about a week of mapping approval. Integration testing — that's Aisha's domain — maybe five to seven business days assuming no major surprises. Then UAT with Acme's team, which I'd suggest is at least five business days. That gets us to roughly February 10th, which gives us a few days buffer before February 14th."
+    },
+    {
+      "timestamp": "17:50",
+      "speaker": "Sarah Chen",
+      "text": "That's tight but workable. Aisha, you're not on the call but I'll confirm this with her directly. Kevin, note that as the indicative schedule."
+    },
+    {
+      "timestamp": "18:05",
+      "speaker": "Kevin Park",
+      "text": "Got it. I'll update the tracker."
+    },
+    {
+      "timestamp": "18:18",
+      "speaker": "Diana Osei",
+      "text": "Can we talk about the UAT process for a moment? Who from Acme's side is owning that?"
+    },
+    {
+      "timestamp": "18:28",
+      "speaker": "Marcus Webb",
+      "text": "That would be Linda and me, along with a couple of people from the clinical informatics team. We have a standard UAT checklist we use for integration projects. I'll share it with Tom and Aisha so they know what we'll be testing."
+    },
+    {
+      "timestamp": "18:48",
+      "speaker": "Tom Reyes",
+      "text": "That would be really helpful. The more we know about what you're going to test, the more we can make sure our integration test suite covers the same scenarios."
+    },
+    {
+      "timestamp": "19:02",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus shares Acme UAT checklist with Tom and Aisha by January 20th."
+    },
+    {
+      "timestamp": "19:15",
+      "speaker": "Diana Osei",
+      "text": "Is there a rollback plan? If we cut over on February 14th and something goes wrong, what's the path back to the legacy system?"
+    },
+    {
+      "timestamp": "19:28",
+      "speaker": "Tom Reyes",
+      "text": "Yes. Because we're building a translation layer rather than replacing the source system, the legacy HL7 feed stays intact until we explicitly decommission it. A rollback is essentially just redirecting traffic back to the legacy path. That's a configuration change — probably less than an hour to execute."
+    },
+    {
+      "timestamp": "19:52",
+      "speaker": "Priya Nair",
+      "text": "From our side, we'll have the legacy path in standby for at least 30 days post-cutover. Jordan will document the rollback procedure as part of the runbook."
+    },
+    {
+      "timestamp": "20:05",
+      "speaker": "Diana Osei",
+      "text": "Good. I want that rollback procedure reviewed and approved before we go live."
+    },
+    {
+      "timestamp": "20:14",
+      "speaker": "Sarah Chen",
+      "text": "Noted. That goes on the pre-launch checklist."
+    },
+    {
+      "timestamp": "20:28",
+      "speaker": "Tom Reyes",
+      "text": "One more pre-launch item I want to raise — we'll need a HIPAA BAA in place between DataBridge and Acme before we can access any PHI, even in a test environment. Kevin, has legal started on that?"
+    },
+    {
+      "timestamp": "20:44",
+      "speaker": "Kevin Park",
+      "text": "The BAA is in draft. I'll follow up with our legal team — I'd expect it to be ready within the week."
+    },
+    {
+      "timestamp": "20:55",
+      "speaker": "Sarah Chen",
+      "text": "That's a dependency on the test environment access. Kevin, can you target January 13th for the signed BAA?"
+    },
+    {
+      "timestamp": "21:05",
+      "speaker": "Kevin Park",
+      "text": "I'll push for that. Our legal team is usually pretty fast on BAAs."
+    },
+    {
+      "timestamp": "21:18",
+      "speaker": "Sarah Chen",
+      "text": "Thank you. Action item — Kevin targets signed BAA by January 13th."
+    },
+    {
+      "timestamp": "21:30",
+      "speaker": "Tom Reyes",
+      "text": "Once the BAA is in place we can also get credentials for your staging environment so Aisha can start test harness development. Marcus, who manages access provisioning on your side?"
+    },
+    {
+      "timestamp": "21:48",
+      "speaker": "Marcus Webb",
+      "text": "That's our IT security team. I'll connect you with them once the BAA is signed."
+    },
+    {
+      "timestamp": "22:00",
+      "speaker": "Sarah Chen",
+      "text": "Okay, I think we're making good progress. Let me pause — Linda was supposed to join. Let me check the waiting room..."
+    },
+    {
       "timestamp": "22:11",
       "speaker": "Linda Marsh",
       "text": "Sorry, just joined — did I miss the data mapping discussion?"
@@ -137,7 +407,237 @@
       "text": "Good call, Linda. You and I can sync before we send our review back to Tom."
     },
     {
-      "timestamp": "35:04",
+      "timestamp": "22:58",
+      "speaker": "Tom Reyes",
+      "text": "Linda, just so you're caught up — on the custom lab fields, we'll handle most of them as FHIR extensions. In the mapping doc I'll use a dedicated tab to list each non-standard field, the proposed extension URL, and the null-value handling policy. You'll be the primary reviewer for that section."
+    },
+    {
+      "timestamp": "23:18",
+      "speaker": "Linda Marsh",
+      "text": "Understood. I'll flag anything that looks off on the ADT side too. In our last migration we had a problem where the sending system was populating PID-3 with an encounter ID instead of the MRN, and it caused downstream duplicate record issues. I want to make sure we catch anything like that early."
+    },
+    {
+      "timestamp": "23:42",
+      "speaker": "Tom Reyes",
+      "text": "That's exactly the kind of thing we need to know about. If you have documentation on known data quality issues in the source HL7 feeds, please send it along with the custom fields doc."
+    },
+    {
+      "timestamp": "23:55",
+      "speaker": "Linda Marsh",
+      "text": "I do have a document from the last migration audit. It's from 2022 but most of it is still applicable. I'll send that."
+    },
+    {
+      "timestamp": "24:08",
+      "speaker": "Sarah Chen",
+      "text": "Great. Action item — Linda sends Tom the 2022 migration audit doc alongside the custom lab fields."
+    },
+    {
+      "timestamp": "24:20",
+      "speaker": "Priya Nair",
+      "text": "Linda, quick question from the infrastructure side — do you know if Acme's HL7 interface engine has any hard limits on concurrent connections? We're going to be standing up a listener on our end and I want to make sure we don't saturate your side."
+    },
+    {
+      "timestamp": "24:40",
+      "speaker": "Linda Marsh",
+      "text": "Honestly I'm not sure of the exact number. We're running Rhapsody as the interface engine. I'll check with IT."
+    },
+    {
+      "timestamp": "24:52",
+      "speaker": "Tom Reyes",
+      "text": "Rhapsody, okay. We've integrated with Rhapsody before. Standard MLLP listener, right?"
+    },
+    {
+      "timestamp": "25:00",
+      "speaker": "Linda Marsh",
+      "text": "Correct. MLLP on port 5000 in our staging environment. Production is 6100 but you won't be touching that until cutover."
+    },
+    {
+      "timestamp": "25:14",
+      "speaker": "Tom Reyes",
+      "text": "Good. Jordan will need those port details for the security group config."
+    },
+    {
+      "timestamp": "25:22",
+      "speaker": "Priya Nair",
+      "text": "I'll make sure Jordan has them."
+    },
+    {
+      "timestamp": "25:35",
+      "speaker": "Sarah Chen",
+      "text": "Alright. We should talk about the testing environment setup. Tom, walk us through what you need from Acme to stand up your dev and test environments."
+    },
+    {
+      "timestamp": "25:50",
+      "speaker": "Tom Reyes",
+      "text": "Sure. We need three things: one, a copy of the staging HL7 feed — ideally replaying a week of recent production messages with PHI scrubbed. Two, read access to the source system data dictionary so we can validate field populations. Three, a test FHIR endpoint to push our output to — we'll be running the FHIR validator against everything we produce."
+    },
+    {
+      "timestamp": "26:20",
+      "speaker": "Marcus Webb",
+      "text": "The staging feed I can arrange. The data dictionary — that's documentation that lives in our IT department. Linda, do you know who owns that?"
+    },
+    {
+      "timestamp": "26:32",
+      "speaker": "Linda Marsh",
+      "text": "It's managed by our informatics team. I can get it. It's about 400 pages but I'll send the relevant sections."
+    },
+    {
+      "timestamp": "26:45",
+      "speaker": "Tom Reyes",
+      "text": "Any format is fine. PDF, Excel, whatever you have."
+    },
+    {
+      "timestamp": "26:52",
+      "speaker": "Sarah Chen",
+      "text": "And the FHIR test endpoint — Priya, is that CloudPeak's responsibility to stand up?"
+    },
+    {
+      "timestamp": "27:02",
+      "speaker": "Priya Nair",
+      "text": "We can stand up a HAPI FHIR server in the test environment for validation purposes. Jordan can have that ready by January 20th assuming the BAA is signed and we have network connectivity."
+    },
+    {
+      "timestamp": "27:18",
+      "speaker": "Tom Reyes",
+      "text": "That works for our timeline."
+    },
+    {
+      "timestamp": "27:25",
+      "speaker": "Sarah Chen",
+      "text": "Good. Priya, action item — CloudPeak stands up HAPI FHIR test server by January 20th, contingent on BAA and network connectivity."
+    },
+    {
+      "timestamp": "27:40",
+      "speaker": "Kevin Park",
+      "text": "Sarah, I want to make sure we have a documented escalation path. If something is at risk and the project team can't resolve it, who's the next level up?"
+    },
+    {
+      "timestamp": "27:55",
+      "speaker": "Sarah Chen",
+      "text": "For Acme, it's Diana. For DataBridge, Kevin — you're the account lead, right? So issues come to you?"
+    },
+    {
+      "timestamp": "28:08",
+      "speaker": "Kevin Park",
+      "text": "Correct. Tom is the technical lead, I own the account relationship. Anything that could affect scope, timeline, or contract goes through me."
+    },
+    {
+      "timestamp": "28:20",
+      "speaker": "Priya Nair",
+      "text": "CloudPeak's escalation path is me, and above me is our VP of Delivery — but I'd rather handle things at my level unless it's truly a senior issue."
+    },
+    {
+      "timestamp": "28:35",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. Let's try to keep escalations rare. My goal is that Diana only hears about things that she actually needs to act on."
+    },
+    {
+      "timestamp": "28:48",
+      "speaker": "Diana Osei",
+      "text": "That's appreciated, Sarah. But when in doubt, over-communicate. I'd rather get a heads-up that turns out to be nothing than find out about a problem a week after it became critical."
+    },
+    {
+      "timestamp": "29:05",
+      "speaker": "Sarah Chen",
+      "text": "Understood."
+    },
+    {
+      "timestamp": "29:18",
+      "speaker": "Tom Reyes",
+      "text": "One more thing I want to put on the radar — change management. If Acme's requirements shift after the mapping is approved, we need a formal change process. Even small changes mid-build can cascade. I'd like to agree now on what constitutes a change request versus a bug fix."
+    },
+    {
+      "timestamp": "29:40",
+      "speaker": "Kevin Park",
+      "text": "That's in the SOW actually. Section 4.3. But it's worth summarizing on this call."
+    },
+    {
+      "timestamp": "29:50",
+      "speaker": "Tom Reyes",
+      "text": "Right. If the approved mapping document changes after sign-off, that's a formal change request which Kevin and Sarah process. A bug is when our implementation doesn't match the approved mapping. We need that distinction to be clear to everyone."
+    },
+    {
+      "timestamp": "30:08",
+      "speaker": "Marcus Webb",
+      "text": "Understood. So we need to make sure our review comments are thorough before we sign off on the mapping, because once we do, any changes are CRs."
+    },
+    {
+      "timestamp": "30:20",
+      "speaker": "Tom Reyes",
+      "text": "Exactly. Take the full review window. It's better to spend the time now than to do a CR in the middle of the build."
+    },
+    {
+      "timestamp": "30:35",
+      "speaker": "Sarah Chen",
+      "text": "Noted. Alright, I think we need to move on — Kevin, did you have anything else on the contracting side?"
+    },
+    {
+      "timestamp": "30:45",
+      "speaker": "Kevin Park",
+      "text": "Just the payment milestone question we covered at the top. And one thing — the acceptance criteria for final delivery. When DataBridge completes the build and hands off, what does done look like?"
+    },
+    {
+      "timestamp": "31:02",
+      "speaker": "Tom Reyes",
+      "text": "In the SOW it's a passing integration test suite, documented API endpoints, and a completed runbook. Plus Acme UAT sign-off."
+    },
+    {
+      "timestamp": "31:18",
+      "speaker": "Marcus Webb",
+      "text": "And we'll add the rollback procedure to that list per Diana's earlier comment."
+    },
+    {
+      "timestamp": "31:28",
+      "speaker": "Kevin Park",
+      "text": "Good. I'll note that as an addendum to the acceptance criteria."
+    },
+    {
+      "timestamp": "31:42",
+      "speaker": "Sarah Chen",
+      "text": "Alright. Good progress on that. Tom, let's spend a few minutes on the architecture diagram. Can you give us a verbal walkthrough of what the stack looks like end to end?"
+    },
+    {
+      "timestamp": "31:55",
+      "speaker": "Tom Reyes",
+      "text": "Sure. At a high level — Acme's Rhapsody engine sends HL7 messages over MLLP to a message broker we're running on AWS. We're using Amazon MQ for that, which gives us durability and replay capability. The broker feeds our transformation service, which is a containerized Java application that does the FHIR mapping. The output goes to a FHIR API layer — we'll be using HAPI FHIR server as the reference implementation, CloudPeak is hosting that. Then the FHIR API is exposed to the downstream network partners."
+    },
+    {
+      "timestamp": "32:45",
+      "speaker": "Priya Nair",
+      "text": "For the CloudPeak piece — we're planning to put the HAPI FHIR server behind an API Gateway with WAF enabled. Jordan is handling the security layer. We'll also have CloudWatch monitoring on the whole stack."
+    },
+    {
+      "timestamp": "33:05",
+      "speaker": "Tom Reyes",
+      "text": "That's the right approach. I'll make sure the architecture doc captures the full stack so Priya and Jordan have a clear picture of the DataBridge components they need to connect to."
+    },
+    {
+      "timestamp": "33:20",
+      "speaker": "Linda Marsh",
+      "text": "What's the latency expectation for the transformation layer? Some of our clinical workflows require near-real-time updates."
+    },
+    {
+      "timestamp": "33:34",
+      "speaker": "Tom Reyes",
+      "text": "We're designing for sub-five-second end-to-end latency for a typical ADT message. Lab results may take longer depending on message size. We'll include latency SLAs in the architecture doc — but those numbers need Acme's validation."
+    },
+    {
+      "timestamp": "33:52",
+      "speaker": "Marcus Webb",
+      "text": "Five seconds is fine for most workflows. The one exception is real-time ADT notifications to our ED system — those need to be under two seconds. That's maybe 10% of total volume."
+    },
+    {
+      "timestamp": "34:08",
+      "speaker": "Tom Reyes",
+      "text": "Understood. We'll prioritize that message class in the routing layer. I'll flag that in the architecture doc."
+    },
+    {
+      "timestamp": "34:25",
+      "speaker": "Sarah Chen",
+      "text": "Good. I think we've covered a lot of ground on the technical side. Kevin, anything else before we move to the timeline summary?"
+    },
+    {
+      "timestamp": "34:38",
       "speaker": "Kevin Park",
       "text": "One thing from our side — for status updates, Kevin should be my first point of contact, and Tom for anything technical. I'll make sure Kevin is looped on all the scheduling."
     },
@@ -145,6 +645,211 @@
       "timestamp": "35:20",
       "speaker": "Sarah Chen",
       "text": "Got it. Kevin for account stuff, Tom for architecture questions."
+    },
+    {
+      "timestamp": "35:35",
+      "speaker": "Diana Osei",
+      "text": "I want to revisit the dependency chain one more time. My concern is that we have a lot of things that depend on the mapping approval, which depends on DataBridge delivering a clean v1. Tom, how confident are you in the January 15th delivery?"
+    },
+    {
+      "timestamp": "35:52",
+      "speaker": "Tom Reyes",
+      "text": "Very confident. We started the field analysis before this kickoff. Once Marcus sends the custom lab fields today I'll have everything I need. I'm planning to have a working draft to Aisha by the 13th for a quick internal review before it goes to Acme on the 15th."
+    },
+    {
+      "timestamp": "36:10",
+      "speaker": "Diana Osei",
+      "text": "Okay. And if there are significant issues in the Acme review — issues that require rework — what's the contingency?"
+    },
+    {
+      "timestamp": "36:22",
+      "speaker": "Tom Reyes",
+      "text": "If there are minor issues, a day or two of turnaround. If there are significant structural issues with the mapping, we'd need to assess. That's why we're giving a full week for the review — I'd rather have feedback come in on January 18th with time to address it than January 22nd with no runway."
+    },
+    {
+      "timestamp": "36:45",
+      "speaker": "Sarah Chen",
+      "text": "Marcus, if your team spots issues early in the review, flag them immediately rather than waiting to compile everything at the end?"
+    },
+    {
+      "timestamp": "36:56",
+      "speaker": "Marcus Webb",
+      "text": "Agreed. We'll review in sections and send rolling feedback."
+    },
+    {
+      "timestamp": "37:08",
+      "speaker": "Tom Reyes",
+      "text": "That's ideal. Rolling feedback lets us address things in parallel instead of all at once."
+    },
+    {
+      "timestamp": "37:20",
+      "speaker": "Priya Nair",
+      "text": "While we're on contingencies — if the mapping slips and we don't have the architecture by the 29th, the February 14th date becomes very difficult. I want to be transparent about that. Ten business days is not a hard number I invented — it's based on the actual work Jordan and I need to do. There's not a lot of buffer built in."
+    },
+    {
+      "timestamp": "37:45",
+      "speaker": "Diana Osei",
+      "text": "Priya, what would you need to compress that if it came to it?"
+    },
+    {
+      "timestamp": "37:55",
+      "speaker": "Priya Nair",
+      "text": "If we get a draft architecture before it's finalized — even a 90% complete version — Jordan can start on the parts that won't change. That could save us two or three days. Tom, would that be possible?"
+    },
+    {
+      "timestamp": "38:12",
+      "speaker": "Tom Reyes",
+      "text": "Yes. Once the mapping approval comes in I can have a preliminary architecture out within 24 hours. It won't be the final version but the network topology and security group requirements won't change much."
+    },
+    {
+      "timestamp": "38:28",
+      "speaker": "Priya Nair",
+      "text": "That would help a lot. If we get a draft architecture by January 24th or 25th, Jordan can start. We'd absorb the risk of minor changes."
+    },
+    {
+      "timestamp": "38:42",
+      "speaker": "Sarah Chen",
+      "text": "Tom, can you commit to sending a draft architecture to Priya and Jordan within 48 hours of mapping approval?"
+    },
+    {
+      "timestamp": "38:52",
+      "speaker": "Tom Reyes",
+      "text": "Yes. 48 hours from approval, draft architecture goes out. Final version by the 29th."
+    },
+    {
+      "timestamp": "39:05",
+      "speaker": "Sarah Chen",
+      "text": "Good. That's the parallel path. Action item — Tom sends draft architecture to CloudPeak within 48 hours of mapping approval. Final by January 29th."
+    },
+    {
+      "timestamp": "39:22",
+      "speaker": "Kevin Park",
+      "text": "I want to flag something on the contract side. The SOW has a force majeure clause but it doesn't specifically address internal resource turnover. If DataBridge has staffing changes that affect delivery, how is that handled?"
+    },
+    {
+      "timestamp": "39:42",
+      "speaker": "Tom Reyes",
+      "text": "DataBridge's commitment is to the deliverable, not to specific personnel. If I got hit by a bus — knock on wood — the engagement continues with whoever takes over. I'm not planning any changes, but you have my word that Aisha is fully ramped up and could carry the build if needed."
+    },
+    {
+      "timestamp": "40:02",
+      "speaker": "Kevin Park",
+      "text": "Good to know. Just want to make sure everyone is aligned on how that works."
+    },
+    {
+      "timestamp": "40:15",
+      "speaker": "Marcus Webb",
+      "text": "Sarah, one thing I want to document — what communication channels are we using? Right now I have email and Zoom. Is there a shared Slack workspace or project management tool?"
+    },
+    {
+      "timestamp": "40:30",
+      "speaker": "Sarah Chen",
+      "text": "Yes. We set up a shared Slack channel — acme-databridge-shared. I'll send invites today to everyone on this call. For internal Acme discussions we have acme-meridian-ops. Tom, Kevin — shared channel for cross-team communication, please."
+    },
+    {
+      "timestamp": "40:50",
+      "speaker": "Tom Reyes",
+      "text": "Works for me. I'll have Aisha join too."
+    },
+    {
+      "timestamp": "41:00",
+      "speaker": "Priya Nair",
+      "text": "Can CloudPeak be added to the shared channel as well? Or a separate one for CloudPeak-DataBridge coordination?"
+    },
+    {
+      "timestamp": "41:12",
+      "speaker": "Sarah Chen",
+      "text": "Let's keep it simple — one cross-team channel for now. I'll add you and Jordan to the acme-databridge-shared channel, we can rename it if needed."
+    },
+    {
+      "timestamp": "41:24",
+      "speaker": "Priya Nair",
+      "text": "Works for me."
+    },
+    {
+      "timestamp": "41:38",
+      "speaker": "Tom Reyes",
+      "text": "For sensitive architecture documents and mapping files, we should use email rather than Slack, just for proper audit trail and version control."
+    },
+    {
+      "timestamp": "41:50",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. Slack for coordination and quick questions. Email with the full distribution list for deliverables."
+    },
+    {
+      "timestamp": "42:05",
+      "speaker": "Marcus Webb",
+      "text": "That makes sense. Sarah, can you send a summary of the distribution list after this call? I want to make sure I'm not missing anyone when I send the mapping review comments."
+    },
+    {
+      "timestamp": "42:18",
+      "speaker": "Sarah Chen",
+      "text": "Yes, I'll include it in the action item summary. Full DL will be everyone on this call plus Jordan and Aisha."
+    },
+    {
+      "timestamp": "42:32",
+      "speaker": "Linda Marsh",
+      "text": "One last thing from me — test data. When DataBridge is developing the transformation logic, are they using real patient data or synthetic data?"
+    },
+    {
+      "timestamp": "42:46",
+      "speaker": "Tom Reyes",
+      "text": "Synthetic data for development. We'll use de-identified production data for integration testing once the BAA is signed. Aisha generates the synthetic test data set from the message specs — she doesn't need real data to build the test cases."
+    },
+    {
+      "timestamp": "43:05",
+      "speaker": "Linda Marsh",
+      "text": "Good. I just wanted to make sure we weren't shipping PHI to a development environment."
+    },
+    {
+      "timestamp": "43:16",
+      "speaker": "Tom Reyes",
+      "text": "Never. Standard practice — PHI only in environments with full controls in place."
+    },
+    {
+      "timestamp": "43:28",
+      "speaker": "Sarah Chen",
+      "text": "Okay. I think we're approaching our end time. Let me move to the timeline summary."
+    },
+    {
+      "timestamp": "43:40",
+      "speaker": "Kevin Park",
+      "text": "Before you do — Priya, I want to make sure we're aligned on the CloudPeak deliverable dates so the project tracker is accurate. February 7th is your commitment for finalized environment, right?"
+    },
+    {
+      "timestamp": "43:52",
+      "speaker": "Priya Nair",
+      "text": "February 7th for a fully configured and validated environment, yes. That's assuming we have the final architecture doc by January 29th."
+    },
+    {
+      "timestamp": "44:05",
+      "speaker": "Kevin Park",
+      "text": "Got it. And DataBridge hands off the integration package — Tom, what's that date?"
+    },
+    {
+      "timestamp": "44:14",
+      "speaker": "Tom Reyes",
+      "text": "We're targeting February 10th for the complete integration package — transformation service, test suite, runbook. That gives Acme a few days for UAT before the 14th."
+    },
+    {
+      "timestamp": "44:28",
+      "speaker": "Kevin Park",
+      "text": "February 10th. Got it. That's tight with UAT."
+    },
+    {
+      "timestamp": "44:36",
+      "speaker": "Sarah Chen",
+      "text": "It is tight. We may need to consider whether UAT can run in parallel with the final integration testing. Marcus, is that feasible?"
+    },
+    {
+      "timestamp": "44:48",
+      "speaker": "Marcus Webb",
+      "text": "We can start UAT on a subset of scenarios before the full package is handed off, as long as the core workflows are stable. Let's see how the build goes before we decide."
+    },
+    {
+      "timestamp": "45:02",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. We'll revisit that closer to the date. Alright — timeline summary."
     },
     {
       "timestamp": "51:22",
@@ -172,6 +877,131 @@
       "text": "Okay, I'm noting that dependency — DataBridge needs the mapping approved by January 22nd to hit the January 29th architecture delivery. And CloudPeak needs architecture by January 29th to hit the February 14th cutover. That's the critical path."
     },
     {
+      "timestamp": "52:48",
+      "speaker": "Diana Osei",
+      "text": "And if the mapping slips, the whole chain slips. I want everyone to internalize that. The mapping review is not a formality — it is the single most important milestone on this project."
+    },
+    {
+      "timestamp": "53:02",
+      "speaker": "Marcus Webb",
+      "text": "Understood. We'll treat it that way."
+    },
+    {
+      "timestamp": "53:15",
+      "speaker": "Tom Reyes",
+      "text": "Same on our end. January 15th is locked."
+    },
+    {
+      "timestamp": "53:28",
+      "speaker": "Kevin Park",
+      "text": "I'll set up a weekly project status call starting next week. Tuesdays at 11 AM work for most people?"
+    },
+    {
+      "timestamp": "53:40",
+      "speaker": "Sarah Chen",
+      "text": "Works for me. Diana, you mentioned weekly status emails — would you want to join the status calls as well, or just receive the written update?"
+    },
+    {
+      "timestamp": "53:52",
+      "speaker": "Diana Osei",
+      "text": "Written update is fine unless something is at risk. No need for me to be on every call."
+    },
+    {
+      "timestamp": "54:05",
+      "speaker": "Sarah Chen",
+      "text": "Perfect. Kevin, please send the recurring invite for Tuesdays 11 AM — include Tom, me, Marcus, Linda, Priya, and Jordan. Diana on a standing exception basis."
+    },
+    {
+      "timestamp": "54:22",
+      "speaker": "Kevin Park",
+      "text": "Will do. I'll have it out today."
+    },
+    {
+      "timestamp": "54:35",
+      "speaker": "Priya Nair",
+      "text": "One last thing from CloudPeak — Jordan is going to need a point of contact at Acme's IT department for the network connectivity setup. Who should he reach out to?"
+    },
+    {
+      "timestamp": "54:48",
+      "speaker": "Marcus Webb",
+      "text": "That would be our network engineer — his name is Dev Rajan. I'll introduce Jordan and Dev over email today."
+    },
+    {
+      "timestamp": "55:00",
+      "speaker": "Priya Nair",
+      "text": "Great, thank you."
+    },
+    {
+      "timestamp": "55:12",
+      "speaker": "Sarah Chen",
+      "text": "Action item — Marcus introduces Jordan to Dev Rajan today for network connectivity coordination."
+    },
+    {
+      "timestamp": "55:28",
+      "speaker": "Tom Reyes",
+      "text": "And I'll need Dev's contact too when it's time to set up the MLLP listener configuration."
+    },
+    {
+      "timestamp": "55:38",
+      "speaker": "Marcus Webb",
+      "text": "I'll copy you on the introduction email."
+    },
+    {
+      "timestamp": "55:50",
+      "speaker": "Linda Marsh",
+      "text": "I just want to say — I know I came in late, but from what I've heard this sounds like a well-organized kickoff. I feel good about where this is heading."
+    },
+    {
+      "timestamp": "56:02",
+      "speaker": "Tom Reyes",
+      "text": "Agreed. Good group. I think we can make February 14th if everyone stays in sync."
+    },
+    {
+      "timestamp": "56:15",
+      "speaker": "Priya Nair",
+      "text": "Cautiously optimistic. Jordan will be happy to finally see some movement on this after the pre-sales phase."
+    },
+    {
+      "timestamp": "56:28",
+      "speaker": "Kevin Park",
+      "text": "I'll make sure Jordan gets the meeting notes and action items."
+    },
+    {
+      "timestamp": "56:40",
+      "speaker": "Sarah Chen",
+      "text": "Great. Before I do the final summary, does anyone have anything else?"
+    },
+    {
+      "timestamp": "56:52",
+      "speaker": "Marcus Webb",
+      "text": "Just a comment — I want to make sure that during the build phase, DataBridge keeps us in the loop on any decisions that affect the mapping. If there are interpretation calls being made, I want to know, not just see them in the final product."
+    },
+    {
+      "timestamp": "57:08",
+      "speaker": "Tom Reyes",
+      "text": "Fair ask. I'll flag any significant interpretation decisions as comments in the mapping doc and send a summary email when they come up."
+    },
+    {
+      "timestamp": "57:22",
+      "speaker": "Marcus Webb",
+      "text": "That's all I need."
+    },
+    {
+      "timestamp": "57:35",
+      "speaker": "Diana Osei",
+      "text": "Sarah, one more thing on the status updates — if anything moves to 'at risk,' I need to see it in that week's update, not the week after."
+    },
+    {
+      "timestamp": "57:48",
+      "speaker": "Sarah Chen",
+      "text": "Understood. At-risk items go into the same week's update. No holding it for the next Friday."
+    },
+    {
+      "timestamp": "58:00",
+      "speaker": "Diana Osei",
+      "text": "Good."
+    },
+    {
       "timestamp": "58:15",
       "speaker": "Diana Osei",
       "text": "Sarah, I want weekly status updates in my inbox. Keep them brief — three bullets is fine. What's on track, what's at risk, what needs my attention. If something slips to the at-risk column, I want to know before it becomes a crisis."
@@ -180,6 +1010,61 @@
       "timestamp": "58:38",
       "speaker": "Sarah Chen",
       "text": "Absolutely. I'll send those every Friday."
+    },
+    {
+      "timestamp": "58:52",
+      "speaker": "Diana Osei",
+      "text": "Thank you everyone. I have to drop off now — Sarah, talk soon."
+    },
+    {
+      "timestamp": "59:00",
+      "speaker": "Sarah Chen",
+      "text": "Thanks Diana. Talk soon."
+    },
+    {
+      "timestamp": "59:10",
+      "speaker": "Kevin Park",
+      "text": "I'm going to need to drop too in about two minutes. Tom, let's connect after this call — I want to make sure the project schedule in our system matches what we aligned on today."
+    },
+    {
+      "timestamp": "59:22",
+      "speaker": "Tom Reyes",
+      "text": "Yeah, send me a message and we can do a quick call this afternoon."
+    },
+    {
+      "timestamp": "59:32",
+      "speaker": "Kevin Park",
+      "text": "Great. Thanks everyone. Good kickoff."
+    },
+    {
+      "timestamp": "59:40",
+      "speaker": "Sarah Chen",
+      "text": "Thanks Kevin. Priya, are you okay if I send the final action item list as a follow-up? I want to make sure Jordan gets everything he needs."
+    },
+    {
+      "timestamp": "59:52",
+      "speaker": "Priya Nair",
+      "text": "Yes, please copy Jordan on everything from here on. He's the one doing the hands-on work and I want him fully informed."
+    },
+    {
+      "timestamp": "60:05",
+      "speaker": "Sarah Chen",
+      "text": "Will do. Marcus, Linda — anything before we close?"
+    },
+    {
+      "timestamp": "60:14",
+      "speaker": "Marcus Webb",
+      "text": "I'm good. Looking forward to seeing the mapping doc on the 15th."
+    },
+    {
+      "timestamp": "60:22",
+      "speaker": "Linda Marsh",
+      "text": "Same. I'll block time that week for the review."
+    },
+    {
+      "timestamp": "60:30",
+      "speaker": "Tom Reyes",
+      "text": "Appreciate it. I'll make sure it's in good shape before it goes out."
     },
     {
       "timestamp": "61:14",
