@@ -121,7 +121,7 @@
     {
       "timestamp": "05:18",
       "speaker": "Priya Nair",
-      "text": "Sarah, I have to be direct — if we don't have the architecture from DataBridge by February 1st at the latest, we cannot deliver a validated environment by February 14th. That's a hard constraint. Our SLA with you is ten business days of configuration time after we have all artifacts."
+      "text": "Sarah, I have to be direct — if we don't have the architecture from DataBridge by January 30th at the latest, we cannot deliver a validated environment by February 14th. That's a hard constraint. Our SLA with you is ten business days of configuration time after we have all artifacts."
     },
     {
       "timestamp": "05:40",
@@ -144,6 +144,436 @@
       "text": "Understood. But the clock is ticking."
     },
     {
+      "timestamp": "06:45",
+      "speaker": "Priya Nair",
+      "text": "Sarah, while we're waiting to see what DataBridge says — can I walk through what CloudPeak's exposure is right now? I want to make sure everyone understands the situation."
+    },
+    {
+      "timestamp": "06:55",
+      "speaker": "Sarah Chen",
+      "text": "Please."
+    },
+    {
+      "timestamp": "07:02",
+      "speaker": "Priya Nair",
+      "text": "Jordan has provisioned the base compute environment — VPC, subnets, IAM roles, the Amazon MQ broker configuration, and the Fargate cluster. He started from the kickoff architecture Tom described and incorporated the single-phase change from Tom's email. But because we never got the architecture doc, there are about a dozen configuration parameters Jordan estimated rather than confirmed. Security group rules, task sizing, API gateway config."
+    },
+    {
+      "timestamp": "07:38",
+      "speaker": "Marcus Webb",
+      "text": "How much rework is that if the architecture doc changes those parameters?"
+    },
+    {
+      "timestamp": "07:48",
+      "speaker": "Priya Nair",
+      "text": "Some of it is straightforward — security group rule updates are quick. The task sizing could require a re-deploy. The API gateway config depends on how far off our assumptions are. Best case, a day of work. Worst case, three or four days if Jordan's assumptions are significantly off."
+    },
+    {
+      "timestamp": "08:10",
+      "speaker": "Sarah Chen",
+      "text": "Okay. So there's risk but it's not catastrophic as long as we get the architecture doc soon."
+    },
+    {
+      "timestamp": "08:20",
+      "speaker": "Priya Nair",
+      "text": "Correct. The longer it takes, the more Jordan builds on assumptions that might be wrong, and the more rework we potentially face."
+    },
+    {
+      "timestamp": "08:35",
+      "speaker": "Marcus Webb",
+      "text": "Sarah, I want to share something. I reached out to Aisha directly last week — not through formal channels, just a quick message on Slack in the shared channel. She didn't respond there either. Her last message in the channel was January 21st."
+    },
+    {
+      "timestamp": "08:55",
+      "speaker": "Sarah Chen",
+      "text": "January 21st. So she went quiet the day before the mapping approval was due."
+    },
+    {
+      "timestamp": "09:05",
+      "speaker": "Marcus Webb",
+      "text": "That's right. And Tom's last message in the channel was January 19th. I can see when they were last active — they've both been offline in the shared workspace."
+    },
+    {
+      "timestamp": "09:22",
+      "speaker": "Sarah Chen",
+      "text": "Something happened at DataBridge. This isn't a communication glitch."
+    },
+    {
+      "timestamp": "09:32",
+      "speaker": "Priya Nair",
+      "text": "What's our contractual position if DataBridge is experiencing internal problems? Is there a notice of delay provision?"
+    },
+    {
+      "timestamp": "09:45",
+      "speaker": "Sarah Chen",
+      "text": "Kevin would know better than me. That's another reason I need to get him on the phone. The SOW has a delay clause but I don't know the specifics off the top of my head."
+    },
+    {
+      "timestamp": "10:00",
+      "speaker": "Marcus Webb",
+      "text": "If Tom really did leave DataBridge in January, that raises a question about the knowledge transfer. Tom was the primary architect. Aisha is the integration developer — does she have enough context to complete the build without him?"
+    },
+    {
+      "timestamp": "10:18",
+      "speaker": "Sarah Chen",
+      "text": "Aisha was on the technical review call and she seemed very capable. She was already building the test framework and had reviewed the mapping with Tom. My hope is that if Tom left, Aisha has enough to carry it — or that DataBridge assigns someone new."
+    },
+    {
+      "timestamp": "10:38",
+      "speaker": "Priya Nair",
+      "text": "The other scenario is that Tom leaving created organizational chaos and the whole project got dropped in the shuffle. That would explain why nobody's responding."
+    },
+    {
+      "timestamp": "10:52",
+      "speaker": "Sarah Chen",
+      "text": "That's the worst case scenario. Let's not assume that yet."
+    },
+    {
+      "timestamp": "11:05",
+      "speaker": "Marcus Webb",
+      "text": "What about a call with Kevin's manager? If Kevin isn't responding either, maybe we need to go above him."
+    },
+    {
+      "timestamp": "11:18",
+      "speaker": "Sarah Chen",
+      "text": "I'll try Kevin directly first — call and email. If I don't hear back by end of day, I'll look for his manager's contact. Kevin's email signature may have an escalation line."
+    },
+    {
+      "timestamp": "11:35",
+      "speaker": "Priya Nair",
+      "text": "Alternatively — Acme's procurement team may have a vendor contact record for DataBridge with more than just Kevin's name. Worth checking."
+    },
+    {
+      "timestamp": "11:50",
+      "speaker": "Marcus Webb",
+      "text": "Good thought. I'll ask our vendor management team. They handled the contracting so they may have multiple contacts."
+    },
+    {
+      "timestamp": "12:05",
+      "speaker": "Sarah Chen",
+      "text": "Yes, please do that today Marcus. It gives us a backup if my call to Kevin doesn't land."
+    },
+    {
+      "timestamp": "12:18",
+      "speaker": "Marcus Webb",
+      "text": "I'll reach out to vendor management as soon as we're off this call."
+    },
+    {
+      "timestamp": "12:32",
+      "speaker": "Sarah Chen",
+      "text": "Thank you. Now — let's also talk about what happens if we can't re-engage DataBridge. What are our options? I don't want to get to February 7th having done nothing but wait."
+    },
+    {
+      "timestamp": "12:48",
+      "speaker": "Priya Nair",
+      "text": "From the CloudPeak side — we can continue building the environment based on our current assumptions. The risk is rework if the architecture changes. But if DataBridge does eventually deliver and their architecture is close to what Jordan assumed, we could be in reasonably good shape."
+    },
+    {
+      "timestamp": "13:08",
+      "speaker": "Marcus Webb",
+      "text": "What's the probability Jordan's assumptions are close enough?"
+    },
+    {
+      "timestamp": "13:15",
+      "speaker": "Priya Nair",
+      "text": "Tom's email about the single-phase decision was actually fairly detailed. Jordan thinks his assumptions are probably 70-80% right. The unknowns are mostly in the network configuration and the API gateway routing rules."
+    },
+    {
+      "timestamp": "13:35",
+      "speaker": "Sarah Chen",
+      "text": "Okay. So Priya, my ask is that you and Jordan keep building on your current assumptions, document what you've assumed versus confirmed, and be ready to adjust when we get the architecture doc. Does that work?"
+    },
+    {
+      "timestamp": "13:52",
+      "speaker": "Priya Nair",
+      "text": "Yes. Jordan is already doing that — he's flagging assumed parameters in the deployment templates with a comment tag. It'll be easy to find and update them."
+    },
+    {
+      "timestamp": "14:08",
+      "speaker": "Sarah Chen",
+      "text": "Good. That's the CloudPeak path. Now for DataBridge's work — the transformation logic and the mapping — we're in a harder position because that's entirely inside their shop. We don't have access to their build environment."
+    },
+    {
+      "timestamp": "14:28",
+      "speaker": "Marcus Webb",
+      "text": "We have the v1 mapping doc Tom sent on the 15th. And we have our v1.1 with comments. Even if DataBridge is in chaos, we have the primary artifact. The question is whether someone can pick up the build from that document."
+    },
+    {
+      "timestamp": "14:48",
+      "speaker": "Sarah Chen",
+      "text": "That's an important point. If it came to it — and I'm not saying it will — could Acme engage a different vendor to do the build against the mapping doc we have?"
+    },
+    {
+      "timestamp": "15:05",
+      "speaker": "Marcus Webb",
+      "text": "In theory yes. The mapping doc is an Acme artifact — we co-developed it. But onboarding a new vendor in this timeline would be... very difficult."
+    },
+    {
+      "timestamp": "15:22",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. That's the nuclear option. I'm not going there yet. But it's worth knowing it's on the table if needed."
+    },
+    {
+      "timestamp": "15:38",
+      "speaker": "Priya Nair",
+      "text": "For what it's worth — CloudPeak has a professional services team that does FHIR integration work. If Acme needed a second opinion or emergency support, that's an avenue. I'm not pitching it, just making sure you know it exists."
+    },
+    {
+      "timestamp": "15:58",
+      "speaker": "Sarah Chen",
+      "text": "Good to know. I'll keep that in the back pocket."
+    },
+    {
+      "timestamp": "16:12",
+      "speaker": "Marcus Webb",
+      "text": "Sarah, I want to make sure we document the steps we've already taken to contact DataBridge. If this ends up in a legal conversation, we need a clear record."
+    },
+    {
+      "timestamp": "16:28",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. I've been keeping a log. The key touchpoints: I sent Kevin calendar invites on January 22nd and January 27th — no response. I emailed Tom on January 23rd — no response. I emailed Aisha on January 26th — no response. Marcus sent a Slack message to Aisha — no response. Those are all documented."
+    },
+    {
+      "timestamp": "16:55",
+      "speaker": "Marcus Webb",
+      "text": "We submitted our review comments with the v1.1 mapping doc on January 20th. That email is also on record."
+    },
+    {
+      "timestamp": "17:08",
+      "speaker": "Sarah Chen",
+      "text": "Good. I'll add that to the contact log. We're building a clear paper trail in case we need it."
+    },
+    {
+      "timestamp": "17:22",
+      "speaker": "Priya Nair",
+      "text": "On our side — I have Tom's email from mid-January about the phasing change. Jordan has his own email thread with Tom from early January about the network architecture. Those are in our records."
+    },
+    {
+      "timestamp": "17:40",
+      "speaker": "Sarah Chen",
+      "text": "Can you forward those to me? I want to centralize everything in case there's a vendor dispute."
+    },
+    {
+      "timestamp": "17:50",
+      "speaker": "Priya Nair",
+      "text": "I'll do that today."
+    },
+    {
+      "timestamp": "18:05",
+      "speaker": "Marcus Webb",
+      "text": "Sarah, let's talk about the February 14th date for a moment. If we don't have DataBridge back online by February 1st — Priya's hard deadline — is there any flexibility on the cutover date? You said Diana has a board-approved date, but surely they'd rather delay than go live on a broken integration."
+    },
+    {
+      "timestamp": "18:30",
+      "speaker": "Sarah Chen",
+      "text": "There's budget approval tied to it. But if we can't safely deliver, Diana would rather know now than be surprised on February 13th. I'll have that conversation with her if we don't get DataBridge back online this week."
+    },
+    {
+      "timestamp": "18:52",
+      "speaker": "Priya Nair",
+      "text": "What's the next board meeting where a date extension would be approved?"
+    },
+    {
+      "timestamp": "19:02",
+      "speaker": "Sarah Chen",
+      "text": "I don't know. Diana would. But if the extension requires a board meeting that's weeks away, that's a serious problem."
+    },
+    {
+      "timestamp": "19:18",
+      "speaker": "Marcus Webb",
+      "text": "Presumably there's an executive authority to approve a short extension without a full board meeting. Especially if it's framed as vendor performance issue, not a project failure."
+    },
+    {
+      "timestamp": "19:35",
+      "speaker": "Sarah Chen",
+      "text": "That's a conversation for Diana and legal. I'll raise it with her once I have a clearer picture of what DataBridge is going to do."
+    },
+    {
+      "timestamp": "19:50",
+      "speaker": "Priya Nair",
+      "text": "Okay. I just want to make sure we're not heading toward a situation where everyone assumes someone else is going to raise the bad news with the executive sponsor."
+    },
+    {
+      "timestamp": "20:05",
+      "speaker": "Sarah Chen",
+      "text": "I will raise it. But I want to try to get DataBridge re-engaged today first. If I call Kevin and there's a simple explanation — someone was sick, email went to spam, whatever — I don't want to have put Diana in crisis mode unnecessarily. Give me until 5 PM today."
+    },
+    {
+      "timestamp": "20:28",
+      "speaker": "Marcus Webb",
+      "text": "That's fair."
+    },
+    {
+      "timestamp": "20:38",
+      "speaker": "Priya Nair",
+      "text": "Agreed. 5 PM today. If we haven't heard anything, I'd say the escalation to Diana becomes necessary."
+    },
+    {
+      "timestamp": "20:52",
+      "speaker": "Sarah Chen",
+      "text": "Understood. I'll send both of you a quick Slack message this afternoon once I've tried Kevin."
+    },
+    {
+      "timestamp": "21:05",
+      "speaker": "Marcus Webb",
+      "text": "And if you do get Kevin on the phone — what's the ask? What do we need from him?"
+    },
+    {
+      "timestamp": "21:15",
+      "speaker": "Sarah Chen",
+      "text": "Three things. One — an explanation for why there's been no communication. Two — confirmation that DataBridge is still on the engagement and who the current technical lead is. Three — a committed date for a revised delivery of the mapping response and the architecture package."
+    },
+    {
+      "timestamp": "21:38",
+      "speaker": "Marcus Webb",
+      "text": "And if the revised dates put us past February 1st for the architecture?"
+    },
+    {
+      "timestamp": "21:48",
+      "speaker": "Sarah Chen",
+      "text": "Then we escalate to Diana immediately. That's the trigger."
+    },
+    {
+      "timestamp": "22:00",
+      "speaker": "Priya Nair",
+      "text": "That's clear. I'm comfortable with that framework."
+    },
+    {
+      "timestamp": "22:14",
+      "speaker": "Marcus Webb",
+      "text": "Me too. Sarah, I appreciate you handling the vendor side of this. I know it's an uncomfortable call to make."
+    },
+    {
+      "timestamp": "22:28",
+      "speaker": "Sarah Chen",
+      "text": "It's part of the job. I'd rather have the uncomfortable conversation now than in two weeks."
+    },
+    {
+      "timestamp": "22:42",
+      "speaker": "Priya Nair",
+      "text": "While we're all here — Marcus, is there anything on the Acme side that has slipped or is at risk that we should be aware of? Not just DataBridge."
+    },
+    {
+      "timestamp": "22:58",
+      "speaker": "Marcus Webb",
+      "text": "The location crosswalk and the abnormal flag code table — those were supposed to go to DataBridge by January 20th. I sent them to Tom's email on January 20th but obviously he hasn't confirmed receipt. If a new technical lead steps in, they'll need those."
+    },
+    {
+      "timestamp": "23:18",
+      "speaker": "Sarah Chen",
+      "text": "Good. Keep those docs ready to resend the moment we have a live contact at DataBridge."
+    },
+    {
+      "timestamp": "23:30",
+      "speaker": "Marcus Webb",
+      "text": "They're ready. Also — the BAA. Kevin said it would be ready by January 13th. Was it ever sent to us?"
+    },
+    {
+      "timestamp": "23:44",
+      "speaker": "Sarah Chen",
+      "text": "Yes — that came through on time, actually. January 12th. Legal signed it on the 13th. So the BAA is in place."
+    },
+    {
+      "timestamp": "23:58",
+      "speaker": "Marcus Webb",
+      "text": "Okay, good. At least that's not an open item."
+    },
+    {
+      "timestamp": "24:10",
+      "speaker": "Priya Nair",
+      "text": "On the CloudPeak side — I want to flag that Jordan reached out to Dev Rajan at Acme IT two weeks ago. Dev has been responsive. The VPN configuration is actually in good shape — that's one area where we made real progress. The site-to-site VPN is established and tested."
+    },
+    {
+      "timestamp": "24:35",
+      "speaker": "Marcus Webb",
+      "text": "That's good news. So network connectivity is ready to go."
+    },
+    {
+      "timestamp": "24:44",
+      "speaker": "Priya Nair",
+      "text": "Correct. Jordan and Dev did the connectivity testing last week. MLLP port is accessible from the CloudPeak VPC. That piece is done."
+    },
+    {
+      "timestamp": "25:00",
+      "speaker": "Sarah Chen",
+      "text": "That's a bright spot. Let's make sure that's in the status update."
+    },
+    {
+      "timestamp": "25:12",
+      "speaker": "Priya Nair",
+      "text": "Also, the HAPI FHIR test server Jordan stood up — that's been running since January 20th. It's just sitting there waiting for DataBridge to connect their transformation service."
+    },
+    {
+      "timestamp": "25:28",
+      "speaker": "Sarah Chen",
+      "text": "So from CloudPeak's side, you're actually in a reasonable position. It's really DataBridge's build that's the blocker."
+    },
+    {
+      "timestamp": "25:40",
+      "speaker": "Priya Nair",
+      "text": "Correct. If DataBridge came back online tomorrow with an architecture doc, we could be validated within ten business days. The infrastructure is largely there."
+    },
+    {
+      "timestamp": "25:55",
+      "speaker": "Marcus Webb",
+      "text": "That's actually more hopeful than I thought. The environment is mostly ready."
+    },
+    {
+      "timestamp": "26:05",
+      "speaker": "Priya Nair",
+      "text": "It is. The problem is the transformation logic and the approved mapping — both of those live inside DataBridge's deliverable. We can't substitute for that."
+    },
+    {
+      "timestamp": "26:20",
+      "speaker": "Sarah Chen",
+      "text": "Understood. So the gap is specifically DataBridge's build — the mapping response and the transformation service. Everything else is either done or in progress."
+    },
+    {
+      "timestamp": "26:38",
+      "speaker": "Marcus Webb",
+      "text": "And our UAT. But we can't start UAT until we have a working integration service to test."
+    },
+    {
+      "timestamp": "26:50",
+      "speaker": "Sarah Chen",
+      "text": "Right. UAT is downstream of DataBridge delivery."
+    },
+    {
+      "timestamp": "27:02",
+      "speaker": "Priya Nair",
+      "text": "I want to make one more point for the record. CloudPeak's contract is a time-and-materials engagement for the infrastructure work. We bill for Jordan's time regardless of whether the project completes. If this drags, the costs mount on Acme's side. I'm not saying that to be difficult — just making sure the financial context is clear."
+    },
+    {
+      "timestamp": "27:30",
+      "speaker": "Sarah Chen",
+      "text": "Noted. I'll make sure Diana understands the cost implications of a delay."
+    },
+    {
+      "timestamp": "27:42",
+      "speaker": "Marcus Webb",
+      "text": "That's another reason to escalate sooner rather than later."
+    },
+    {
+      "timestamp": "27:52",
+      "speaker": "Sarah Chen",
+      "text": "Agreed. My 5 PM deadline stands, but if I can't get Kevin on the phone by noon I'll loop Diana in earlier."
+    },
+    {
+      "timestamp": "28:08",
+      "speaker": "Priya Nair",
+      "text": "That sounds right."
+    },
+    {
+      "timestamp": "28:18",
+      "speaker": "Marcus Webb",
+      "text": "Sarah — keep us posted today. I'm in back-to-back meetings until 3 but I'll check Slack."
+    },
+    {
+      "timestamp": "28:30",
+      "speaker": "Sarah Chen",
+      "text": "I'll post in Slack the moment I have anything. Okay. I think we've covered everything we can cover right now. Let me do a quick action item summary."
+    },
+    {
       "timestamp": "29:44",
       "speaker": "Sarah Chen",
       "text": "Okay. Action items: I'm calling Kevin Park today and emailing Aisha. Marcus holds on any escalation to Diana until I have more info. Priya, if I can get DataBridge engaged today, what's the fastest path to getting the architecture to you?"
@@ -151,12 +581,12 @@
     {
       "timestamp": "30:02",
       "speaker": "Priya Nair",
-      "text": "Tom or Aisha sends the architecture doc to me and Jordan, we'll start reviewing immediately. If we get it by February 1st we can still make February 14th work — barely."
+      "text": "Tom or Aisha sends the architecture doc to me and Jordan, we'll start reviewing immediately. If we get it by January 30th we can still make February 14th work — barely."
     },
     {
       "timestamp": "30:18",
       "speaker": "Sarah Chen",
-      "text": "Got it. February 1st is the drop-dead date for the architecture doc. I'll convey that."
+      "text": "Got it. January 30th is the drop-dead date for the architecture doc. I'll convey that."
     }
   ]
 }

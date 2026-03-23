@@ -97,6 +97,13 @@
       "text": "got it, thanks"
     },
     {
+      "message_id": "s002_012a",
+      "date": "2026-01-19",
+      "time": "10:30 AM EST",
+      "author": "t.reyes",
+      "text": "@marcus.webb @sarah.chen — quick check-in ahead of the Jan 22 review deadline. Let us know if you have any questions while you're going through the mapping doc. Aisha and I have been working on the transformation logic this week but happy to jump on a quick call if anything in the document is unclear."
+    },
+    {
       "message_id": "s002_013",
       "date": "2026-01-20",
       "time": "3:30 PM EST",
@@ -104,11 +111,25 @@
       "text": "Tom, Kevin — just sent the v1.1 review comments via email. significant items in ADT section and on the custom extensions. please confirm receipt"
     },
     {
+      "message_id": "s002_013a",
+      "date": "2026-01-21",
+      "time": "9:15 AM EST",
+      "author": "a.patel",
+      "text": "@marcus.webb — saw the review comments came through yesterday. Tom has them and should be responding shortly. I also found a potential edge case in the ADT A03 mapping that may overlap with your section 3 comments — will flag it when we send back the revised doc."
+    },
+    {
       "message_id": "s002_014",
       "date": "2026-01-22",
       "time": "9:00 AM EST",
       "author": "sarah.chen",
       "text": "Tom / Kevin — just following up on Marcus's message Monday. Have you had a chance to look at the review comments?"
+    },
+    {
+      "message_id": "s002_014a",
+      "date": "2026-01-23",
+      "time": "9:30 AM EST",
+      "author": "marcus.webb",
+      "text": "@a.patel — Aisha, any update on the review response? We sent our comments to Tom on Monday and haven't heard anything back. Getting concerned given the timeline. Can you let us know where things stand?"
     },
     {
       "message_id": "s002_015",

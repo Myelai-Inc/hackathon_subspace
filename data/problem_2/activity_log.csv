@@ -10,26 +10,26 @@ date,csm_name,account_name,activity_type,task_id,task_name,time_spent_minutes,cl
 2026-02-10,Jamie Torres,Lakeshore Freight Partners,escalation_handling,t10,Create follow-up tickets in Zendesk,10,ASSEMBLY,Created 3-day and 14-day tickets only; forgot 30-day
 2026-02-10,Jamie Torres,Lakeshore Freight Partners,escalation_handling,t11,Schedule follow-up calls in Calendly,9,ASSEMBLY,
 2026-02-10,Jamie Torres,Lakeshore Freight Partners,escalation_handling,t12,Update account health score in CRM,6,ASSEMBLY_JUDGMENT,Dropped from 72 to 55
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t02,Pull account profile from CRM,8,ASSEMBLY,
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t03,Retrieve contract terms from DocuSign,18,ASSEMBLY,Contract not easy to find — multiple versions in DocuSign
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t04,Check related tickets in Zendesk,11,ASSEMBLY,
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t05,Identify internal specialist,5,ASSEMBLY_JUDGMENT,
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t06,Draft internal context email,12,ASSEMBLY_JUDGMENT,
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t07,Conduct client call,28,JUDGMENT,Billing dispute — straightforward. Account is stable.
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t08,Draft response email to client,14,ASSEMBLY_JUDGMENT,
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t09,Log interaction in Salesforce,0,ASSEMBLY,SKIPPED — busy with back-to-back calls
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t10,Create follow-up tickets in Zendesk,8,ASSEMBLY,3-day ticket only
-2026-02-08,Jamie Torres,Meridian Logistics LLC,escalation_handling,t11,Schedule follow-up calls in Calendly,7,ASSEMBLY,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t02,Pull account profile from CRM,8,ASSEMBLY,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t03,Retrieve contract terms from DocuSign,11,ASSEMBLY,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t04,Check related tickets in Zendesk,14,ASSEMBLY,Found 3 related data sync tickets — pattern emerging
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t05,Identify internal specialist,6,ASSEMBLY_JUDGMENT,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t06,Draft internal context email,15,ASSEMBLY_JUDGMENT,Flagged recurring pattern to engineering lead
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t07,Conduct client call,35,JUDGMENT,Renewal is in 4 months. Used escalation call to gauge expansion interest.
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t08,Draft response email to client,19,ASSEMBLY_JUDGMENT,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t09,Log interaction in Salesforce,12,ASSEMBLY,Also updated renewal opportunity stage
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t10,Create follow-up tickets in Zendesk,9,ASSEMBLY,
-2026-02-07,Jamie Torres,Apex Carriers Group,escalation_handling,t11,Schedule follow-up calls in Calendly,8,ASSEMBLY,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t02,Pull account profile from CRM,8,ASSEMBLY,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t03,Retrieve contract terms from DocuSign,18,ASSEMBLY,Contract not easy to find — multiple versions in DocuSign
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t04,Check related tickets in Zendesk,11,ASSEMBLY,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t05,Identify internal specialist,5,ASSEMBLY_JUDGMENT,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t06,Draft internal context email,12,ASSEMBLY_JUDGMENT,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t07,Conduct client call,28,JUDGMENT,Billing dispute — straightforward. Account is stable.
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t08,Draft response email to client,14,ASSEMBLY_JUDGMENT,
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t09,Log interaction in Salesforce,0,ASSEMBLY,SKIPPED — busy with back-to-back calls
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t10,Create follow-up tickets in Zendesk,8,ASSEMBLY,3-day ticket only
+2026-02-09,Jamie Torres,Meridian Logistics LLC,escalation_handling,t11,Schedule follow-up calls in Calendly,7,ASSEMBLY,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t02,Pull account profile from CRM,8,ASSEMBLY,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t03,Retrieve contract terms from DocuSign,11,ASSEMBLY,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t04,Check related tickets in Zendesk,14,ASSEMBLY,Found 3 related data sync tickets — pattern emerging
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t05,Identify internal specialist,6,ASSEMBLY_JUDGMENT,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t06,Draft internal context email,15,ASSEMBLY_JUDGMENT,Flagged recurring pattern to engineering lead
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t07,Conduct client call,35,JUDGMENT,Renewal is in 4 months. Used escalation call to gauge expansion interest.
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t08,Draft response email to client,19,ASSEMBLY_JUDGMENT,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t09,Log interaction in Salesforce,12,ASSEMBLY,Also updated renewal opportunity stage
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t10,Create follow-up tickets in Zendesk,9,ASSEMBLY,
+2026-02-06,Jamie Torres,Apex Carriers Group,escalation_handling,t11,Schedule follow-up calls in Calendly,8,ASSEMBLY,
 2026-02-05,Jamie Torres,TerraHaul Inc.,escalation_handling,t02,Pull account profile from CRM,7,ASSEMBLY,
 2026-02-05,Jamie Torres,TerraHaul Inc.,escalation_handling,t03,Retrieve contract terms from DocuSign,13,ASSEMBLY,Pulled wrong version first (original MSA not current amendment)
 2026-02-05,Jamie Torres,TerraHaul Inc.,escalation_handling,t04,Check related tickets in Zendesk,8,ASSEMBLY,

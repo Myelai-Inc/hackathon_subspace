@@ -70,7 +70,7 @@
         {"label": "Data Mapping", "status": "COMPLETE", "note": "v1.3 approved Feb 3."},
         {"label": "Architecture Package", "status": "COMPLETE", "note": "Delivered to CloudPeak Feb 3."},
         {"label": "CloudPeak Security Config", "status": "BLOCKED", "note": "Single-phase write-path requires HIPAA field-level audit logging, KMS key hierarchy, and network segmentation not in current environment. 10-12 business days to complete."},
-        {"label": "February 14 Cutover", "status": "AT_RISK", "note": "Phase 1 (read-only) achievable on Feb 14. Phase 2 (write) not achievable before ~Feb 28 at earliest."}
+        {"label": "February 14 Cutover", "status": "AT_RISK", "note": "Phase 1 (read-only) achievable on Feb 14. Phase 2 (write) not achievable before ~Mar 3 at earliest."}
       ],
       "escalations": [
         "Recommending executive decision on Option A (revert to phased, Phase 1 Feb 14 / Phase 2 ~Mar 3) vs. Option B (delay full cutover to Feb 28)."
